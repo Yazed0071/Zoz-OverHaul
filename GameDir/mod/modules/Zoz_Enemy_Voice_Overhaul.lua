@@ -207,8 +207,12 @@ function this.Messages()
 			{
 				msg = "RadioEnd",
 				func = function ( gameObjectId, cpGameObjectId, speechLabel, isSuccess )
-					if speechLabel == StrCode32( "CPR0130" ) or speechLabel == StrCode32("CPR0038") then
-						Zoz_Enemy_Overhaul.GetClosestSoldierSpeak("EVR190") -- DAAAMNM ITTTT
+					if speechLabel == StrCode32( "CPR0090" ) then
+						mvars.DeniedSoldier = gameObjectId
+					elseif speechLabel == StrCode32( "CPR0130" ) or speechLabel == StrCode32("CPR0038") then -- Can't send reinforcement
+						local soldierId = GetGameObjectId( "TppSoldier2", mvars.DeniedSoldier )
+						local command = { id = "CallVoice", dialogueName = "DD_vox_ene", parameter= "EVR190" }-- DAAAMNM ITTTT
+						SendCommand( soldierId, command )
 					end
 				end
 			},
