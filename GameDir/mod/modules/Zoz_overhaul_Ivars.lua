@@ -210,33 +210,49 @@ this.SECURITY_LIST = {
 }
 
 function this.SetupCamera()
-	for index, camInfo in pairs(this.SECURITY_LIST.CCTVList) do
-		local gameObjectId = GameObject.GetGameObjectId(camInfo.name)
-		if gameObjectId ~= GameObject.NULL_ID then
-			GameObject.SendCommand(gameObjectId, {id = "SetCommandPost", cp = camInfo.cp } )
-			if TppRevenge.GetRevengeLv(TppRevenge.REVENGE_TYPE.STEALTH)==1 then
-				local securityCameras={type="TppSecurityCamera2"}
-				GameObject.SendCommand(securityCameras,{id="SetNormalCamera"})
-				GameObject.SendCommand(securityCameras,{id="SetDevelopLevel",developLevel=5})
-			elseif TppRevenge.GetRevengeLv(TppRevenge.REVENGE_TYPE.STEALTH)==2 then
-				local securityCameras={type="TppSecurityCamera2"}
-				GameObject.SendCommand(securityCameras,{id="SetNormalCamera"})
-				GameObject.SendCommand(securityCameras,{id="SetDevelopLevel",developLevel=6})
-			elseif TppRevenge.GetRevengeLv(TppRevenge.REVENGE_TYPE.STEALTH)==3 then
-				local securityCameras={type="TppSecurityCamera2"}
-				GameObject.SendCommand(securityCameras,{id="SetDevelopLevel",developLevel=6})
-				GameObject.SendCommand(securityCameras,{id="SetNormalCamera"})
-			elseif TppRevenge.GetRevengeLv(TppRevenge.REVENGE_TYPE.STEALTH)==4 then
-				local securityCameras={type="TppSecurityCamera2"}
-				GameObject.SendCommand(securityCameras,{id="SetGunCamera"})
-				GameObject.SendCommand(securityCameras,{id="SetDevelopLevel",developLevel=7})
-			elseif TppRevenge.GetRevengeLv(TppRevenge.REVENGE_TYPE.STEALTH)==5 then
-				local securityCameras={type="TppSecurityCamera2"}
-				GameObject.SendCommand(securityCameras,{id="SetGunCamera"})
-				GameObject.SendCommand(securityCameras,{id="SetDevelopLevel",developLevel=8})
-			end
-		end
-	end
+    -- Configuration table for revenge level settings
+    local revengeConfig = {
+        [1] = {
+            {id = "SetNormalCamera"},
+            {id = "SetDevelopLevel", developLevel = 5}
+        },
+        [2] = {
+            {id = "SetNormalCamera"},
+            {id = "SetDevelopLevel", developLevel = 6}
+        },
+        [3] = {
+            {id = "SetDevelopLevel", developLevel = 6},
+            {id = "SetNormalCamera"}
+        },
+        [4] = {
+            {id = "SetGunCamera"},
+            {id = "SetDevelopLevel", developLevel = 7}
+        },
+        [5] = {
+            {id = "SetGunCamera"},
+            {id = "SetDevelopLevel", developLevel = 8}
+        },
+    }
+
+    -- Set command posts for each CCTV camera
+    for _, camInfo in ipairs(this.SECURITY_LIST.CCTVList) do
+        local gameObjectId = GameObject.GetGameObjectId(camInfo.name)
+        if gameObjectId ~= GameObject.NULL_ID then
+            GameObject.SendCommand(gameObjectId, {id = "SetCommandPost", cp = camInfo.cp})
+        end
+    end
+
+    -- Apply security camera settings based on revenge level
+    local revengeLevel = TppRevenge.GetRevengeLv(TppRevenge.REVENGE_TYPE.STEALTH)
+    if revengeLevel >= 1 and revengeLevel <= 5 then
+        local commands = revengeConfig[revengeLevel]
+        if commands then
+            local securityCameras = {type = "TppSecurityCamera2"}
+            for _, command in ipairs(commands) do
+                GameObject.SendCommand(securityCameras, command)
+            end
+        end
+    end
 end
 
 this.SetUpEnemy = function ()
