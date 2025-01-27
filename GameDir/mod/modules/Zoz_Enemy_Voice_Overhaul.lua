@@ -216,14 +216,14 @@ function this.Messages()
 					end
 				end
 			},
-		},
-		Timer = {
 			{
-				msg = "Finish", sender = "HoldUp_EV_Cooldowwn",
+				msg = "TapFoundPlayerInAlert",
 				func = function ()
-					
+					GkEventTimerManager.Start("EVR083_Enable", 15)
 				end
 			},
+		},
+		Timer = {
 			{
 				msg = "Finish", sender = "Soldier_GiveUp",
 				func = function ()
@@ -259,7 +259,7 @@ function this.Messages()
 				msg = "PlayerHoldWeapon",
 				func = function (equipId, equipType, hasGunLight, isSheild)
 					if Ivars.Zoz_Enemy_Voice_Enemy_Reaction_Player_RPG:Is(1) then
-						if equipType == 8 and not Tpp.IsNotAlert() and not GkEventTimerManager.IsTimerActive("EVR083_Timer") then -- EQP_TYPE_Missile
+						if equipType == 8 and not Tpp.IsNotAlert() and not GkEventTimerManager.IsTimerActive("EVR083_Timer") and GkEventTimerManager.IsTimerActive("EVR083_Enable") then -- EQP_TYPE_Missile
 							Zoz_Enemy_Overhaul.GetClosestSoldierSpeak("EVR083") -- INCOMING!!
 							GkEventTimerManager.Start("EVR083_Timer", 15)
 						end
