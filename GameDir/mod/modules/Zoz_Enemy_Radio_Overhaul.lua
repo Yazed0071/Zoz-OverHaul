@@ -72,7 +72,7 @@ function this.Messages()
   						TppUiCommand.AnnounceLogViewLangId("announce_phase_to_caution",n)
 					elseif isSuccess ~= 1 and not Zoz_overhaul_Ivars.IsNotPhase(PHASE_ALERT) and Ivars.Zoz_Enemy_Radio_Repeat_Last:Is(1) and not (vars.locationCode == TppDefine.LOCATION_ID.GNTN) then
 						Zoz_Enemy_Overhaul.PlayCPOnlyRadio("ZOZ_CPI0110")-- Repeat that last
-					elseif isSuccess and speechLabel == StrCode32( "CPR0230" ) or speechLabel == StrCode32( "CPR0250" ) or speechLabel == StrCode32( "CPR0270" ) then
+					elseif isSuccess and speechLabel == StrCode32( "CPR0230" ) or speechLabel == StrCode32( "CPR0250" ) or speechLabel == StrCode32( "CPR0270" ) and TppMission.IsFreeMission(vars.missionCode) and Ivars.Zoz_Enemy_Radio_Cancel_Prisoner_Search:Is(1) then
 						GkEventTimerManager.Start("Announce_PrisonerNotFound", 180)
 						InfCore.Log("Zoz_Overhaul Log: Timer Announce_PrisonerNotFound Start")
 					end
@@ -148,18 +148,16 @@ function this.Messages()
 				sender = "Announce_PrisonerNotFound",
 				func = 	function()
 					InfCore.Log("Zoz_Overhaul Log: Timer Announce_PrisonerNotFound Finish")
-					if Ivars.Zoz_Enemy_Radio_Cancel_Prisoner_Search:Is(1) then
-						if Zoz_overhaul_Ivars.IsNotPhase(PHASE_ALERT) or Zoz_overhaul_Ivars.IsNotPhase(PHASE_EVASION) and not (missionID >= 10010) or not (missionID <= 11151 ) then
-							InfCore.Log("Zoz_Overhaul Log: Second")
-							local gameObjectId = GameObject.GetGameObjectId( "TppSoldier2", Zoz_Enemy_Overhaul.GetClosestSoldier() )
-							if not Zoz_Enemy_Overhaul.IsCanCommunicate(gameObjectId) then
-								Zoz_Enemy_Overhaul.PlayCPOnlyRadio("CPR0081")
-								InfCore.Log("Zoz_Overhaul Log: CannotCommunicate")
-							else
-								InfCore.Log("Zoz_Overhaul Log: IsCanNotCanCommunicate")
-								local command = { id="CallRadio", label="CPR0081", stance="Stand", isHqRadio=false } -- no sign of prisoner standing down
-								GameObject.SendCommand( gameObjectId, command )
-							end
+					if Zoz_overhaul_Ivars.IsNotPhase(PHASE_ALERT) or Zoz_overhaul_Ivars.IsNotPhase(PHASE_EVASION) and TppMission.IsFreeMission(vars.missionCode) then
+						InfCore.Log("Zoz_Overhaul Log: Second")
+						local gameObjectId = GameObject.GetGameObjectId( "TppSoldier2", Zoz_Enemy_Overhaul.GetClosestSoldier() )
+						if not Zoz_Enemy_Overhaul.IsCanCommunicate(gameObjectId) then
+							Zoz_Enemy_Overhaul.PlayCPOnlyRadio("CPR0081")
+							InfCore.Log("Zoz_Overhaul Log: CannotCommunicate")
+						else
+							InfCore.Log("Zoz_Overhaul Log: IsCanNotCanCommunicate")
+							local command = { id="CallRadio", label="CPR0081", stance="Stand", isHqRadio=false } -- no sign of prisoner standing down
+							GameObject.SendCommand( gameObjectId, command )
 						end
 					end
 				end

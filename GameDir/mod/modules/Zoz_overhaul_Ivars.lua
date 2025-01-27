@@ -269,7 +269,7 @@ function this.AddMissionPacks(missionCode,packPaths)
 		local isFreeRoom = Ivars.Zoz_Enemy_Equipment_Ir_Sensors:Is"FreeRoom"
 		local isMission = Ivars.Zoz_Enemy_Equipment_Ir_Sensors:Is"Mission"
 		local isAll = Ivars.Zoz_Enemy_Equipment_Ir_Sensors:Is"ALL"
-		local isFreeRoomMission = (missionID == 30010) or (missionID == 30020)
+		local isFreeRoomMission = TppMission.IsFreeMission(vars.missionCode)
 
 		if isFreeRoom and isFreeRoomMission then
 			AddLocationPacks("/Assets/tpp/pack/zoz/zoz_afgh_Ir_Sensor.fpk", "/Assets/tpp/pack/zoz/zoz_mafr_Ir_Sensor.fpk", true)
@@ -288,7 +288,7 @@ function this.AddMissionPacks(missionCode,packPaths)
 		local isFreeRoom = Ivars.Zoz_Enemy_Equipment_burglar_alarm:Is"FreeRoom"
 		local isMission = Ivars.Zoz_Enemy_Equipment_burglar_alarm:Is"Mission"
 		local isAll = Ivars.Zoz_Enemy_Equipment_burglar_alarm:Is"ALL"
-		local isFreeRoomMission = (missionID == 30010) or (missionID == 30020)
+		local isFreeRoomMission = TppMission.IsFreeMission(vars.missionCode)
 
 		if isFreeRoom and isFreeRoomMission then
 			AddLocationPacks("/Assets/tpp/pack/zoz/alm_afgh.fpk", "/Assets/tpp/pack/zoz/alm_mafr.fpk", true)
