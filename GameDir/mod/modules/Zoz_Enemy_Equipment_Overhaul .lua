@@ -33,19 +33,14 @@ end
 
 local function HandleFultonAlert(gameObjectId, sourceId)
     InfCore.Log("Zoz: Checking alarm for object "..tostring(gameObjectId))
-    if Gimmick.CallBurglarAlarm(gameObjectId, this.burgularAlarmRange, this.burgularAlarmTime) then
+    if Gimmick.CallBurglarAlarm(gameObjectId, 2, 10) then
         InfCore.Log("Zoz: Alarm activated - "..tostring(gameObjectId))
         this.RequestNoticeGimmick(Zoz_overhaul_Ivars.getClosestCp(), gameObjectId, sourceId)
     end
 end
 
 function this.RequestNoticeGimmick(cp, gimmickId, sourceId)
-    SendCommand(cp, {
-        id = "RequestNotice",
-        type = 0,
-        targetId = gimmickId,
-        sourceId = sourceId
-    })
+    SendCommand(cp, {id = "RequestNotice", type = 0, targetId = gimmickId, sourceId = sourceId})
     InfCore.Log("Zoz: CP alerted about "..tostring(gimmickId))
 end
 
@@ -62,7 +57,7 @@ function this.Messages()
             {
                 msg = "BurglarAlarmTrap",
                 func = function(_, bAlarmId, _, gameObjectId)
-                    InfCore.Log("Zoz: Physical alarm triggered - "..tostring(bAlarmId))
+                    InfCore.Log("Zoz: BurglarAlarmTrap triggered - "..tostring(bAlarmId))
                     this.RequestNoticeGimmick(Zoz_overhaul_Ivars.getClosestCp(), bAlarmId, gameObjectId)
                 end
             },
@@ -100,7 +95,6 @@ function this.Messages()
                 msg = "Finish",
                 sender = "fultonedbyenemy",
                 func = function()
-                    InfCore.Log("Zoz: Fulton timer expired")
                     mvars.fultonedbyenemy = true
                 end
             },
@@ -109,7 +103,7 @@ function this.Messages()
             {
                 msg = "PlayerFulton",
                 func = function(_, targetId)
-                    InfCore.Log("Zoz: Player initiated fulton - "..tostring(targetId))
+                    InfCore.Log("Zoz: PlayerFulton - targetId == "..tostring(targetId))
                     if Tpp.IsFultonContainer(targetId) then
                         mvars.fultonedbyenemy = false
                         GkEventTimerManager.Start("fultonedbyenemy", 8)
@@ -123,21 +117,20 @@ end
 local FULTON_LEVELS = {
     Normal = {
         [1] = {level = 1, wormhole = false},
-        [2] = {level = 2, wormhole = false},
-        [3] = {level = 3, wormhole = false},
-        [4] = {level = 3, wormhole = true},
+        [2] = {level = 3, wormhole = false},
+        [3] = {level = 3, wormhole = true},
     }
 }
 
 function this.SetUpEnemy()
     if TppMission.IsFOBMission(vars.missionCode) then
         InfCore.Log("Zoz: Skipping Setup - FOB Mission")
-        return 
+        return
     end
     
     if not GameObject.DoesGameObjectExistWithTypeName"TppSoldier2" then
         InfCore.Log("Zoz: Aborting Setup - No Soldiers Found")
-        return 
+        return
     end
 
     if not Ivars.Zoz_Enemy_Equipment_Fulton:Is"OFF" then
@@ -148,9 +141,13 @@ function this.SetUpEnemy()
         if Ivars.Zoz_Enemy_Equipment_Fulton:Is"Normal" then
             local revengeLevel = TppRevenge.GetRevengeLv(TppRevenge.REVENGE_TYPE.FULTON)
             InfCore.Log("Zoz: Normal Mode - Revenge Level "..revengeLevel)
-            local config = FULTON_LEVELS.Normal[math.min(revengeLevel, 4)] or FULTON_LEVELS.Normal[4]
-            fultonLevel = config.level
-            isWormHole = config.wormhole
+            if FULTON_LEVELS.Normal[revengeLevel] then
+                for _, config in ipairs(FULTON_LEVELS.Normal[revengeLevel]) do
+                    fultonLevel = config.level
+                    isWormHole = config.wormhole
+                end
+            end
+            
         elseif Ivars.Zoz_Enemy_Equipment_Fulton:Is"Balloon" then
             InfCore.Log("Zoz: Forcing Balloon Fulton")
             fultonLevel = 3
