@@ -1,4 +1,18 @@
 local this={}
+local StrCode32 = Fox.StrCode32
+local StrCode32Table = Tpp.StrCode32Table
+
+local missionID = TppMission.GetMissionID()
+local IsTypeString=Tpp.IsTypeString
+local GetGameObjectId = GameObject.GetGameObjectId
+local SendCommand = GameObject.SendCommand
+
+local PHASE_ALERT = TppGameObject.PHASE_ALERT
+local PHASE_EVASION = TppGameObject.PHASE_EVASION
+local PHASE_CAUTION = TppGameObject.PHASE_CAUTION
+local PHASE_SNEAK = TppGameObject.PHASE_SNEAK
+
+local NULL_ID = GameObject.NULL_ID
 
 this.registerMenus={
 	"Zoz_Overhaul",
@@ -25,239 +39,56 @@ this.langStrings={
 }
 
 this.MISSION_PACKS = {
-	[10020] ={ "/Assets/tpp/pack/zoz/s10020_custom_pack.fpk"}, -- PHANTOM LIMBS
-	[10036] ={ "/Assets/tpp/pack/zoz/s10036_custom_pack.fpk"}, -- A HERO’S WAY
-	[10043] ={ "/Assets/tpp/pack/zoz/s10043_custom_pack.fpk"}, -- C2W
-	[10033] ={ "/Assets/tpp/pack/zoz/s10033_custom_pack.fpk"}, -- OVER THE FENCE
-	[10040] ={ "/Assets/tpp/pack/zoz/s10040_custom_pack.fpk"}, -- WHERE DO THE BEES SLEEP?
-	[10041] ={ "/Assets/tpp/pack/zoz/s10041_custom_pack.fpk"}, -- RED BRASS
-	[10052] ={ "/Assets/tpp/pack/zoz/s10052_custom_pack.fpk"}, -- ANGEL WITH BROKEN WINGS
-	[10070] ={ "/Assets/tpp/pack/zoz/s10070_custom_pack.fpk"}, -- HELLBOUND
-	[10080] ={ "/Assets/tpp/pack/zoz/s10080_custom_pack.fpk"}, -- PITCH DARK
-	[10090] ={ "/Assets/tpp/pack/zoz/s10090_custom_pack.fpk"}, -- TRAITORS’ CARAVAN
-	[10130] ={ "/Assets/tpp/pack/zoz/s10130_custom_pack.fpk"}, -- CODE TALKER
-	[10045] ={ "/Assets/tpp/pack/zoz/s10045_custom_pack.fpk"}, -- TO KNOW TOO MUCH
-	[10093] ={ "/Assets/tpp/pack/zoz/s10093_custom_pack.fpk"}, -- CURSED LEGACY
-}
-
-this.SECURITY_LIST = {
-	CCTVList = {
-		{
-			name = "Camera_Village_0",
-			cp = "afgh_village_cp",
-		},
-		{
-			name = "Camera_Village_1",
-			cp = "afgh_village_cp",
-		},
-		{
-			name = "Camera_Village_2",
-			cp = "afgh_village_cp",
-		},
-		{
-			name = "Camera_Village_3",
-			cp = "afgh_village_cp",
-		},
-		{
-			name = "Camera_SlopedTown_0",
-			cp = "afgh_slopedTown_cp",
-		},
-		{
-			name = "Camera_SlopedTown_1",
-			cp = "afgh_slopedTown_cp",
-		},
-		{
-			name = "Camera_Field_0",
-			cp = "afgh_field_cp",
-		},
-		{
-			name = "Camera_Field_1",
-			cp = "afgh_field_cp",
-		},
-		{
-			name = "Camera_commFacility_0",
-			cp = "afgh_commFacility_cp",
-		},
-		{
-			name = "Camera_commFacility_1",
-			cp = "afgh_commFacility_cp",
-		},
-		{
-			name = "Camera_enemyBase_0",
-			cp = "afgh_enemyBase_cp",
-		},
-		{
-			name = "Camera_enemyBase_1",
-			cp = "afgh_enemyBase_cp",
-		},
-		{
-			name = "Camera_enemyBase_2",
-			cp = "afgh_enemyBase_cp",
-		},
-		{
-			name = "Camera_fort_0",
-			cp = "afgh_fort_cp",
-		},
-		{
-			name = "Camera_Remenants_0",
-			cp = "afgh_remnants_cp",
-		},
-		{
-			name = "Camera_Remenants_1",
-			cp = "afgh_remnants_cp",
-		},
-		{
-			name = "Camera_Remenants_2",
-			cp = "afgh_remnants_cp",
-		},
-		{
-			name = "Camera_Remenants_3",
-			cp = "afgh_remnants_cp",
-		},
-		{
-			name = "Camera_Tent_0",
-			cp = "afgh_tent_cp",
-		},
-		{
-			name = "Camera_Tent_1",
-			cp = "afgh_tent_cp",
-		},
-		{
-			name = "Camera_Tent_2",
-			cp = "afgh_tent_cp",
-		},
-		{
-			name = "Camera_powerPlant_0",
-			cp = "afgh_powerPlant_cp",
-		},
-		{
-			name = "Camera_powerPlant_1",
-			cp = "afgh_powerPlant_cp",
-		},
-		{
-			name = "Camera_powerPlant_2",
-			cp = "afgh_powerPlant_cp",
-		},
-		{
-			name = "Camera_powerPlant_3",
-			cp = "afgh_powerPlant_cp",
-		},
-		{
-			name = "Camera_sovietBase_0",
-			cp = "afgh_sovietBase_cp",
-		},
-		{
-			name = "Camera_sovietBase_1",
-			cp = "afgh_sovietBase_cp",
-		},
-		{
-			name = "Camera_sovietBase_2",
-			cp = "afgh_sovietBase_cp",
-		},
-		{
-			name = "Camera_sovietBase_3",
-			cp = "afgh_sovietBase_cp",
-		},
-		{
-			name = "Camera_flowStation_0",
-			cp = "mafr_flowStation_cp",
-		},
-		{
-			name = "Camera_flowStation_1",
-			cp = "mafr_flowStation_cp",
-		},
-		{
-			name = "Camera_flowStation_2",
-			cp = "mafr_flowStation_cp",
-		},
-		{
-			name = "Camera_flowStation_3",
-			cp = "mafr_flowStation_cp",
-		},
-		{
-			name = "Camera_flowStation_4",
-			cp = "mafr_flowStation_cp",
-		},
-		{
-			name = "Camera_flowStation_5",
-			cp = "mafr_flowStation_cp",
-		},
-		{
-			name = "Camera_pfCamp_0",
-			cp = "mafr_pfCamp_cp",
-		},
-		{
-			name = "Camera_pfCamp_1",
-			cp = "mafr_pfCamp_cp",
-		},
-		{
-			name = "Camera_pfCamp_2",
-			cp = "mafr_pfCamp_cp",
-		},
-		{
-			name = "Camera_lab_0",
-			cp = "mafr_lab_cp",
-		},
-		{
-			name = "Camera_lab_1",
-			cp = "mafr_lab_cp",
-		},
-		{
-			name = "Camera_lab_2",
-			cp = "mafr_lab_cp",
-		},
+	[10020] ={ -- PHANTOM LIMBS
+		"/Assets/tpp/pack/zoz/zoz_SlopedTown_Cameras_custom.fpk",
+		"/Assets/tpp/pack/zoz/zoz_Village_Cameras_custom.fpk",
+	},
+	[10033] ={ -- OVER THE FENCE
+		"/Assets/tpp/pack/zoz/zoz_enemyBase_Cameras_custom.fpk"
+	}, 
+	[10036] ={ -- A HERO’S WAY
+		"/Assets/tpp/pack/zoz/zoz_Field_Cameras_custom.fpk",
+	}, 
+	[10040] ={ -- WHERE DO THE BEES SLEEP?
+		"/Assets/tpp/pack/zoz/zoz_fort_Cameras_custom.fpk"
+	}, 
+	[10041] ={ -- RED BRASS
+		"/Assets/tpp/pack/zoz/zoz_Village_Cameras_custom.fpk",
+		"/Assets/tpp/pack/zoz/zoz_Field_Cameras_custom.fpk",
+		"/Assets/tpp/pack/zoz/zoz_commFacility_Cameras_custom.fpk"
+	}, 
+	[10043] ={ -- C2W
+		"/Assets/tpp/pack/zoz/zoz_Village_Cameras_custom.fpk",
+		"/Assets/tpp/pack/zoz/zoz_commFacility_Cameras_custom.fpk"
+	}, 
+	[10045] ={ -- TO KNOW TOO MUCH
+		"/Assets/tpp/pack/zoz/zoz_Field_Cameras_custom.fpk",
+		"/Assets/tpp/pack/zoz/zoz_Remenants_Cameras_custom.fpk"
+	}, 
+	[10052] ={ -- ANGEL WITH BROKEN WINGS
+		"/Assets/tpp/pack/zoz/zoz_Tent_Cameras_custom.fpk",
+		"/Assets/tpp/pack/zoz/zoz_Remenants_Cameras_custom.fpk"
+	}, 
+	[10070] ={ -- HELLBOUND
+		"/Assets/tpp/pack/zoz/zoz_powerPlant_Cameras_custom.fpk",
+		"/Assets/tpp/pack/zoz/zoz_sovietBase_Cameras_custom.fpk"
+	}, 
+	[10080] ={ -- PITCH DARK
+		"/Assets/tpp/pack/zoz/zoz_flowStation_Cameras_custom.fpk"
+	}, 
+	[10090] ={ -- TRAITORS’ CARAVAN
+		"/Assets/tpp/pack/zoz/zoz_flowStation_Cameras_custom.fpk",
+		"/Assets/tpp/pack/zoz/zoz_pfCamp_Cameras_custom.fpk"
+	},
+	[10093] ={ -- CURSED LEGACY
+		"/Assets/tpp/pack/zoz/zoz_lab_Cameras_custom.fpk"
+	}, 
+	[10130] ={ -- CODE TALKER
+		"/Assets/tpp/pack/zoz/zoz_lab_Cameras_custom.fpk"
 	},
 }
 
-function this.SetupCamera()
-    -- Configuration table for revenge level settings
-    local revengeConfig = {
-        [1] = {
-            {id = "SetNormalCamera"},
-            {id = "SetDevelopLevel", developLevel = 5}
-        },
-        [2] = {
-            {id = "SetNormalCamera"},
-            {id = "SetDevelopLevel", developLevel = 6}
-        },
-        [3] = {
-            {id = "SetDevelopLevel", developLevel = 6},
-            {id = "SetNormalCamera"}
-        },
-        [4] = {
-            {id = "SetGunCamera"},
-            {id = "SetDevelopLevel", developLevel = 7}
-        },
-        [5] = {
-            {id = "SetGunCamera"},
-            {id = "SetDevelopLevel", developLevel = 8}
-        },
-    }
 
-    -- Set command posts for each CCTV camera
-    for _, camInfo in ipairs(this.SECURITY_LIST.CCTVList) do
-        local gameObjectId = GameObject.GetGameObjectId(camInfo.name)
-        if gameObjectId ~= GameObject.NULL_ID then
-            GameObject.SendCommand(gameObjectId, {id = "SetCommandPost", cp = camInfo.cp})
-        end
-    end
-
-    -- Apply security camera settings based on revenge level
-    local revengeLevel = TppRevenge.GetRevengeLv(TppRevenge.REVENGE_TYPE.STEALTH)
-    if revengeLevel >= 1 and revengeLevel <= 5 then
-        local commands = revengeConfig[revengeLevel]
-        if commands then
-            local securityCameras = {type = "TppSecurityCamera2"}
-            for _, command in ipairs(commands) do
-                GameObject.SendCommand(securityCameras, command)
-            end
-        end
-    end
-end
-
-this.SetUpEnemy = function ()
-	this.SetupCamera()
-end
 
 function this.AddMissionPacks(missionCode,packPaths)
 	if InfMain.IsOnlineMission(missionCode) or missionCode < 5 or (vars.locationCode == TppDefine.LOCATION_ID.GNTN) then
@@ -265,67 +96,6 @@ function this.AddMissionPacks(missionCode,packPaths)
 	end
 
 	packPaths[#packPaths + 1] = "/Assets/tpp/pack/zoz/Zoz_Overhaul.fpk"
-
-	if not Ivars.Zoz_Enemy_Equipment_Fulton:Is"OFF" then
-		packPaths[#packPaths + 1] = "/Assets/tpp/pack/zoz/Zoz_Online_Animation.fpk"
-	end
-
-	local function AddLocationPacks(basePathAfghan, basePathAfrica, condition)
-		if condition then
-			if TppLocation.IsAfghan() then
-				packPaths[#packPaths + 1] = basePathAfghan
-			elseif TppLocation.IsMiddleAfrica() then
-				packPaths[#packPaths + 1] = basePathAfrica
-			end
-		end
-	end
-
-	if not Ivars.Zoz_Enemy_Equipment_Ir_Sensors:Is"OFF" then
-		packPaths[#packPaths + 1] = "/Assets/tpp/pack/zoz/mis_common_zoz_Ir_Sensor.fpk"
-		local isFreeRoom = Ivars.Zoz_Enemy_Equipment_Ir_Sensors:Is"FreeRoom"
-		local isMission = Ivars.Zoz_Enemy_Equipment_Ir_Sensors:Is"Mission"
-		local isAll = Ivars.Zoz_Enemy_Equipment_Ir_Sensors:Is"ALL"
-		local isFreeRoomMission = TppMission.IsFreeMission(vars.missionCode)
-
-		if isFreeRoom and isFreeRoomMission then
-			AddLocationPacks("/Assets/tpp/pack/zoz/zoz_afgh_Ir_Sensor.fpk", "/Assets/tpp/pack/zoz/zoz_mafr_Ir_Sensor.fpk", true)
-		elseif isMission and not isFreeRoomMission then
-			AddLocationPacks("/Assets/tpp/pack/zoz/zoz_afgh_Ir_Sensor.fpk", "/Assets/tpp/pack/zoz/zoz_mafr_Ir_Sensor.fpk", true)
-		elseif isAll then
-			AddLocationPacks("/Assets/tpp/pack/zoz/zoz_afgh_Ir_Sensor.fpk", "/Assets/tpp/pack/zoz/zoz_mafr_Ir_Sensor.fpk", true)
-		end
-	end
-
-
-
-
-	if not Ivars.Zoz_Enemy_Equipment_burglar_alarm:Is"OFF" then
-		packPaths[#packPaths + 1] = "/Assets/tpp/pack/zoz/zoz_common_alm.fpk"
-		local isFreeRoom = Ivars.Zoz_Enemy_Equipment_burglar_alarm:Is"FreeRoom"
-		local isMission = Ivars.Zoz_Enemy_Equipment_burglar_alarm:Is"Mission"
-		local isAll = Ivars.Zoz_Enemy_Equipment_burglar_alarm:Is"ALL"
-		local isFreeRoomMission = TppMission.IsFreeMission(vars.missionCode)
-
-		if isFreeRoom and isFreeRoomMission then
-			AddLocationPacks("/Assets/tpp/pack/zoz/alm_afgh.fpk", "/Assets/tpp/pack/zoz/alm_mafr.fpk", true)
-		elseif isMission and not isFreeRoomMission then
-			AddLocationPacks("/Assets/tpp/pack/zoz/alm_afgh.fpk", "/Assets/tpp/pack/zoz/alm_mafr.fpk", true)
-		elseif isAll then
-			AddLocationPacks("/Assets/tpp/pack/zoz/alm_afgh.fpk", "/Assets/tpp/pack/zoz/alm_mafr.fpk", true)
-		end
-	end
-
-	if TppMission.IsHardMission(missionCode)then
-	  missionCode=TppMission.GetNormalMissionCodeFromHardMission(missionCode)
-	end
-	if not Ivars.Zoz_Enemy_Equipment_Camera:Is"OFF" then
-		if this.MISSION_PACKS[missionCode] then
-			packPaths[#packPaths + 1] = "/Assets/tpp/pack/zoz/mis_common_zoz_cctv.fpk"
-			for _, packPath in ipairs(this.MISSION_PACKS[missionCode]) do
-			  	packPaths[#packPaths + 1] = packPath
-			end
-		end
-	end
 end
 
 function this.IsNotPhase(phase)

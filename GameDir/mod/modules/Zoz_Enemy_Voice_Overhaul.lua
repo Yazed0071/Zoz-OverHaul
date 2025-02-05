@@ -3,7 +3,7 @@ local StrCode32 = Fox.StrCode32
 local StrCode32Table = Tpp.StrCode32Table
 
 local missionID = TppMission.GetMissionID()
-local IsTypeString = Tpp.IsTypeString
+local IsTypeString=Tpp.IsTypeString
 local GetGameObjectId = GameObject.GetGameObjectId
 local SendCommand = GameObject.SendCommand
 
@@ -14,263 +14,286 @@ local PHASE_SNEAK = TppGameObject.PHASE_SNEAK
 
 local NULL_ID = GameObject.NULL_ID
 
+
 function this.OnAllocate()end
 function this.OnInitialize()end
 
 function this.SetEnableSendMessageAimedFromPlayer()
-    InfCore.Log("Zoz_Overhaul Log: Enabling AimedFromPlayer messages for CP soldiers")
-    for cpName, cpSoldiers in pairs(mvars.ene_soldierDefine) do
-        InfCore.Log("Zoz_Overhaul Log: Processing CP - "..tostring(cpName))
+	for cpName, cpSoldiers in pairs(mvars.ene_soldierDefine) do
         for index, soldierName in ipairs(cpSoldiers) do
-            local gameObjectId = GetGameObjectId(soldierName)
-            if gameObjectId ~= NULL_ID then
-                InfCore.Log("Zoz_Overhaul Log: Enabling AimedFromPlayer for "..tostring(soldierName))
-                SendCommand(gameObjectId, { id = "SetEnableSendMessageAimedFromPlayer", enabled = true })
-            else
-                InfCore.Log("Zoz_Overhaul Log: Invalid GameObjectID for "..tostring(soldierName))
+            if GetGameObjectId(soldierName)~=GameObject.NULL_ID  then
+                local gameObjectId = GetGameObjectId( soldierName )
+				SendCommand( gameObjectId, { id = "SetEnableSendMessageAimedFromPlayer", enabled=true } )
             end
         end
     end
 end
 
 function this.GetAllAliveSoldiersInCp()
-    InfCore.Log("Zoz_Overhaul Log: Counting alive soldiers in CP")
-    mvars.aliveSoldierName = nil
-    local enemyAlive = 0
-    local enemyNeutralized = 0
-    local closestCp = Zoz_overhaul_Ivars.getClosestCp()
 
-    for cpName, cpSoldiers in pairs(mvars.ene_soldierDefine) do
-        if GetGameObjectId(cpName) == closestCp then
-            InfCore.Log("Zoz_Overhaul Log: Processing CP - "..tostring(cpName))
-            for _, soldierName in ipairs(cpSoldiers) do
-                if not TppEnemy.IsNeutralized(soldierName) then
-                    InfCore.Log("Zoz_Overhaul Log: Alive soldier - "..tostring(soldierName))
-                    enemyAlive = enemyAlive + 1
-                    if enemyAlive == 1 then
-                        mvars.aliveSoldierName = soldierName
-                        InfCore.Log("Zoz_Overhaul Log: First alive soldier set to "..tostring(soldierName))
-                    end
-                else
-                    InfCore.Log("Zoz_Overhaul Log: Neutralized soldier - "..tostring(soldierName))
-                    enemyNeutralized = enemyNeutralized + 1
-                end
-            end
-        end
-    end
-    InfCore.Log(string.format("Zoz_Overhaul Log: CP Status - Alive: %d, Neutralized: %d", enemyAlive, enemyNeutralized))
-    return enemyAlive
+	mvars.aliveSoldierName = nil
+	local enemyAlive = 0
+	local enemyNeutralized = 0
+
+	for cpName, cpSoldiers in pairs(mvars.ene_soldierDefine) do
+		if GetGameObjectId(cpName) == Zoz_overhaul_Ivars.getClosestCp() then
+			InfCore.Log("Zoz Log: cpName: " .. tostring(cpName))
+			for _, soldierName in ipairs(cpSoldiers) do
+				if not TppEnemy.IsNeutralized(soldierName) then
+					InfCore.Log("Zoz Log: enemyAlive: " .. tostring(soldierName))
+					enemyAlive = enemyAlive + 1
+					if enemyAlive == 1 then
+						mvars.aliveSoldierName = soldierName
+					end
+				else
+					InfCore.Log("Zoz Log: enemyNeutralized: " .. tostring(soldierName))
+					enemyNeutralized = enemyNeutralized + 1
+				end
+			end
+		end
+	end
+
+	return enemyAlive
 end
 
 function this.SetSoldierSurrender(soldierId)
-    InfCore.Log("Zoz_Overhaul Log: SetSoldierSurrender called for ID: "..tostring(soldierId))
-    if not Tpp.IsSoldier(soldierId) then
-        InfCore.Log("Zoz_Overhaul Log: Invalid soldier ID, aborting")
-        return
-    end
-    if Ivars.Zoz_Enemy_Voice_Enemy_Surrender:Is(0) then
-        InfCore.Log("Zoz_Overhaul Log: Surrender disabled via Ivars")
-        return
-    end
+	InfCore.Log("Zoz Log: Zoz_Enemy_Voice_Overhaul.SetSoldierSurrender() Enter")
+	if not Tpp.IsSoldier(soldierId) then
+		return
+	end
+	if Ivars.Zoz_Enemy_Voice_Enemy_Surrender:Is(0) then
+		return
+	end
 
-    local makeSurrender = function()
-        InfCore.Log("Zoz_Overhaul Log: Executing surrender routine")
-        if mvars.aliveSoldierName then
-            local gameObjectId = GetGameObjectId("TppSoldier2", mvars.aliveSoldierName)
-            InfCore.Log("Zoz_Overhaul Log: Processing soldier - "..tostring(mvars.aliveSoldierName))
+	local makeSurrender = function ()
+		InfCore.Log("Zoz Log: local this.makeSurrender Enter")
+		if mvars.aliveSoldierName then
+			local gameObjectId = GetGameObjectId("TppSoldier2", mvars.aliveSoldierName)
 
-            if not Zoz_overhaul_Ivars.IsNotPhase(PHASE_ALERT) then
-                InfCore.Log("Zoz_Overhaul Log: Setting force holdup for "..tostring(mvars.aliveSoldierName))
-                SendCommand(gameObjectId, { id = "SetForceHoldup" })
-                SendCommand(gameObjectId, { id = "SetEverDown", enabled = true })
-                InfCore.Log("Zoz_Overhaul Log: Starting surrender timer")
-                GkEventTimerManager.Start("Soldier_GiveUp", 2)
-            end
-        end
-    end
+			if not Zoz_overhaul_Ivars.IsNotPhase(PHASE_ALERT) then
+				SendCommand(gameObjectId, { id = "SetForceHoldup" })
+				InfCore.Log("Zoz Log: SetForceHoldup: " .. tostring(mvars.aliveSoldierName))
+				SendCommand(gameObjectId, { id = "SetEverDown", enabled = true })
+				GkEventTimerManager.Start("Soldier_GiveUp", 2)
+			end
+		end
+	end
 
-    if not Zoz_overhaul_Ivars.IsNotPhase(PHASE_ALERT) and this.GetAllAliveSoldiersInCp() == 1 then
-        InfCore.Log("Zoz_Overhaul Log: Surrender conditions met")
-        if not TppEnemy.IsArmor(mvars.aliveSoldierName) then
-            local randomValue = math.random(1, 100)
-            local revengeLevel = TppRevenge.GetRevengeLv(TppRevenge.REVENGE_TYPE.COMBAT)
-            InfCore.Log(string.format("Zoz_Overhaul Log: Surrender check - Random: %d, RevengeLv: %d", randomValue, revengeLevel))
+	if not Zoz_overhaul_Ivars.IsNotPhase(PHASE_ALERT) and this.GetAllAliveSoldiersInCp() == 1 then
+		if not TppEnemy.IsArmor(mvars.aliveSoldierName) then
+			local randomValue = math.random(1, 100)
+			InfCore.Log("Zoz Log: randomValue == " .. randomValue)
+			InfCore.Log("Zoz Log: TppRevenge.GetRevengeLv(TppRevenge.REVENGE_TYPE.COMBAT) == " .. TppRevenge.GetRevengeLv(TppRevenge.REVENGE_TYPE.COMBAT))
 
-            if (revengeLevel < 3 and randomValue >= 25) or
-               (revengeLevel == 3 and randomValue <= 50) or
-               (revengeLevel > 3 and randomValue <= 25) then
-                InfCore.Log("Zoz_Overhaul Log: Surrender triggered")
-                makeSurrender()
-            else
-                InfCore.Log("Zoz_Overhaul Log: Surrender check failed")
-            end
-        else
-            InfCore.Log("Zoz_Overhaul Log: Armored unit cannot surrender")
-        end
-    end
+			local revengeLevel = TppRevenge.GetRevengeLv(TppRevenge.REVENGE_TYPE.COMBAT)
+
+			if revengeLevel < 3 and randomValue >= 25 then
+				makeSurrender()
+			elseif revengeLevel == 3 and randomValue <= 50 then
+				makeSurrender()
+			elseif revengeLevel > 3 and randomValue <= 25 then
+				makeSurrender()
+			else
+				InfCore.Log("Zoz Log: wow soldier very brave")
+			end
+		end
+	end
+	InfCore.Log("Zoz Log: Zoz_Enemy_Voice_Overhaul.SetSoldierSurrender() Exit")
 end
+
+
 
 function this.CheckEnemyDistance(gameObjectId)
-    InfCore.Log("Zoz_Overhaul Log: Checking distance for ID: "..tostring(gameObjectId))
-    local command = { id = "GetPosition" }
-    local position = SendCommand(gameObjectId, command)
 
-    if position == nil then
-        InfCore.Log("Zoz_Overhaul Log: Failed to get position for ID: "..tostring(gameObjectId))
-        return
-    end
 
-    local point1 = TppMath.Vector3toTable(position)
-    local point2 = TppPlayer.GetPosition()
-    local dist = TppMath.FindDistance(point1, point2)
-    
-    InfCore.Log(string.format("Zoz_Overhaul Log: Distance check - Soldier: (%.2f,%.2f,%.2f) Player: (%.2f,%.2f,%.2f) Distance: %.2fm",
-        point1[1], point1[2], point1[3],
-        point2[1], point2[2], point2[3],
-        dist
-    ))
-    return dist
+	Fox.Log("::Get GameObject Pos")
+	local gameObjectId =  gameObjectId 
+	local command = { id = "GetPosition" }
+	local position = SendCommand( gameObjectId, command )
+
+	if position == nil then
+		return
+	end
+
+	local point1 = TppMath.Vector3toTable( position )
+	local point2 = TppPlayer.GetPosition()
+
+	Fox.Log("position1 = "..point1[1]..","..point1[2]..","..point1[3])
+	Fox.Log("position2 = "..point2[1]..","..point2[2]..","..point2[3])
+
+	local dist = TppMath.FindDistance( point1, point2 )
+	Fox.Log("dist : "..dist )
+	return dist
+
 end
 
-this.GetStatus = function(enemyName)
-    InfCore.Log("Zoz_Overhaul Log: GetStatus for "..tostring(enemyName))
-    if IsTypeString(enemyName) then
-        enemyName = GetGameObjectId(enemyName)
-    end
-    local status = SendCommand(enemyName, { id = "GetStatus" })
-    InfCore.Log("Zoz_Overhaul Log: Status result - "..tostring(status))
-    return status
+this.GetStatus = function( enemyName )
+
+	if IsTypeString( enemyName ) then
+		enemyName = GetGameObjectId( enemyName )
+	end
+	
+	local Status = SendCommand( enemyName, { id = "GetStatus" } )
+	
+	return Status
 end
+
 
 function this.Messages()
     return StrCode32Table{
-        GameObject = {
-            {
-                msg = "ChangePhase",
-                func = function(gameObjectId, phaseId, oldPhaseId)
-                    InfCore.Log(string.format("Zoz_Overhaul Log: ChangePhase - From %s to %s",
-                        TppGameObject.GetPhaseName(oldPhaseId), TppGameObject.GetPhaseName(phaseId)))
-                    if phaseId == PHASE_ALERT and Ivars.Zoz_Enemy_Voice_Enemy_Reaction_Player_Vehicle:Is(1) then
-                        InfCore.Log("Zoz_Overhaul Log: Alert phase vehicle reaction check")
-                        if PlayerInfo.OrCheckStatus{PlayerStatusEx.ON_APC} then
-                            InfCore.Log("Zoz_Overhaul Log: Player on APC - triggering EVR085")
-                            Zoz_Enemy_Overhaul.GetClosestSoldierSpeak("EVR085")
-                        elseif PlayerInfo.OrCheckStatus{PlayerStatusEx.ON_TANK} then
-                            InfCore.Log("Zoz_Overhaul Log: Player on Tank - triggering EVR084")
-                            Zoz_Enemy_Overhaul.GetClosestSoldierSpeak("EVR084")
-                        end
-                    end
-                end
-            },
-            {
-                msg = "AimedFromPlayer",
-                func = function(AimedAt, isFound)
-                    InfCore.Log("Zoz_Overhaul Log: AimedFromPlayer - ID: "..tostring(AimedAt).." Found: "..tostring(isFound))
-                    local distance = this.CheckEnemyDistance(AimedAt)
-                    local status = this.GetStatus(AimedAt)
-                    
-                    InfCore.Log(string.format("Zoz_Overhaul Log: AimedCheck - Status: %s, Distance: %.2f, Cooldown: %s",
-                        tostring(status), distance, tostring(GkEventTimerManager.IsTimerActive("HoldUp_EV_Cooldowwn"))))
-                    
-                    if status == EnemyState.STAND_HOLDUP and distance <= 20 
-                        and SendCommand(AimedAt, {id = "IsDoneHoldup"}) 
-                        and not GkEventTimerManager.IsTimerActive("HoldUp_EV_Cooldowwn") 
-                        and Ivars.Zoz_Enemy_Voice_Enemy_Reaction_Player_Aim:Is(1) then
-                        InfCore.Log("Zoz_Overhaul Log: Triggering hold-up voice line")
-                        local command = { id = "CallVoice", dialogueName = "DD_vox_ene", parameter = "EVR071" }
-                        SendCommand(AimedAt, command)
-                        GkEventTimerManager.Start("HoldUp_EV_Cooldowwn", 5)
-                    end
-                end
-            },
-            {
-                msg = "Restraint",
-                func = function(soldierId, releaseType, restraintType)
-                    InfCore.Log(string.format("Zoz_Overhaul Log: Restraint - ID: %s, Type: %s, Release: %s",
-                        tostring(soldierId), tostring(restraintType), tostring(releaseType)))
-                    if Ivars.Zoz_Enemy_Voice_Enemy_Player_Restrain:Is(0) then
-                        InfCore.Log("Zoz_Overhaul Log: Restraint reactions disabled")
-                        return
-                    end
-                    mvars.IsEnemyRestrained = (releaseType == 0)
-                    InfCore.Log("Zoz_Overhaul Log: Restraint state - "..tostring(mvars.IsEnemyRestrained))
-                    mvars.zoz_restrained_sol = soldierId
-                    GkEventTimerManager.Start("HoldUp_EV_Cooldowwn", 3)
-                    GkEventTimerManager.Start("SoldierSpeak_Restrained", 5)
-                end
-            },
-        },
-        Timer = {
-            {
-                msg = "Finish", sender = "Soldier_GiveUp",
-                func = function()
-                    InfCore.Log("Zoz_Overhaul Log: Soldier_GiveUp timer finished")
-                    if mvars.aliveSoldierName then
-                        local gameObjectId = GetGameObjectId("TppSoldier2", mvars.aliveSoldierName)
-                        InfCore.Log("Zoz_Overhaul Log: Playing surrender voice EVC440")
-                        SendCommand(gameObjectId, { id = "CallVoice", dialogueName = "DD_vox_ene", parameter = "EVC440" })
-                    end
-                end
-            },
-        },
-        Player = {
-            {
-                msg = "PlayerHoldWeapon",
-                func = function(equipId, equipType, hasGunLight, isSheild)
-                    InfCore.Log(string.format("Zoz_Overhaul Log: PlayerHoldWeapon - Type: %d, Light: %s, Shield: %s",
-                        equipType, tostring(hasGunLight), tostring(isSheild)))
-                    if Ivars.Zoz_Enemy_Voice_Enemy_Reaction_Player_RPG:Is(1) then
-                        if equipType == 8 and not Tpp.IsNotAlert() 
-                            and not GkEventTimerManager.IsTimerActive("EVR083_Timer") 
-                            and GkEventTimerManager.IsTimerActive("EVR083_Enable") then
-                            InfCore.Log("Zoz_Overhaul Log: Triggering RPG reaction EVR083")
-                            Zoz_Enemy_Overhaul.GetClosestSoldierSpeak("EVR083")
-                            GkEventTimerManager.Start("EVR083_Timer", 15)
-                        end
-                    end
-                end
-            },
-        },
+		GameObject = {
+			{
+				msg = "ChangePhase",
+				func = function(gameObjectId,phaseId,oldPhaseId)
+					if phaseId == TppGameObject.PHASE_ALERT and Ivars.Zoz_Enemy_Voice_Enemy_Reaction_Player_Vehicle:Is(1) then
+						if PlayerInfo.OrCheckStatus{PlayerStatusEx.ON_APC} then
+							Zoz_Enemy_Overhaul.GetClosestSoldierSpeak("EVR085")
+						elseif PlayerInfo.OrCheckStatus{PlayerStatusEx.ON_TANK} then
+							Zoz_Enemy_Overhaul.GetClosestSoldierSpeak("EVR084")
+						end
+					end
+				end
+			},
+			{
+				msg = "AimedFromPlayer",
+				func = function(AimedAt,isFound)
+					local distance = this.CheckEnemyDistance(AimedAt)
+					local status= this.GetStatus(AimedAt)
+					if status == EnemyState.STAND_HOLDUP and distance <=20 and SendCommand(AimedAt,{id="IsDoneHoldup"}) and not GkEventTimerManager.IsTimerActive("HoldUp_EV_Cooldowwn") and Ivars.Zoz_Enemy_Voice_Enemy_Reaction_Player_Aim:Is(1) then
+						local gameObjectId = AimedAt
+						local command = { id="CallVoice", dialogueName="DD_vox_ene", parameter= "EVR071" }
+						SendCommand( gameObjectId, command )
+						GkEventTimerManager.Start("HoldUp_EV_Cooldowwn", 5)
+					end
+				end
+			},
+			{
+				msg = "Restraint",
+				func = function (soldierId, releaseType, restraintType)
+					if Ivars.Zoz_Enemy_Voice_Enemy_Player_Restrain:Is(0) then
+						return
+					end
+					if releaseType == 0 then
+						mvars.IsEnemyRestrained = true
+					else
+						mvars.IsEnemyRestrained = false
+					end
+					InfCore.Log("Zoz Log: GameObject msg = \"Restraint\",")
+					mvars.zoz_restrained_sol = soldierId
+
+					InfCore.Log("Zoz Log: TppGameObject.NPC_STATE_NORMAL")
+					GkEventTimerManager.Start("HoldUp_EV_Cooldowwn", 3)
+					GkEventTimerManager.Start("SoldierSpeak_Restrained", 5)
+				end
+			},
+			{
+				msg = "Neutralize",
+				func = function (gameId, attackerId, neutralizeType, neutralizeCause)
+					this.SetSoldierSurrender(gameId)
+				end
+			},
+			{
+				msg = "Conscious",
+				func = function (gameId, wakerUpper, arg2)
+					this.SetSoldierSurrender(gameId)
+				end
+			},
+			{
+				msg = "Dying",
+				func = function (soldierId, attackerId)
+					this.SetSoldierSurrender(soldierId)
+				end
+			},
+			{
+				msg = "RadioEnd",
+				func = function ( gameObjectId, cpGameObjectId, speechLabel, isSuccess )
+					if speechLabel == StrCode32( "CPR0130" ) or speechLabel == StrCode32("CPR0038") then
+						Zoz_Enemy_Overhaul.GetClosestSoldierSpeak("EVR190") -- DAAAMNM ITTTT
+					end
+				end
+			},
+		},
+		Timer = {
+			{
+				msg = "Finish", sender = "HoldUp_EV_Cooldowwn",
+				func = function ()
+					
+				end
+			},
+			{
+				msg = "Finish", sender = "Soldier_GiveUp",
+				func = function ()
+					local gameObjectId = GetGameObjectId("TppSoldier2", mvars.aliveSoldierName)
+					SendCommand( gameObjectId, { id = "CallVoice", dialogueName = "DD_vox_ene", parameter= "EVC440" } ) --・EVC440:Don't shoot; Soldier surrenders to the player after his surrounding comrades are all eliminated.
+				end
+			},
+			{
+				msg = "Finish", sender = "SoldierSpeak_Restrained",
+				func = function ()
+					if not Tpp.IsNotAlert() and mvars.IsEnemyRestrained then
+						GkEventTimerManager.Start("EVC420_Timer", 3)
+						if TppRevenge.GetRevengeLv(TppRevenge.REVENGE_TYPE.COMBAT) > 3 then
+							Zoz_Enemy_Overhaul.GetClosestSoldierCQC("EVC430")
+						else
+							Zoz_Enemy_Overhaul.GetClosestSoldierCQC("EVC431")
+						end
+					end
+				end
+			},
+			{
+				msg = "Finish", sender = "EVC420_Timer",
+				func = function ()
+					if not Tpp.IsNotAlert() and mvars.IsEnemyRestrained then
+						Zoz_Enemy_Overhaul.GetSecondClosestSoldierSpeak("EVC420")
+						
+					end
+				end
+			},
+		},
+		Player = {
+			{
+				msg = "PlayerHoldWeapon",
+				func = function (equipId, equipType, hasGunLight, isSheild)
+					if Ivars.Zoz_Enemy_Voice_Enemy_Reaction_Player_RPG:Is(1) then
+						if equipType == 8 and not Tpp.IsNotAlert() and not GkEventTimerManager.IsTimerActive("EVR083_Timer") then -- EQP_TYPE_Missile
+							Zoz_Enemy_Overhaul.GetClosestSoldierSpeak("EVR083") -- INCOMING!!
+							GkEventTimerManager.Start("EVR083_Timer", 15)
+						end
+					end
+				end
+			},
+		},
     }
 end
 
 function this.SetUpEnemy()
-    InfCore.Log("Zoz_Overhaul Log: SetUpEnemy started")
-    if TppMission.IsFOBMission(vars.missionCode) then
-        InfCore.Log("Zoz_Overhaul Log: FOB mission detected, aborting setup")
-        return
-    end
-    if not GameObject.DoesGameObjectExistWithTypeName"TppSoldier2" then
-        InfCore.Log("Zoz_Overhaul Log: No soldiers found, aborting setup")
-        return
-    end
-    InfCore.Log("Zoz_Overhaul Log: Setting up enemy messages")
-    this.SetEnableSendMessageAimedFromPlayer()
+	if TppMission.IsFOBMission(vars.missionCode) then
+		return
+	end
+	if not GameObject.DoesGameObjectExistWithTypeName"TppSoldier2" then
+		return
+	end
+	this.SetEnableSendMessageAimedFromPlayer()
 end
 
 function this.OnMessage(sender, messageId, arg0, arg1, arg2, arg3, strLogText)
-    InfCore.Log(string.format("Zoz_Overhaul Log: Received message - Sender: %s, ID: %s",
-        tostring(sender), tostring(messageId)))
-    if TppMission.IsFOBMission(vars.missionCode) then
-        InfCore.Log("Zoz_Overhaul Log: FOB mission, ignoring message")
-        return
-    end
+	if TppMission.IsFOBMission(vars.missionCode)  then
+		return
+	end
     Tpp.DoMessage(this.messageExecTable, TppMission.CheckMessageOption, sender, messageId, arg0, arg1, arg2, arg3, strLogText)
 end
 
 function this.Init(missionTable)
-    InfCore.Log("Zoz_Overhaul Log: Initializing enemy voice overhaul")
-    if TppMission.IsFOBMission(vars.missionCode) then
-        InfCore.Log("Zoz_Overhaul Log: FOB mission detected, aborting init")
-        return
-    end
-    mvars.IsEnemyRestrained = false
-    InfCore.Log("Zoz_Overhaul Log: Creating message exec table")
-    this.messageExecTable = Tpp.MakeMessageExecTable(this.Messages())
+	if TppMission.IsFOBMission(vars.missionCode) then
+		return
+	end
+	mvars.IsEnemyRestrained = false
+	this.messageExecTable = Tpp.MakeMessageExecTable(this.Messages())
 end
 
+
 function this.OnLoad()
-    InfCore.Log("Zoz_Overhaul Log: Voice overhaul module loaded")
+	InfCore.Log("Zoz_Overhaul Log: Zoz_Support_Enemy_Voice_Overhaul.OnLoad()")
 end
 
 return this

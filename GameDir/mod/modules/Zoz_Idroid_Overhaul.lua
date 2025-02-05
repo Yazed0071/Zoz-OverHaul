@@ -9,6 +9,8 @@ this.registerMenus={
 	"Zoz_Idroid_Overhaul_Audio_Notification",
 }
 
+
+
 this.Zoz_Idroid_Overhaul={
 	parentRefs={"Zoz_Overhaul.safeSpaceMenu","Zoz_Overhaul.inMissionMenu"},
 	options={
@@ -37,6 +39,8 @@ this.registerIvars={
 	"Zoz_Idroid_Audio_Friendly_Vehicle_Destroyed",
 	"Zoz_Idroid_Audio_Heli_Withdrawn",
 	"Zoz_Idroid_Audio_OnRequested_AirStrike",
+	"Zoz_Idroid_Audio_",
+	"Zoz_Idroid_Audio_",
 }
 
 this.Zoz_Idroid_Overhaul_Notification={
@@ -127,32 +131,133 @@ this.Zoz_Idroid_announce_enemyRecovered={
 	settingNames="set_switch",
 	default=1,
 }
--- ... [remaining ivar configurations unchanged] ...
+this.Zoz_Idroid_announce_destroy_APC={
+	save=IvarProc.CATEGORY_EXTERNAL,
+	range=Ivars.switchRange,
+	settingNames="set_switch",
+	default=1,
+}
+this.Zoz_Idroid_announce_destroy_vehicle={
+	save=IvarProc.CATEGORY_EXTERNAL,
+	range=Ivars.switchRange,
+	settingNames="set_switch",
+	default=1,
+}
+this.Zoz_Idroid_announce_destroy_truck={
+	save=IvarProc.CATEGORY_EXTERNAL,
+	range=Ivars.switchRange,
+	settingNames="set_switch",
+	default=1,
+}
+this.Zoz_Idroid_announce_destroy_AntiAirCraftGun={
+	save=IvarProc.CATEGORY_EXTERNAL,
+	range=Ivars.switchRange,
+	settingNames="set_switch",
+	default=1,
+}
+this.Zoz_Idroid_announce_destroy_heli={
+	save=IvarProc.CATEGORY_EXTERNAL,
+	range=Ivars.switchRange,
+	settingNames="set_switch",
+	default=1,
+}
+this.Zoz_Idroid_announce_enemyIncrease={
+	save=IvarProc.CATEGORY_EXTERNAL,
+	range=Ivars.switchRange,
+	settingNames="set_switch",
+	default=1,
+}
+this.Zoz_Idroid_announce_quiet_request={
+	save=IvarProc.CATEGORY_EXTERNAL,
+	range=Ivars.switchRange,
+	settingNames="set_switch",
+	default=1,
+}
+this.Zoz_Idroid_announce_enemy_checkpoint={
+	save=IvarProc.CATEGORY_EXTERNAL,
+	range=Ivars.switchRange,
+	settingNames="set_switch",
+	default=1,
+}
+this.Zoz_Idroid_announce_enemyReplacement={
+	save=IvarProc.CATEGORY_EXTERNAL,
+	range=Ivars.switchRange,
+	settingNames="set_switch",
+	default=1,
+}
+this.Zoz_Idroid_announce_approach_border={
+	save=IvarProc.CATEGORY_EXTERNAL,
+	range=Ivars.switchRange,
+	settingNames="set_switch",
+	default=1,
+}
+this.Zoz_Idroid_announce_FOB_Alert={
+	save=IvarProc.CATEGORY_EXTERNAL,
+	range=Ivars.switchRange,
+	settingNames="set_switch",
+	default=1,
+}
+this.Zoz_Idroid_Audio_Welcome_Acc={
+	save=IvarProc.CATEGORY_EXTERNAL,
+	range=Ivars.switchRange,
+	settingNames="set_switch",
+	default=1,
+}
+this.Zoz_Idroid_Audio_OpenStaffManagement={
+	save=IvarProc.CATEGORY_EXTERNAL,
+	range=Ivars.switchRange,
+	settingNames="set_switch",
+	default=1,
+}
+this.Zoz_Idroid_Audio_Prepare_Sortie={
+	save=IvarProc.CATEGORY_EXTERNAL,
+	range=Ivars.switchRange,
+	settingNames="set_switch",
+	default=1,
+}
+this.Zoz_Idroid_Audio_Friendly_Vehicle_Destroyed={
+	save=IvarProc.CATEGORY_EXTERNAL,
+	range=Ivars.switchRange,
+	settingNames="set_switch",
+	default=1,
+}
+this.Zoz_Idroid_Audio_Heli_Withdrawn={
+	save=IvarProc.CATEGORY_EXTERNAL,
+	range=Ivars.switchRange,
+	settingNames="set_switch",
+	default=1,
+}
+this.Zoz_Idroid_Audio_OnRequested_AirStrike={
+	save=IvarProc.CATEGORY_EXTERNAL,
+	range=Ivars.switchRange,
+	settingNames="set_switch",
+	default=1,
+}
 
-function this.OnAllocate()
-    InfCore.Log("Zoz_Overhaul Log: Zoz_Idroid_Overhaul.OnAllocate()")
-end
 
-function this.OnInitialize()
-    InfCore.Log("Zoz_Overhaul Log: Zoz_Idroid_Overhaul.OnInitialize()")
+function this.OnAllocate()end
+function this.OnInitialize()end
+
+function this.GetSoldierSubType(n,e)
+	local e=nil
+	if mvars.ene_soldierSubType then
+	  e=mvars.ene_soldierSubType[n]
+	end
+	return e
 end
 
 function this.LoadLibraries()
-    InfCore.Log("Zoz_Overhaul Log: Loading Idroid Overhaul libraries")
     local ShowAnnounceLog = TppUI.ShowAnnounceLog
-    TppUI.ShowAnnounceLog = function(announceId,param1,param2,delayTime,missionSubGoalNumber)
-        InfCore.Log("Zoz_Overhaul Log: ShowAnnounceLog - "..tostring(announceId)..
-                    " p1:"..tostring(param1).." p2:"..tostring(param2))
-        ShowAnnounceLog(announceId,param1,param2,delayTime,missionSubGoalNumber)
-        if announceId == "mine_quest_log" and param1 == param2 then
-            TppUiCommand.AnnounceLogViewLangId("announce_disposal_minefield")
-        end
+    TppUI.ShowAnnounceLog = function(announceId,param1,param2,delayTime,missionSubGoalNumber) -- value if announceId comes from TppUi.ANNOUNCE_LOG_TYPE
+		ShowAnnounceLog(announceId,param1,param2,delayTime,missionSubGoalNumber)
+		if announceId == "mine_quest_log" and param1 == param2 then
+			TppUiCommand.AnnounceLogViewLangId("announce_disposal_minefield")
+		end
     end
 end
 
 function this.IdroidRadioPlay(r)
-    InfCore.Log("Zoz_Overhaul Log: Playing radio ID: "..tostring(r))
-    TppRadio.Play(r, {isEnqueue = true})
+	TppRadio.Play( r, {isEnqueue = true})
 end
 
 function this.Messages()
@@ -160,23 +265,17 @@ function this.Messages()
 		GameObject = {
 			{
 				msg = "VehicleBroken",
-				func = function(gameObjectId, state)
+				func = function( gameObjectId, state )
 					if state == StrCode32("End") then
-						local type = GameObject.SendCommand(gameObjectId, {id="GetVehicleType"})
-						InfCore.Log("Zoz_Overhaul Log: VehicleBroken - Type:"..tostring(type).." ID:"..tostring(gameObjectId))
-						
-						if gameObjectId == 25600 and Ivars.Zoz_Idroid_Audio_Friendly_Vehicle_Destroyed:Is(1) then
-							InfCore.Log("Zoz_Overhaul Log: Friendly vehicle destroyed notification")
+						local type = GameObject.SendCommand( gameObjectId, { id="GetVehicleType", } )
+						if gameObjectId == 25600 and Ivars.Zoz_Idroid_Audio_Friendly_Vehicle_Destroyed:Is(1) then -- Friendly vehicle
 							this.IdroidRadioPlay("idrd1000_106444")
 						else
 							if type==Vehicle.type.EASTERN_WHEELED_ARMORED_VEHICLE or type==Vehicle.type.WESTERN_WHEELED_ARMORED_VEHICLE and Ivars.Zoz_Idroid_announce_destroy_APC:Is(1) then
-								InfCore.Log("Zoz_Overhaul Log: APC destroyed announcement")
 								TppUiCommand.AnnounceLogViewLangId("announce_destroy_APC")
 							elseif type==Vehicle.type.EASTERN_LIGHT_VEHICLE or type==Vehicle.type.WESTERN_LIGHT_VEHICLE and Ivars.Zoz_Idroid_announce_destroy_vehicle:Is(1) then
-								InfCore.Log("Zoz_Overhaul Log: Vehicle destroyed announcement")
 								TppUiCommand.AnnounceLogViewLangId("announce_destroy_vehicle")
 							elseif type==Vehicle.type.EASTERN_TRUCK or type==Vehicle.type.WESTERN_TRUCK and Ivars.Zoz_Idroid_announce_destroy_truck:Is(1) then
-								InfCore.Log("Zoz_Overhaul Log: Truck destroyed announcement")
 								TppUiCommand.AnnounceLogViewLangId("announce_destroy_truck")
 							end
 						end
@@ -185,18 +284,16 @@ function this.Messages()
 			},
 			{
 				msg = "LostControl",
-				func = function(heliId, sequenceName, attackerId)
-					if sequenceName == StrCode32("End") and Ivars.Zoz_Idroid_announce_destroy_heli:Is(1) then
-						InfCore.Log("Zoz_Overhaul Log: Helicopter destroyed announcement")
+				func = function( heliId, sequenceName, attackerId )
+					if  sequenceName == StrCode32("End") and Ivars.Zoz_Idroid_announce_destroy_heli:Is(1) then
 						TppUiCommand.AnnounceLogViewLangId("announce_destroy_heli")
 					end
 				end
 			},
 			{
 				msg = "BreakGimmick",
-				func = function(gameObjectId, locatorName, locatorNameUpper, breakerGameObjectId)
-					if Tpp.IsGatlingGun(gameObjectId) and Ivars.Zoz_Idroid_announce_destroy_AntiAirCraftGun:Is(1) then
-						InfCore.Log("Zoz_Overhaul Log: Anti-aircraft gun destroyed announcement")
+				func = function ( gameObjectId, locatorName, locatorNameUpper, breakerGameObjectId )
+					if Tpp.IsGatlingGun( gameObjectId ) and Ivars.Zoz_Idroid_announce_destroy_AntiAirCraftGun:Is(1) then
 						TppUiCommand.AnnounceLogViewLangId("announce_destroy_AntiAirCraftGun")
 					end
 				end,
@@ -205,7 +302,6 @@ function this.Messages()
 				msg = "ReinforceRespawn",
 				func = function(arg0)
 					if mvars.ReinforceRespawnCooldown == false and not (vars.locationCode == TppDefine.LOCATION_ID.GNTN) and Ivars.Zoz_Idroid_announce_enemyIncrease:Is(1) then
-						InfCore.Log("Zoz_Overhaul Log: Enemy reinforcement spawned")
 						mvars.ReinforceRespawnCooldown = true
 						TppUiCommand.AnnounceLogViewLangId("announce_enemyIncrease")
 						GkEventTimerManager.Start("ReinforceRespawn", 5)
@@ -214,19 +310,17 @@ function this.Messages()
 			},
 			{
 				msg = "Conscious",
-				func = function(gameObjectId)
+				func = function (gameObjectId)
 					if Tpp.IsSoldier(gameObjectId) and Ivars.Zoz_Idroid_announce_enemyRecovered:Is(1) then
-						InfCore.Log("Zoz_Overhaul Log: Enemy recovered consciousness")
 						TppUiCommand.AnnounceLogViewLangId("announce_enemyRecovered")
 					end
 				end
 			},
 			{
 				msg = "ChangeLife",
-				func = function(gameObjectId, hitPoint)
+				func = function( gameObjectId, hitPoint )
 					if (gameObjectId == GameObject.GetGameObjectId"BuddyQuietGameObjectLocator") and Ivars.Zoz_Idroid_announce_quiet_request:Is(1)then
 						if hitPoint <= 25 and mvars.QuietSOS == false then
-							InfCore.Log("Zoz_Overhaul Log: Quiet health low (HP:"..hitPoint..")")
 							mvars.QuietSOS = true
 							TppUiCommand.AnnounceLogViewLangId("announce_quiet_request")
 						else
@@ -237,34 +331,51 @@ function this.Messages()
 			},
 			{
 				msg = "RadioEnd",
-				func = function(gameObjectId, cpGameObjectId, speechLabel, isSuccess)
+				func = function( gameObjectId, cpGameObjectId, speechLabel, isSuccess )
 					local e=TppEnemy.GetCpSubType(cpGameObjectId)
-					local n="cmmn_ene_soviet"
-					-- ... [original cp type handling] ...
-					
-					if speechLabel == StrCode32("HQR0130") and Ivars.Zoz_Idroid_announce_enemy_checkpoint:Is(1) then
-						InfCore.Log("Zoz_Overhaul Log: Enemy checkpoint announcement")
+  					local n="cmmn_ene_soviet"
+  					if e=="SOVIET_A"or e=="SOVIET_B"then
+  					  n="cmmn_ene_soviet"
+  					elseif e=="PF_A"then
+  					  n="cmmn_ene_cfa"
+  					elseif e=="PF_B"then
+  					  n="cmmn_ene_zrs"
+  					elseif e=="PF_C"then
+  					  n="cmmn_ene_coyote"
+  					elseif e=="DD_A"then
+  					  return
+  					elseif e=="DD_PW"then
+  					  n="cmmn_ene_pf"
+  					elseif e=="DD_FOB"then
+  					  n="cmmn_ene_pf"
+  					elseif e=="SKULL_AFGH"then
+  					  n="cmmn_ene_xof"
+  					elseif e=="SKULL_CYPR"then
+  					  return
+  					elseif e=="CHILD_A"then
+  					  return
+					else
+						n="cmmn_ene_pf"
+  					end
+					if speechLabel == StrCode32( "HQR0130" ) and Ivars.Zoz_Idroid_announce_enemy_checkpoint:Is(1) then
 						TppUiCommand.AnnounceLogViewLangId("announce_mission_40_20030_004_from_0_prio_0",n)
-					elseif speechLabel == StrCode32("CPR0330") and Ivars.Zoz_Idroid_announce_enemyReplacement:Is(1) then
-						InfCore.Log("Zoz_Overhaul Log: Enemy shift change announcement")
+					elseif speechLabel == StrCode32( "CPR0330" ) and Ivars.Zoz_Idroid_announce_enemyReplacement:Is(1) then
 						TppUiCommand.AnnounceLogViewLangId("announce_enemyReplacement",n)
 					end
 				end
 			},
 			{
 				msg = "StartedMoveToLandingZone",
-				func = function(gameId, landingZone)
-					if gameId == 7168 then
-						InfCore.Log("Zoz_Overhaul Log: Support helicopter moving to LZ")
+				func = function (gameId, landingZone)
+					if gameId == 7168 then -- Support Heli
 						mvars.IsSupportHeliAttacking = false
 					end
 				end
 			},
 			{
 				msg = "StartedPullingOut",
-				func =function(gameId)
+				func =function (gameId)
 					if gameId == 7168 and mvars.IsSupportHeliAttacking == false and Ivars.Zoz_Idroid_Audio_Heli_Withdrawn:Is(1)then
-						InfCore.Log("Zoz_Overhaul Log: Helicopter withdrawal audio")
 						this.IdroidRadioPlay("idrd1000_2d1010")
 					end
 				end
@@ -274,8 +385,7 @@ function this.Messages()
 			{
 				msg = "Finish",
 				sender = "ReinforceRespawn",
-				func = function()
-					InfCore.Log("Zoz_Overhaul Log: Reinforce respawn cooldown expired")
+				func = 	function()
 					mvars.ReinforceRespawnCooldown = false
 				end
 			},
@@ -288,11 +398,9 @@ function this.Messages()
 					if Ivars.Zoz_Idroid_announce_approach_border:Is(1) then
 						mvars.InZaire = false
 						if mvars.InAngola == true then
-							InfCore.Log("Zoz_Overhaul Log: Approaching border announcement")
 							TppUiCommand.AnnounceLogViewLangId("announce_approach_border")
 						else
 							mvars.InAngola = true
-							InfCore.Log("Zoz_Overhaul Log: Entered Angola")
 							TppUiCommand.AnnounceLogViewLangId("announce_immigration_angola")
 						end
 					end
@@ -305,12 +413,10 @@ function this.Messages()
 					if Ivars.Zoz_Idroid_announce_approach_border:Is(1) then
 						mvars.InAngola = false
 						if mvars.InZaire == true then
-							InfCore.Log("Zoz_Overhaul Log: Approaching border announcement")
 							TppUiCommand.AnnounceLogViewLangId("announce_approach_border")
 						else
 							mvars.InAngola = false
 							mvars.InZaire = true
-							InfCore.Log("Zoz_Overhaul Log: Entered Zaire")
 							TppUiCommand.AnnounceLogViewLangId("announce_immigration_zaire")
 						end
 					end
@@ -323,19 +429,30 @@ function this.Messages()
 				msg="NoticeSneakMotherBase",
 				func=function(n,e)
 					if Ivars.Zoz_Idroid_announce_FOB_Alert:Is(1) then
-						InfCore.Log("Zoz_Overhaul Log: FOB alert notification")
 						if n==FobMode.MODE_ACTUAL then
 							TppUI.ShowAnnounceLog"fobNoticeIntruder"
-						-- ... [rest of FOB handling] ...
+						elseif n==FobMode.MODE_SHAM then
+							TppUI.ShowAnnounceLog"fobReqPractice"
+						elseif n==FobMode.MODE_VISIT then
+							if e==0 then
+								TppUI.ShowAnnounceLog"fobVisitFob1"
+							elseif e==1 then
+								TppUI.ShowAnnounceLog"fobVisitFob2"
+							elseif e==2 then
+								TppUI.ShowAnnounceLog"fobVisitFob3"
+							elseif e==3 then
+								TppUI.ShowAnnounceLog"fobVisitFob4"
+							else
+								TppUI.ShowAnnounceLog"fobVisitFob1"
+							end
 						end
 					end
 				end
 			},
 			{
 				msg="NoticeSneakSupportedMotherBase",
-				func=function()
+				func=function ()
 					if Ivars.Zoz_Idroid_announce_FOB_Alert:Is(1) then
-						InfCore.Log("Zoz_Overhaul Log: FOB support request")
 						TppUiCommand.AnnounceLogViewLangId("announce_fob_req_help")
 					end
 				end
@@ -344,12 +461,11 @@ function this.Messages()
 		SupportAttack = {
 			{
 				msg = "OnRequested",
-				func = function(playerIndex, supportStrikeId, gradeId)
+				func = function (playerIndex, supportStrikeId, gradeId)
 					if Ivars.Zoz_Idroid_Audio_OnRequested_AirStrike:Is(1) then
-						InfCore.Log("Zoz_Overhaul Log: Support attack requested - Type:"..tostring(supportStrikeId))
-						if supportStrikeId == 1 then
+						if supportStrikeId == 1 then -- BOMBARDMENT
 							this.IdroidRadioPlay("idrd1000_121010")
-						elseif supportStrikeId == 5 then
+						elseif supportStrikeId == 5 then -- 5 == WEATHER_MODIFICATION
 							this.IdroidRadioPlay("idrd1000_1i1010")
 						end
 					end
@@ -359,17 +475,15 @@ function this.Messages()
 		Terminal = {
 			{
 				msg = "MbDvcActOpenStaffList",
-				func = function()
+				func = function ()
 					if Ivars.Zoz_Idroid_Audio_OpenStaffManagement:Is(1) then
-						InfCore.Log("Zoz_Overhaul Log: Staff management opened")
 						this.IdroidRadioPlay("idrd1000_1j1010")
 					end
 				end
 			},
 			{
 				msg = "MbDvcActHeliGoHere",
-				func = function()
-					InfCore.Log("Zoz_Overhaul Log: Helicopter attack ordered")
+				func = function ()
 					mvars.IsSupportHeliAttacking = true
 				end
 			},
@@ -377,11 +491,10 @@ function this.Messages()
 		UI = {
 			{
 				msg = "TitleMenu",
-				func = function(action)
-					if action == 3261117285 then
+				func = function (action)
+					if action == 3261117285 then -- Press start
 						return
-					elseif action == 1439467306 and (vars.missionCode == 40010) or (vars.missionCode == 40020) or (vars.missionCode == 40050) and Ivars.Zoz_Idroid_Audio_Welcome_Acc:Is(1) then
-						InfCore.Log("Zoz_Overhaul Log: ACC welcome message played")
+					elseif action == 1439467306 and (vars.missionCode == 40010) or (vars.missionCode == 40020) or (vars.missionCode == 40050) and Ivars.Zoz_Idroid_Audio_Welcome_Acc:Is(1) then -- (1439467306 Continue) missionCode 40010 40020 40050
 						this.IdroidRadioPlay("idrd1000_106552")
 						this.IdroidRadioPlay("idrd1000_106553")
 					end
@@ -390,8 +503,7 @@ function this.Messages()
 			{
 				msg = "EndFadeIn",
 				func = function(fadeInName, unk1)
-					if fadeInName == 3515316815 and Ivars.Zoz_Idroid_Audio_Prepare_Sortie:Is(1) then
-						InfCore.Log("Zoz_Overhaul Log: Sortie preparation audio")
+					if fadeInName == 3515316815 and Ivars.Zoz_Idroid_Audio_Prepare_Sortie:Is(1) then --OnMissionPreparationStart
 						this.IdroidRadioPlay("idrd1000_106556")
 					end
 				end
@@ -401,14 +513,9 @@ function this.Messages()
 end
 
 function this.OnMessage(sender, messageId, arg0, arg1, arg2, arg3, strLogText)
-    InfCore.Log("Zoz_Overhaul Log: Received message - "..
-                Tpp.DumpMessage(messageId,arg0,arg1,arg2,arg3,strLogText))
-    
-    if TppMission.IsFOBMission(vars.missionCode) or (vars.locationCode == TppDefine.LOCATION_ID.GNTN) then
-        InfCore.Log("Zoz_Overhaul Log: Skipping message handling for FOB/GNTN")
-        return
-    end
-    
+	if TppMission.IsFOBMission(vars.missionCode) or (vars.locationCode == TppDefine.LOCATION_ID.GNTN) then
+		return
+	end
     Tpp.DoMessage(this.messageExecTable, TppMission.CheckMessageOption, sender, messageId, arg0, arg1, arg2, arg3, strLogText)
 end
 
@@ -417,14 +524,9 @@ function this.OnLoad()
 end
 
 function this.Init(missionTable)
-	InfCore.Log("Zoz_Overhaul Log: Initializing Idroid Overhaul")
-	
 	if TppMission.IsFOBMission(vars.missionCode) or (vars.locationCode == TppDefine.LOCATION_ID.GNTN) then
-		InfCore.Log("Zoz_Overhaul Log: Skipping initialization for FOB/GNTN")
 		return
 	end
-	
-	InfCore.Log("Zoz_Overhaul Log: Resetting state variables")
 	mvars.ReinforceRespawnCooldown = false
 	mvars.InAngola = true
 	mvars.InZaire = true
