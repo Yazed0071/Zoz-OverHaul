@@ -38,56 +38,6 @@ this.langStrings={
 	},
 }
 
-this.MISSION_PACKS = {
-	[10020] ={ -- PHANTOM LIMBS
-		"/Assets/tpp/pack/zoz/zoz_SlopedTown_Cameras_custom.fpk",
-		"/Assets/tpp/pack/zoz/zoz_Village_Cameras_custom.fpk",
-	},
-	[10033] ={ -- OVER THE FENCE
-		"/Assets/tpp/pack/zoz/zoz_enemyBase_Cameras_custom.fpk"
-	}, 
-	[10036] ={ -- A HERO’S WAY
-		"/Assets/tpp/pack/zoz/zoz_Field_Cameras_custom.fpk",
-	}, 
-	[10040] ={ -- WHERE DO THE BEES SLEEP?
-		"/Assets/tpp/pack/zoz/zoz_fort_Cameras_custom.fpk"
-	}, 
-	[10041] ={ -- RED BRASS
-		"/Assets/tpp/pack/zoz/zoz_Village_Cameras_custom.fpk",
-		"/Assets/tpp/pack/zoz/zoz_Field_Cameras_custom.fpk",
-		"/Assets/tpp/pack/zoz/zoz_commFacility_Cameras_custom.fpk"
-	}, 
-	[10043] ={ -- C2W
-		"/Assets/tpp/pack/zoz/zoz_Village_Cameras_custom.fpk",
-		"/Assets/tpp/pack/zoz/zoz_commFacility_Cameras_custom.fpk"
-	}, 
-	[10045] ={ -- TO KNOW TOO MUCH
-		"/Assets/tpp/pack/zoz/zoz_Field_Cameras_custom.fpk",
-		"/Assets/tpp/pack/zoz/zoz_Remenants_Cameras_custom.fpk"
-	}, 
-	[10052] ={ -- ANGEL WITH BROKEN WINGS
-		"/Assets/tpp/pack/zoz/zoz_Tent_Cameras_custom.fpk",
-		"/Assets/tpp/pack/zoz/zoz_Remenants_Cameras_custom.fpk"
-	}, 
-	[10070] ={ -- HELLBOUND
-		"/Assets/tpp/pack/zoz/zoz_powerPlant_Cameras_custom.fpk",
-		"/Assets/tpp/pack/zoz/zoz_sovietBase_Cameras_custom.fpk"
-	}, 
-	[10080] ={ -- PITCH DARK
-		"/Assets/tpp/pack/zoz/zoz_flowStation_Cameras_custom.fpk"
-	}, 
-	[10090] ={ -- TRAITORS’ CARAVAN
-		"/Assets/tpp/pack/zoz/zoz_flowStation_Cameras_custom.fpk",
-		"/Assets/tpp/pack/zoz/zoz_pfCamp_Cameras_custom.fpk"
-	},
-	[10093] ={ -- CURSED LEGACY
-		"/Assets/tpp/pack/zoz/zoz_lab_Cameras_custom.fpk"
-	}, 
-	[10130] ={ -- CODE TALKER
-		"/Assets/tpp/pack/zoz/zoz_lab_Cameras_custom.fpk"
-	},
-}
-
 
 
 function this.AddMissionPacks(missionCode,packPaths)

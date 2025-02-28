@@ -96,6 +96,8 @@ this.Zoz_Enemy_Phase_Music_Overhaul={
 this.Zoz_BGM_Phase_List = {
 	"None",
     "bgm_paz_escape",
+    "bgm_fob_neutral",
+    "bgm_time_limit",
     "ITSTHEFREAKINBAT",
 }
 
@@ -183,8 +185,8 @@ this.Zoz_Enemy_Equipment_Fulton={
 }
 this.Zoz_Enemy_Equipment_Camera={
 	save=IvarProc.CATEGORY_EXTERNAL,
-	settings={"OFF","FreeRoom","Mission","ALL"},
-	default=3,
+	settings={"OFF","ON"},
+	default=1,
 } 
 this.Zoz_Enemy_Equipment_Ir_Sensors = {
 	save=IvarProc.CATEGORY_EXTERNAL,

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<ArchiveFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:type="FpkFile" Name="alm_afgh.fpk" FpkType="Fpk">
+  <Entries>
+    <Entry FilePath="/Assets/tpp/level/mission2/free/lba/alm0_main0_def_v00.lba" />
+  </Entries>
+  <References />
+</ArchiveFile>

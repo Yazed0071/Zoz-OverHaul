@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<ArchiveFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:type="FpkFile" Name="mis_common_zoz_Ir_Sensor.fpk" FpkType="Fpk">
+  <Entries>
+    <Entry FilePath="/Assets/tpp/environ/object/mother_base/trap/mtbs_trap003/scenes/mtbs_trap003.fmdl" />
+    <Entry FilePath="/Assets/tpp/environ/object/mother_base/trap/mtbs_trap003/scenes/mtbs_trap003.geom" />
+    <Entry FilePath="/Assets/tpp/environ/object/mother_base/trap/mtbs_trap003/scenes/mtbs_trap003.fcnp" />
+  </Entries>
+  <References />
+</ArchiveFile>

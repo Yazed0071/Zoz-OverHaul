@@ -51,40 +51,54 @@ this.IsMachineGun = function( gameObjectId )
 end
 
 
-
-
-this.Camera_Locator_PackList = {
-    afgh_slopedTown 	= {"/Assets/tpp/pack/zoz/zoz_SlopedTown_Cameras_custom.fpk"},
-    afgh_village 		= {"/Assets/tpp/pack/zoz/zoz_Village_Cameras_custom.fpk"},
-    afgh_enemyBase 		= {"/Assets/tpp/pack/zoz/zoz_enemyBase_Cameras_custom.fpk"},
-    afgh_field 			= {"/Assets/tpp/pack/zoz/zoz_Field_Cameras_custom.fpk"},
-    afgh_fort 			= {"/Assets/tpp/pack/zoz/zoz_fort_Cameras_custom.fpk"},
-    afgh_commFacility 	= {"/Assets/tpp/pack/zoz/zoz_commFacility_Cameras_custom.fpk"},
-    afgh_remnants 		= {"/Assets/tpp/pack/zoz/zoz_Remenants_Cameras_custom.fpk"},
-    afgh_tent 			= {"/Assets/tpp/pack/zoz/zoz_Tent_Cameras_custom.fpk"},
-    afgh_powerPlant 	= {"/Assets/tpp/pack/zoz/zoz_powerPlant_Cameras_custom.fpk"},
-    afgh_sovietBase 	= {"/Assets/tpp/pack/zoz/zoz_sovietBase_Cameras_custom.fpk"},
-    afgh_citadel 		= {"/Assets/tpp/pack/zoz/zoz_citadel_Cameras_custom.fpk"},
-
-    mafr_flowStation  	= {"/Assets/tpp/pack/zoz/zoz_flowStation_Cameras_custom.fpk"},
-    mafr_pfCamp 		= {"/Assets/tpp/pack/zoz/zoz_pfCamp_Cameras_custom.fpk"},
-    mafr_lab 			= {"/Assets/tpp/pack/zoz/zoz_lab_Cameras_custom.fpk"},
-}
-this.BlockNameToLocation = {
-    [3041980042] = "mafr_flowStation",
-    [1844257133] = "mafr_pfCamp",
-    [3163996055] = "afgh_citadel",
-    [2041687118] = "mafr_lab",
-    [1464583031] = "afgh_slopedTown",
-    [2636505666] = "afgh_village",
-    [1187220508] = "afgh_enemyBase",
-    [3875782426] = "afgh_field",
-    [1881950023] = "afgh_fort",
-    [1151111627] = "afgh_commFacility",
-    [3270833862] = "afgh_remnants",
-    [2016038145] = "afgh_tent",
-    [3657571649] = "afgh_powerPlant",
-    [352694746]  = "afgh_sovietBase",
+this.MISSION_PACKS = {
+	[10020] ={ -- PHANTOM LIMBS
+		"/Assets/tpp/pack/zoz/zoz_SlopedTown_Cameras_custom.fpk",
+		"/Assets/tpp/pack/zoz/zoz_Village_Cameras_custom.fpk",
+	},
+	[10033] ={ -- OVER THE FENCE
+		"/Assets/tpp/pack/zoz/zoz_enemyBase_Cameras_custom.fpk"
+	}, 
+	[10036] ={ -- A HERO’S WAY
+		"/Assets/tpp/pack/zoz/zoz_Field_Cameras_custom.fpk",
+	}, 
+	[10040] ={ -- WHERE DO THE BEES SLEEP?
+		"/Assets/tpp/pack/zoz/zoz_fort_Cameras_custom.fpk"
+	}, 
+	[10041] ={ -- RED BRASS
+		"/Assets/tpp/pack/zoz/zoz_Village_Cameras_custom.fpk",
+		"/Assets/tpp/pack/zoz/zoz_Field_Cameras_custom.fpk",
+		"/Assets/tpp/pack/zoz/zoz_commFacility_Cameras_custom.fpk"
+	}, 
+	[10043] ={ -- C2W
+		"/Assets/tpp/pack/zoz/zoz_Village_Cameras_custom.fpk",
+		"/Assets/tpp/pack/zoz/zoz_commFacility_Cameras_custom.fpk"
+	}, 
+	[10045] ={ -- TO KNOW TOO MUCH
+		"/Assets/tpp/pack/zoz/zoz_Field_Cameras_custom.fpk",
+		"/Assets/tpp/pack/zoz/zoz_Remenants_Cameras_custom.fpk"
+	}, 
+	[10052] ={ -- ANGEL WITH BROKEN WINGS
+		"/Assets/tpp/pack/zoz/zoz_Tent_Cameras_custom.fpk",
+		"/Assets/tpp/pack/zoz/zoz_Remenants_Cameras_custom.fpk"
+	}, 
+	[10070] ={ -- HELLBOUND
+		"/Assets/tpp/pack/zoz/zoz_powerPlant_Cameras_custom.fpk",
+		"/Assets/tpp/pack/zoz/zoz_sovietBase_Cameras_custom.fpk"
+	}, 
+	[10080] ={ -- PITCH DARK
+		"/Assets/tpp/pack/zoz/zoz_flowStation_Cameras_custom.fpk"
+	}, 
+	[10090] ={ -- TRAITORS’ CARAVAN
+		"/Assets/tpp/pack/zoz/zoz_flowStation_Cameras_custom.fpk",
+		"/Assets/tpp/pack/zoz/zoz_pfCamp_Cameras_custom.fpk"
+	},
+	[10093] ={ -- CURSED LEGACY
+		"/Assets/tpp/pack/zoz/zoz_lab_Cameras_custom.fpk"
+	}, 
+	[10130] ={ -- CODE TALKER
+		"/Assets/tpp/pack/zoz/zoz_lab_Cameras_custom.fpk"
+	},
 }
 
 function this.Messages()
@@ -145,53 +159,6 @@ function this.Messages()
 					end
 				end
 			}
-		},
-		Block = {
-			{
-				msg = "OnChangeLargeBlockState",
-				func = function(blockName, blockStatus)
-					if Ivars.Zoz_Enemy_Equipment_Camera:Is("OFF") or
-					   (TppMission.IsFreeMission(vars.missionCode) and Ivars.Zoz_Enemy_Equipment_Camera:Is("Mission")) or
-					   (not TppMission.IsFreeMission(vars.missionCode) and Ivars.Zoz_Enemy_Equipment_Camera:Is("FreeRoom")) then
-						return
-					end
-					local location = this.BlockNameToLocation[blockName]
-					if location and this.Camera_Locator_PackList[location] then
-						TppScriptBlock.Load("Zoz_Camera_Free_Locator", location, true)
-					else
-						TppScriptBlock.Unload("Zoz_Camera_Free_Locator")
-					end
-				end
-			},
-			{
-				msg = "OnScriptBlockStateTransition",
-				func = function(blockName, blockState)
-					if blockName == 2173424513 and blockState == ScriptBlock.TRANSITION_ACTIVATED then
-						this.SetupCameraGrade()
-						this.SetUpCameraCp()
-					end
-				end
-			},
-		},
-		UI = {
-			{
-				msg = "EndFadeIn",
-				func = function(fadeInName, unk1)
-					if Ivars.Zoz_Enemy_Equipment_Camera:Is("OFF") or
-					   (TppMission.IsFreeMission(vars.missionCode) and Ivars.Zoz_Enemy_Equipment_Camera:Is("Mission")) or
-					   (not TppMission.IsFreeMission(vars.missionCode) and Ivars.Zoz_Enemy_Equipment_Camera:Is("FreeRoom")) then
-						return
-					end
-					if fadeInName == StrCode32("FadeInOnGameStart") then
-						for location, _ in pairs(this.Camera_Locator_PackList) do
-							if Tpp.IsLoadedLargeBlock(location) then
-								TppScriptBlock.Load("Zoz_Camera_Free_Locator", location, true)
-								this.SetUpCameraCp()
-							end
-						end
-					end
-				end
-			},
 		},
     }
 end
@@ -481,6 +448,150 @@ this.SECURITY_LIST = {
 			cp = "mafr_lab_cp",
 		},
 	},
+	IRSensors = {
+		"afgh_bridge_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0000|srt_mtbs_trap003",
+		"afgh_bridge_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0001|srt_mtbs_trap003",
+		"afgh_bridge_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0002|srt_mtbs_trap003",
+		"afgh_bridge_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0003|srt_mtbs_trap003",
+		"afgh_citadel_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0000|srt_mtbs_trap003",
+		"afgh_citadel_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0001|srt_mtbs_trap003",
+		"afgh_citadel_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0002|srt_mtbs_trap003",
+		"afgh_citadel_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0003|srt_mtbs_trap003",
+		"afgh_citadel_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0004|srt_mtbs_trap003",
+		"afgh_citadel_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0005|srt_mtbs_trap003",
+		"afgh_enemyBase_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0000|srt_mtbs_trap003",
+		"afgh_enemyBase_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0001|srt_mtbs_trap003",
+		"afgh_enemyBase_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0002|srt_mtbs_trap003",
+		"afgh_enemyBase_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0003|srt_mtbs_trap003",
+		"afgh_enemyBase_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0004|srt_mtbs_trap003",
+		"afgh_fort_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0000|srt_mtbs_trap003",
+		"afgh_fort_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0001|srt_mtbs_trap003",
+		"afgh_fort_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0002|srt_mtbs_trap003",
+		"afgh_powerPlant_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0000|srt_mtbs_trap003",
+		"afgh_powerPlant_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0001|srt_mtbs_trap003",
+		"afgh_powerPlant_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0002|srt_mtbs_trap003",
+		"afgh_powerPlant_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0003|srt_mtbs_trap003",
+		"afgh_powerPlant_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0004|srt_mtbs_trap003",
+		"afgh_sovietBase_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0000|srt_mtbs_trap003",
+		"afgh_sovietBase_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0001|srt_mtbs_trap003",
+		"afgh_sovietBase_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0002|srt_mtbs_trap003",
+		"afgh_sovietBase_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0003|srt_mtbs_trap003",
+		"afgh_tent_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0000|srt_mtbs_trap003",
+		"afgh_tent_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0001|srt_mtbs_trap003",
+		"afgh_tent_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0002|srt_mtbs_trap003",
+		"afgh_tent_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0003|srt_mtbs_trap003",
+		"mafr_banana_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0000|srt_mtbs_trap003",
+		"mafr_banana_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0001|srt_mtbs_trap003",
+		"mafr_banana_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0002|srt_mtbs_trap003",
+		"mafr_banana_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0003|srt_mtbs_trap003",
+		"mafr_diamond_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0000|srt_mtbs_trap003",
+		"mafr_diamond_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0001|srt_mtbs_trap003",
+		"mafr_diamond_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0002|srt_mtbs_trap003",
+		"mafr_flowStation_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0000|srt_mtbs_trap003",
+		"mafr_flowStation_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0001|srt_mtbs_trap003",
+		"mafr_flowStation_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0002|srt_mtbs_trap003",
+		"mafr_flowStation_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0003|srt_mtbs_trap003",
+		"mafr_flowStation_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0004|srt_mtbs_trap003",
+		"mafr_hill_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0000|srt_mtbs_trap003",
+		"mafr_lab_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0000|srt_mtbs_trap003",
+		"mafr_lab_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0001|srt_mtbs_trap003",
+		"mafr_lab_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0002|srt_mtbs_trap003",
+		"mafr_lab_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0003|srt_mtbs_trap003",
+		"mafr_lab_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0004|srt_mtbs_trap003",
+		"mafr_pfCamp_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0000|srt_mtbs_trap003",
+		"mafr_pfCamp_item0000|cl00pl1_mb_fndt_plnt_gimmick2|mtbs_trap003_gim_n0001|srt_mtbs_trap003",
+	},
+	BurglarAlarm = {
+		"SovietBase|Container|alm0_main0_def_v00_gim_n0000|srt_alm0_main0_def_v00",
+		"SovietBase|Container|alm0_main0_def_v00_gim_n0001|srt_alm0_main0_def_v00",
+		"SovietBase|Container|alm0_main0_def_v00_gim_n0002|srt_alm0_main0_def_v00",
+		"SovietBase|Container|alm0_main0_def_v00_gim_n0000|srt_alm0_main0_def_v00",
+		"SovietBase|Container|alm0_main0_def_v00_gim_n0003|srt_alm0_main0_def_v00",
+		"SovietBase|Container|alm0_main0_def_v00_gim_n0004|srt_alm0_main0_def_v00",
+		"SovietBase|Container|alm0_main0_def_v00_gim_n0005|srt_alm0_main0_def_v00",
+		"SovietBase|Container|alm0_main0_def_v00_gim_n0006|srt_alm0_main0_def_v00",
+		"SovietBase|Container|alm0_main0_def_v00_gim_n0007|srt_alm0_main0_def_v00",
+		"SovietBase|Container|alm0_main0_def_v00_gim_n0008|srt_alm0_main0_def_v00",
+		"SovietBase|Container|alm0_main0_def_v00_gim_n0009|srt_alm0_main0_def_v00",
+		"SovietBase|Container|alm0_main0_def_v00_gim_n0010|srt_alm0_main0_def_v00",
+
+		"Citadel|Container|alm0_main0_def_v00_gim_n0000|srt_alm0_main0_def_v00",
+		"Citadel|Container|alm0_main0_def_v00_gim_n0001|srt_alm0_main0_def_v00",
+		"Citadel|Container|alm0_main0_def_v00_gim_n0002|srt_alm0_main0_def_v00",
+		"Citadel|Container|alm0_main0_def_v00_gim_n0003|srt_alm0_main0_def_v00",
+		"Citadel|Container|alm0_main0_def_v00_gim_n0004|srt_alm0_main0_def_v00",
+		"Citadel|Container|alm0_main0_def_v00_gim_n0005|srt_alm0_main0_def_v00",
+		"Citadel|Container|alm0_main0_def_v00_gim_n0006|srt_alm0_main0_def_v00",
+		"Citadel|Container|alm0_main0_def_v00_gim_n0007|srt_alm0_main0_def_v00",
+		"Citadel|Container|alm0_main0_def_v00_gim_n0008|srt_alm0_main0_def_v00",
+		"Citadel|Container|alm0_main0_def_v00_gim_n0009|srt_alm0_main0_def_v00",
+		"Citadel|Container|alm0_main0_def_v00_gim_n0010|srt_alm0_main0_def_v00",
+
+		"Tent|Container|alm0_main0_def_v00_gim_n0000|srt_alm0_main0_def_v00",
+
+		"Remnants|Container|alm0_main0_def_v00_gim_n0000|srt_alm0_main0_def_v00",
+
+		"enemyBase|Container|alm0_main0_def_v00_gim_n0000|srt_alm0_main0_def_v00",
+		"enemyBase|Container|alm0_main0_def_v00_gim_n0001|srt_alm0_main0_def_v00",
+		"enemyBase|Container|alm0_main0_def_v00_gim_n0002|srt_alm0_main0_def_v00",
+		"enemyBase|Container|alm0_main0_def_v00_gim_n0000|srt_alm0_main0_def_v00",
+		"enemyBase|Container|alm0_main0_def_v00_gim_n0003|srt_alm0_main0_def_v00",
+		"enemyBase|Container|alm0_main0_def_v00_gim_n0004|srt_alm0_main0_def_v00",
+		"enemyBase|Container|alm0_main0_def_v00_gim_n0005|srt_alm0_main0_def_v00",
+		"enemyBase|Container|alm0_main0_def_v00_gim_n0006|srt_alm0_main0_def_v00",
+
+		"commonFacility|Container|alm0_main0_def_v00_gim_n0000|srt_alm0_main0_def_v00",
+		"commonFacility|Container|alm0_main0_def_v00_gim_n0001|srt_alm0_main0_def_v00",
+
+		"bridge|Container|alm0_main0_def_v00_gim_n0000|srt_alm0_main0_def_v00",
+		"bridge|Container|alm0_main0_def_v00_gim_n0001|srt_alm0_main0_def_v00",
+		"bridge|Container|alm0_main0_def_v00_gim_n0002|srt_alm0_main0_def_v00",
+		"bridge|Container|alm0_main0_def_v00_gim_n0000|srt_alm0_main0_def_v00",
+		"bridge|Container|alm0_main0_def_v00_gim_n0003|srt_alm0_main0_def_v00",
+		"bridge|Container|alm0_main0_def_v00_gim_n0004|srt_alm0_main0_def_v00",
+		"bridge|Container|alm0_main0_def_v00_gim_n0005|srt_alm0_main0_def_v00",
+		"bridge|Container|alm0_main0_def_v00_gim_n0006|srt_alm0_main0_def_v00",
+
+		"flowStation|Container|alm0_main0_def_v00_gim_n0000|srt_alm0_main0_def_v00",
+		"flowStation|Container|alm0_main0_def_v00_gim_n0001|srt_alm0_main0_def_v00",
+		"flowStation|Container|alm0_main0_def_v00_gim_n0002|srt_alm0_main0_def_v00",
+		"flowStation|Container|alm0_main0_def_v00_gim_n0003|srt_alm0_main0_def_v00",
+		"flowStation|Container|alm0_main0_def_v00_gim_n0004|srt_alm0_main0_def_v00",
+		"flowStation|Container|alm0_main0_def_v00_gim_n0005|srt_alm0_main0_def_v00",
+
+		"swamp|Container|alm0_main0_def_v00_gim_n0000|srt_alm0_main0_def_v00",
+		"swamp|Container|alm0_main0_def_v00_gim_n0001|srt_alm0_main0_def_v00",
+
+		"airport|Container|alm0_main0_def_v00_gim_n0000|srt_alm0_main0_def_v00",
+		"airport|Container|alm0_main0_def_v00_gim_n0001|srt_alm0_main0_def_v00",
+		"airport|Container|alm0_main0_def_v00_gim_n0002|srt_alm0_main0_def_v00",
+		"airport|Container|alm0_main0_def_v00_gim_n0000|srt_alm0_main0_def_v00",
+		"airport|Container|alm0_main0_def_v00_gim_n0003|srt_alm0_main0_def_v00",
+		"airport|Container|alm0_main0_def_v00_gim_n0004|srt_alm0_main0_def_v00",
+		"airport|Container|alm0_main0_def_v00_gim_n0005|srt_alm0_main0_def_v00",
+		"airport|Container|alm0_main0_def_v00_gim_n0006|srt_alm0_main0_def_v00",
+		"airport|Container|alm0_main0_def_v00_gim_n0007|srt_alm0_main0_def_v00",
+		"airport|Container|alm0_main0_def_v00_gim_n0008|srt_alm0_main0_def_v00",
+		"airport|Container|alm0_main0_def_v00_gim_n0009|srt_alm0_main0_def_v00",
+		"airport|Container|alm0_main0_def_v00_gim_n0010|srt_alm0_main0_def_v00",
+		"airport|Container|alm0_main0_def_v00_gim_n0011|srt_alm0_main0_def_v00",
+		"airport|Container|alm0_main0_def_v00_gim_n0012|srt_alm0_main0_def_v00",
+		"airport|Container|alm0_main0_def_v00_gim_n0013|srt_alm0_main0_def_v00",
+		"airport|Container|alm0_main0_def_v00_gim_n0014|srt_alm0_main0_def_v00",
+
+		"hill|Container|alm0_main0_def_v00_gim_n0000|srt_alm0_main0_def_v00",
+		"hill|Container|alm0_main0_def_v00_gim_n0001|srt_alm0_main0_def_v00",
+		"hill|Container|alm0_main0_def_v00_gim_n0002|srt_alm0_main0_def_v00",
+		"hill|Container|alm0_main0_def_v00_gim_n0003|srt_alm0_main0_def_v00",
+		"hill|Container|alm0_main0_def_v00_gim_n0004|srt_alm0_main0_def_v00",
+
+		"diamond|Container|alm0_main0_def_v00_gim_n0000|srt_alm0_main0_def_v00",
+		"diamond|Container|alm0_main0_def_v00_gim_n0001|srt_alm0_main0_def_v00",
+		"diamond|Container|alm0_main0_def_v00_gim_n0002|srt_alm0_main0_def_v00",
+		"diamond|Container|alm0_main0_def_v00_gim_n0003|srt_alm0_main0_def_v00",
+		"diamond|Container|alm0_main0_def_v00_gim_n0004|srt_alm0_main0_def_v00",
+		"diamond|Container|alm0_main0_def_v00_gim_n0005|srt_alm0_main0_def_v00",
+	},
 }
 
 function this.SetupCameraGrade()
@@ -526,6 +637,43 @@ function this.SetUpCameraCp()
         end
     end
 end
+
+function this.SetUpIRBurglarLevel()
+    local revengeStealthLevel = TppRevenge.GetRevengeLv(TppRevenge.REVENGE_TYPE.STEALTH)
+
+    local configByLevel = {
+        [2] = { irSensorLevel = 1, burglarAlarmRange = 1 },
+        [3] = { irSensorLevel = 2, burglarAlarmRange = 2 },
+        [4] = { irSensorLevel = 2, burglarAlarmRange = 2 },
+        [5] = { irSensorLevel = 3, burglarAlarmRange = 3 }
+    }
+
+    local config = configByLevel[revengeStealthLevel]
+
+    if config then
+        this.burgularAlarmRange = config.burglarAlarmRange
+        Gimmick.SetGimmickLevels(config.irSensorLevel, config.burglarAlarmRange)
+    else
+        for _, sensorName in ipairs(this.SECURITY_LIST.IRSensors) do
+            if type(sensorName) == "string" then
+                Gimmick.InvisibleGimmick(TppGameObject.GAME_OBJECT_TYPE_IR_SENSOR, sensorName,
+                    "/Assets/tpp/level/mission2/free/Zoz_Afgh_Ir_Sensors.fox2", true)
+                Gimmick.InvisibleGimmick(TppGameObject.GAME_OBJECT_TYPE_IR_SENSOR, sensorName,
+                    "/Assets/tpp/level/mission2/free/Zoz_Mafr_Ir_Sensors.fox2", true)
+            end
+        end
+        for _, alarmName in ipairs(this.SECURITY_LIST.BurglarAlarm) do
+            if type(alarmName) == "string" then
+                Gimmick.InvisibleGimmick(TppGameObject.GAME_OBJECT_TYPE_IMPORTANT_BREAKABLE, alarmName,
+                    "/Assets/tpp/level/mission2/custom/alm_afgh.fox2", true)
+                Gimmick.InvisibleGimmick(TppGameObject.GAME_OBJECT_TYPE_IMPORTANT_BREAKABLE, alarmName,
+                    "/Assets/tpp/level/mission2/custom/alm_mafr.fox2", true)
+            end
+        end
+        return
+    end
+end
+
 
 function this.AddMissionPacks(missionCode,packPaths)
 	if InfMain.IsOnlineMission(missionCode) or missionCode < 5 or (vars.locationCode == TppDefine.LOCATION_ID.GNTN) then
@@ -577,12 +725,16 @@ function this.AddMissionPacks(missionCode,packPaths)
 			AddLocationPacks("/Assets/tpp/pack/zoz/alm_afgh.fpk", "/Assets/tpp/pack/zoz/alm_mafr.fpk", true)
 		end
 	end
+	if TppMission.IsHardMission(missionCode)then
+		missionCode=TppMission.GetNormalMissionCodeFromHardMission(missionCode)
+	end
 	if not Ivars.Zoz_Enemy_Equipment_Camera:Is"OFF" then
-		if GameObject.DoesGameObjectExistWithTypeName"TppSecurityCamera2" then
-			return
+		if this.MISSION_PACKS[missionCode] then
+			packPaths[#packPaths + 1] = "/Assets/tpp/pack/zoz/mis_common_zoz_cctv.fpk"
+			for _, packPath in ipairs(this.MISSION_PACKS[missionCode]) do
+				packPaths[#packPaths + 1] = packPath
+			end
 		end
-		packPaths[#packPaths + 1] = "/Assets/tpp/pack/zoz/mis_common_zoz_cctv_ScriptBlockData.fpk"
-		packPaths[#packPaths + 1] ="/Assets/tpp/pack/zoz/mis_common_zoz_cctv.fpk"
 	end
 end
 
@@ -619,9 +771,10 @@ function this.SetUpEnemy()
             {id = "SetFultonLevel", fultonLevel = fultonLevel, isWormHole = isWormHole}
         )
     end
-	
+
 	if not Ivars.Zoz_Enemy_Equipment_Camera:Is"OFF" then
 		this.SetupCameraGrade()
+		this.SetUpCameraCp()
 	end
 end
 
@@ -636,10 +789,19 @@ function this.Init(missionTable)
     if TppMission.IsFOBMission(vars.missionCode) then 
         return
     end
-    
-    this.burgularAlarmRange = 2
-    this.burgularAlarmTime = 10
+
     mvars.fultonedbyenemy = true
+
+
+
+	if not Ivars.Zoz_Enemy_Equipment_Ir_Sensors:Is"OFF" then
+		this.SetUpIRBurglarLevel()
+	end
+
+	if not Ivars.Zoz_Enemy_Equipment_burglar_alarm:Is"OFF" then
+		this.burgularAlarmTime = 10
+		this.SetUpIRBurglarLevel()
+	end
 
     if Ivars.mbDDEquipNonLethal:Is(1) then
         SendCommand({type = "TppSoldier2"},{id = "RegistGrenadeId",grenadeId = TppEquip.EQP_SWP_StunGrenade_G03,stunId = TppEquip.EQP_SWP_StunGrenade_G03,isNoKill = true})

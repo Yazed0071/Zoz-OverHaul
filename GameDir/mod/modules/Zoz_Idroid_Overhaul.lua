@@ -24,8 +24,9 @@ this.registerIvars={
 	"Zoz_Idroid_announce_destroy_APC",
 	"Zoz_Idroid_announce_destroy_vehicle",
 	"Zoz_Idroid_announce_destroy_truck",
-	"Zoz_Idroid_announce_destroy_AntiAirCraftGun",
 	"Zoz_Idroid_announce_destroy_heli",
+	"Zoz_Idroid_announce_destroy_AntiAirCraftGun",
+	"Zoz_Idroid_announce_destroy_WatchTower",
 	"Zoz_Idroid_announce_enemyIncrease",
 	"Zoz_Idroid_announce_quiet_request",
 	"Zoz_Idroid_announce_enemy_checkpoint",
@@ -39,8 +40,7 @@ this.registerIvars={
 	"Zoz_Idroid_Audio_Friendly_Vehicle_Destroyed",
 	"Zoz_Idroid_Audio_Heli_Withdrawn",
 	"Zoz_Idroid_Audio_OnRequested_AirStrike",
-	"Zoz_Idroid_Audio_",
-	"Zoz_Idroid_Audio_",
+
 }
 
 this.Zoz_Idroid_Overhaul_Notification={
@@ -50,8 +50,9 @@ this.Zoz_Idroid_Overhaul_Notification={
 		"Ivars.Zoz_Idroid_announce_destroy_APC",
 		"Ivars.Zoz_Idroid_announce_destroy_vehicle",
 		"Ivars.Zoz_Idroid_announce_destroy_truck",
-		"Ivars.Zoz_Idroid_announce_destroy_AntiAirCraftGun",
 		"Ivars.Zoz_Idroid_announce_destroy_heli",
+		"Ivars.Zoz_Idroid_announce_destroy_AntiAirCraftGun",
+		"Ivars.Zoz_Idroid_announce_destroy_WatchTower",
 		"Ivars.Zoz_Idroid_announce_enemyIncrease",
 		"Ivars.Zoz_Idroid_announce_quiet_request",
 		"Ivars.Zoz_Idroid_announce_enemy_checkpoint",
@@ -82,7 +83,8 @@ this.langStrings={
 		Zoz_Idroid_announce_destroy_APC = "Destroy APC",
 		Zoz_Idroid_announce_destroy_vehicle = "Destroy vehicle",
 		Zoz_Idroid_announce_destroy_truck = "Destroy truck",
-		Zoz_Idroid_announce_destroy_AntiAirCraftGun = "Destroy AntiAirCraftGun",
+		Zoz_Idroid_announce_destroy_AntiAirCraftGun = "Destroy AntiAir Gun",
+		Zoz_Idroid_announce_destroy_WatchTower = "Destroy Watch Tower",
 		Zoz_Idroid_announce_destroy_heli = "Destroy heli",
 		Zoz_Idroid_announce_enemyIncrease = "Enemy Increase",
 		Zoz_Idroid_announce_quiet_request = "Quiet request",
@@ -107,6 +109,7 @@ this.langStrings={
 			Zoz_Idroid_announce_destroy_vehicle = "Announce when an enemy 4 wheel drive is destroyed",
 			Zoz_Idroid_announce_destroy_truck = "Announce when an enemy truck drive is destroyed",
 			Zoz_Idroid_announce_destroy_AntiAirCraftGun = "Announce when an Anti Air Craft gun is destroyed",
+			Zoz_Idroid_announce_destroy_WatchTower = "Announce when a Watch Tower is destroyed",
 			Zoz_Idroid_announce_destroy_heli = "Announce when an enemy helicopter is destroyed",
 			Zoz_Idroid_announce_enemyIncrease = "Announce when enemy reinfrocement spawn",
 			Zoz_Idroid_announce_quiet_request = "Announce when quiet's health drop below 25",
@@ -233,6 +236,12 @@ this.Zoz_Idroid_Audio_OnRequested_AirStrike={
 	settingNames="set_switch",
 	default=1,
 }
+this.Zoz_Idroid_announce_destroy_WatchTower={
+	save=IvarProc.CATEGORY_EXTERNAL,
+	range=Ivars.switchRange,
+	settingNames="set_switch",
+	default=1,
+}
 
 
 function this.OnAllocate()end
@@ -257,7 +266,16 @@ function this.LoadLibraries()
 end
 
 function this.IdroidRadioPlay(r)
-	TppRadio.Play( r, {isEnqueue = true})
+	TppRadio.Play( r, {isEnqueue = true, noiseType="none"})
+end
+
+this.IsWatchTower = function( gameObjectId )
+	if gameObjectId == nil then
+		return
+	end
+	if gameObjectId == NULL_ID then return end
+	local gameObjectType = GameObject.GetTypeIndex(gameObjectId)
+	return gameObjectType == TppGameObject.GAME_OBJECT_TYPE_WATCH_TOWER
 end
 
 function this.Messages()
@@ -295,6 +313,8 @@ function this.Messages()
 				func = function ( gameObjectId, locatorName, locatorNameUpper, breakerGameObjectId )
 					if Tpp.IsGatlingGun( gameObjectId ) and Ivars.Zoz_Idroid_announce_destroy_AntiAirCraftGun:Is(1) then
 						TppUiCommand.AnnounceLogViewLangId("announce_destroy_AntiAirCraftGun")
+					elseif this.IsWatchTower( gameObjectId ) and Ivars.Zoz_Idroid_announce_destroy_WatchTower:Is(1) then
+						TppUiCommand.AnnounceLogViewLangId("announce_destroy_tower")
 					end
 				end,
 			},
@@ -389,6 +409,20 @@ function this.Messages()
 					mvars.ReinforceRespawnCooldown = false
 				end
 			},
+			{
+				msg = "Finish",
+				sender = "SupportAttackOnRequested_BOMBARDMENT",
+				func = 	function()
+					this.IdroidRadioPlay("idrd1000_121010")
+				end
+			},
+			{
+				msg = "Finish",
+				sender = "SupportAttackOnRequested_WEATHER_MODIFICATION",
+				func = 	function()
+					this.IdroidRadioPlay("idrd1000_1i1010")
+				end
+			},
 		},
 		Trap = {
 			{
@@ -464,9 +498,9 @@ function this.Messages()
 				func = function (playerIndex, supportStrikeId, gradeId)
 					if Ivars.Zoz_Idroid_Audio_OnRequested_AirStrike:Is(1) then
 						if supportStrikeId == 1 then -- BOMBARDMENT
-							this.IdroidRadioPlay("idrd1000_121010")
+							GkEventTimerManager.Start("SupportAttackOnRequested_BOMBARDMENT", 1)
 						elseif supportStrikeId == 5 then -- 5 == WEATHER_MODIFICATION
-							this.IdroidRadioPlay("idrd1000_1i1010")
+							GkEventTimerManager.Start("SupportAttackOnRequested_WEATHER_MODIFICATION", 1)
 						end
 					end
 				end

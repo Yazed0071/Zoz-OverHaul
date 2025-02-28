@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ModEntry xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="Zoz OverHaul" Version="1.0" Author="Yazed0071" Website="">
+<ModEntry xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="Zoz OverHaul" Version="1.2.1" Author="Yazed0071" Website="https://www.nexusmods.com/metalgearsolidvtpp/mods/2169?tab=description">
   <MGSVersion Version="1.0.15.3" />
-  <SBVersion Version="0.9.2.2" />
+  <SBVersion Version="0.0.0.0" />
   <Description>Thank you for downloading!
 
 This mod aims to do what Enemy OverHaul did, better and more!!
@@ -29,136 +29,17 @@ Current features:
  --TO KNOW TOO MUCH
  --CURSED LEGACY
 
-And a bonus 2 Phase BGM tracks
+And a bonus 3 Phase BGM tracks
 
-this mod wasn't going to be possible without the help of the great community</Description>
-  <QarEntries>
-    <QarEntry Hash="5920020714540712421" FilePath="/Assets/tpp/pack/zoz/alm_afgh.fpk" Compressed="true" ContentHash="F640EC0CC8551CCA755045F49B4DBE1D" />
-    <QarEntry Hash="17100206789487968741" FilePath="/Assets/tpp/pack/zoz/alm_afgh.fpkd" Compressed="true" ContentHash="C162F6BC4EAF5E90026A34F94F9B9A7C" />
-    <QarEntry Hash="5920453732530627211" FilePath="/Assets/tpp/pack/zoz/alm_mafr.fpk" Compressed="true" ContentHash="0B6F99E7B2F007BA19EC09675DD3A8BA" />
-    <QarEntry Hash="17100639807477883531" FilePath="/Assets/tpp/pack/zoz/alm_mafr.fpkd" Compressed="true" ContentHash="1000E1D2F45A86FC807E4A938249769F" />
-    <QarEntry Hash="5920925326486079614" FilePath="/Assets/tpp/pack/zoz/mis_common_zoz_cctv.fpk" Compressed="true" ContentHash="4DB52BBCD28013CCA7BDE8E1AF13E4B2" />
-    <QarEntry Hash="17101111401433335934" FilePath="/Assets/tpp/pack/zoz/mis_common_zoz_cctv.fpkd" Compressed="true" ContentHash="D90CF53F70C902312E27BC47723C2CA8" />
-    <QarEntry Hash="5920170093511521548" FilePath="/Assets/tpp/pack/zoz/mis_common_zoz_Ir_Sensor.fpk" Compressed="true" ContentHash="3F806CE39B2FBEA284F3CF57E1C25B92" />
-    <QarEntry Hash="17100356168458777868" FilePath="/Assets/tpp/pack/zoz/mis_common_zoz_Ir_Sensor.fpkd" Compressed="true" ContentHash="E6F7D757AB8269F9A1845D1AEB982118" />
-    <QarEntry Hash="5920216110614343410" FilePath="/Assets/tpp/pack/zoz/s10020_custom_pack.fpk" Compressed="true" ContentHash="C81E734EA4A831A0A963FA7E486F54F6" />
-    <QarEntry Hash="17100402185561599730" FilePath="/Assets/tpp/pack/zoz/s10020_custom_pack.fpkd" Compressed="true" ContentHash="31DDB0E4615AD538FCAB530DB2900248" />
-    <QarEntry Hash="5921099497547962527" FilePath="/Assets/tpp/pack/zoz/s10033_custom_pack.fpk" Compressed="true" ContentHash="C81E734EA4A831A0A963FA7E486F54F6" />
-    <QarEntry Hash="17101285572495218847" FilePath="/Assets/tpp/pack/zoz/s10033_custom_pack.fpkd" Compressed="true" ContentHash="D6BFC2359EA53C4F47F2D4FD84C991B8" />
-    <QarEntry Hash="5920880067023699451" FilePath="/Assets/tpp/pack/zoz/s10036_custom_pack.fpk" Compressed="true" ContentHash="C81E734EA4A831A0A963FA7E486F54F6" />
-    <QarEntry Hash="17101066141970955771" FilePath="/Assets/tpp/pack/zoz/s10036_custom_pack.fpkd" Compressed="true" ContentHash="A1AA5BAC7004ADFA0612C1E7EFF53B4E" />
-    <QarEntry Hash="5921099266156803649" FilePath="/Assets/tpp/pack/zoz/s10040_custom_pack.fpk" Compressed="true" ContentHash="C81E734EA4A831A0A963FA7E486F54F6" />
-    <QarEntry Hash="17101285341104059969" FilePath="/Assets/tpp/pack/zoz/s10040_custom_pack.fpkd" Compressed="true" ContentHash="385FA234D18EEABF30D7513043C2B615" />
-    <QarEntry Hash="5920709961094888156" FilePath="/Assets/tpp/pack/zoz/s10041_custom_pack.fpk" Compressed="true" ContentHash="C81E734EA4A831A0A963FA7E486F54F6" />
-    <QarEntry Hash="17100896036042144476" FilePath="/Assets/tpp/pack/zoz/s10041_custom_pack.fpkd" Compressed="true" ContentHash="DA842CDBED84F2C023A2BC46788A5345" />
-    <QarEntry Hash="5920521523789731519" FilePath="/Assets/tpp/pack/zoz/s10043_custom_pack.fpk" Compressed="true" ContentHash="C81E734EA4A831A0A963FA7E486F54F6" />
-    <QarEntry Hash="17100707598736987839" FilePath="/Assets/tpp/pack/zoz/s10043_custom_pack.fpkd" Compressed="true" ContentHash="B3FD2B591755C2C5DF082D94C0C3112E" />
-    <QarEntry Hash="5920545184676140961" FilePath="/Assets/tpp/pack/zoz/s10045_custom_pack.fpk" Compressed="true" ContentHash="C81E734EA4A831A0A963FA7E486F54F6" />
-    <QarEntry Hash="17100731259623397281" FilePath="/Assets/tpp/pack/zoz/s10045_custom_pack.fpkd" Compressed="true" ContentHash="2B46A66645F6912F2F3AE2CA54B1BCB4" />
-    <QarEntry Hash="5921029163093055561" FilePath="/Assets/tpp/pack/zoz/s10052_custom_pack.fpk" Compressed="true" ContentHash="C81E734EA4A831A0A963FA7E486F54F6" />
-    <QarEntry Hash="17101215238040311881" FilePath="/Assets/tpp/pack/zoz/s10052_custom_pack.fpkd" Compressed="true" ContentHash="2C02AFF2D15383D6B86B180711F3DDA9" />
-    <QarEntry Hash="5920013087344275034" FilePath="/Assets/tpp/pack/zoz/s10070_custom_pack.fpk" Compressed="true" ContentHash="C81E734EA4A831A0A963FA7E486F54F6" />
-    <QarEntry Hash="17100199162291531354" FilePath="/Assets/tpp/pack/zoz/s10070_custom_pack.fpkd" Compressed="true" ContentHash="C1BC8ADF5E056AC4FC70E394F38B9EB9" />
-    <QarEntry Hash="5920908354034974377" FilePath="/Assets/tpp/pack/zoz/s10080_custom_pack.fpk" Compressed="true" ContentHash="C81E734EA4A831A0A963FA7E486F54F6" />
-    <QarEntry Hash="17101094428982230697" FilePath="/Assets/tpp/pack/zoz/s10080_custom_pack.fpkd" Compressed="true" ContentHash="7BC12238D973C2E0CA703D7630C291BF" />
-    <QarEntry Hash="5920338439670381688" FilePath="/Assets/tpp/pack/zoz/s10090_custom_pack.fpk" Compressed="true" ContentHash="C81E734EA4A831A0A963FA7E486F54F6" />
-    <QarEntry Hash="17100524514617638008" FilePath="/Assets/tpp/pack/zoz/s10090_custom_pack.fpkd" Compressed="true" ContentHash="9CA0EA6DCDD62B0E9067E5E2CD7B8D6E" />
-    <QarEntry Hash="5920863445772022697" FilePath="/Assets/tpp/pack/zoz/s10093_custom_pack.fpk" Compressed="true" ContentHash="C81E734EA4A831A0A963FA7E486F54F6" />
-    <QarEntry Hash="17101049520719279017" FilePath="/Assets/tpp/pack/zoz/s10093_custom_pack.fpkd" Compressed="true" ContentHash="3693D6FBCC080FD3122FD73F5F14EDA0" />
-    <QarEntry Hash="5920706678751779331" FilePath="/Assets/tpp/pack/zoz/s10130_custom_pack.fpk" Compressed="true" ContentHash="C81E734EA4A831A0A963FA7E486F54F6" />
-    <QarEntry Hash="17100892753699035651" FilePath="/Assets/tpp/pack/zoz/s10130_custom_pack.fpkd" Compressed="true" ContentHash="44883EC9F01784E38C32492827035D6B" />
-    <QarEntry Hash="5920884882406402963" FilePath="/Assets/tpp/pack/zoz/zoz_afgh_Ir_Sensor.fpk" Compressed="true" ContentHash="53B20027178D990CE106443DF09D5769" />
-    <QarEntry Hash="17101070957353659283" FilePath="/Assets/tpp/pack/zoz/zoz_afgh_Ir_Sensor.fpkd" Compressed="true" ContentHash="7D50BB3728428FD544F649937B473F75" />
-    <QarEntry Hash="5920989932555021364" FilePath="/Assets/tpp/pack/zoz/zoz_common_alm.fpk" Compressed="true" ContentHash="AF1E0E6692C336BB2781441A13E71501" />
-    <QarEntry Hash="17101176007502277684" FilePath="/Assets/tpp/pack/zoz/zoz_common_alm.fpkd" Compressed="true" ContentHash="066653317BA13764685A738D0830E525" />
-    <QarEntry Hash="5920264648357134628" FilePath="/Assets/tpp/pack/zoz/zoz_mafr_Ir_Sensor.fpk" Compressed="true" ContentHash="38862127BEBFAD9F6CAB4C43AD80F993" />
-    <QarEntry Hash="17100450723304390948" FilePath="/Assets/tpp/pack/zoz/zoz_mafr_Ir_Sensor.fpkd" Compressed="true" ContentHash="56E4A1F02E6D4AB4733B66E8F0FC867D" />
-    <QarEntry Hash="5920840791138261353" FilePath="/Assets/tpp/pack/zoz/Zoz_Online_Animation.fpk" Compressed="true" ContentHash="2250C96FF0DBE8880E82AFDEE93EF6F9" />
-    <QarEntry Hash="17101026866085517673" FilePath="/Assets/tpp/pack/zoz/Zoz_Online_Animation.fpkd" Compressed="true" ContentHash="F08BEF4048E7640AA290F2D71B6ED96E" />
-    <QarEntry Hash="5920443366308953834" FilePath="/Assets/tpp/pack/zoz/Zoz_Overhaul.fpk" Compressed="true" ContentHash="BE6F95CE4D356B6A6AEC6605910DF6AB" />
-    <QarEntry Hash="17100629441256210154" FilePath="/Assets/tpp/pack/zoz/Zoz_Overhaul.fpkd" Compressed="true" ContentHash="A64EB1D9460EB2B630CFBE75BD0FDB4D" />
-    <QarEntry Hash="13466599129925797427" FilePath="/Assets/tpp/sound/asset/zoz_bgm_phase_changer_mod_BAKFEAR.sbp" Compressed="false" ContentHash="0996C994464895C423FF172553ABE59D" />
-    <QarEntry Hash="13466196647608633869" FilePath="/Assets/tpp/sound/asset/zoz_bgm_phase_changer_mod_bloodstained.sbp" Compressed="false" ContentHash="8EE572BB9C69C38D79ADBFA6C01E802A" />
-  </QarEntries>
-  <FpkEntries>
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/alm_afgh.fpk" FilePath="/Assets/tpp/level/mission2/free/lba/alm0_main0_def_v00.lba" ContentHash="6A78CC97B727AB50D4588199985F1F1B" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/alm_afgh.fpkd" FilePath="/Assets/tpp/level/mission2/custom/alm_afgh.fox2" ContentHash="80E5B3A5B2C10227C228587319635C9E" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/alm_mafr.fpk" FilePath="/Assets/tpp/item/alm/Scenes/alm0_main0_def.fcnp" ContentHash="19E170337BF7B89A7DA590DA5201E802" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/alm_mafr.fpk" FilePath="/Assets/tpp/item/alm/Scenes/alm0_main0_def.fmdl" ContentHash="E7ADA15064A58745D1ED47C937C5852C" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/alm_mafr.fpk" FilePath="/Assets/tpp/item/alm/Scenes/alm0_main0_def.geom" ContentHash="92BC124A328990B28B242D1E78ADCD60" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/alm_mafr.fpk" FilePath="/Assets/tpp/level/mission2/free/lba/alm0_main0_def_v00.lba" ContentHash="12B0EE3BFEB4521B914211A8720319C4" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/alm_mafr.fpkd" FilePath="/Assets/tpp/effect/vfx_data/break/fx_tpp_brkalm01_s1.vfx" ContentHash="9ED330625D68F740C7088FC883F251F5" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/alm_mafr.fpkd" FilePath="/Assets/tpp/effect/vfx_data/mecha/fx_tpp_mchctvflrchf01_s0.vfx" ContentHash="E46901627524B8840EE4B252FD6DD1B7" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/alm_mafr.fpkd" FilePath="/Assets/tpp/level/mission2/custom/alm_mafr.fox2" ContentHash="EC135B39DEAB74372BCE8F97AC4896F2" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/alm_mafr.fpkd" FilePath="/Assets/tpp/parts/item/alm/alm0_main0_def_v00.parts" ContentHash="B28B1AD4306518008947CC27D734E9D4" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/alm_mafr.fpkd" FilePath="/Assets/tpp/parts/item/alm/alm0_main0_def_v00.tgt" ContentHash="F75BE04CC20192E00FDEE9C7E1392EEE" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/mis_common_zoz_cctv.fpk" FilePath="/Assets/tpp/fova/mecha/ctv/ctv0_v00.fv2" ContentHash="7AB178DAE7400B20DA06B3A3633DAC54" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/mis_common_zoz_cctv.fpk" FilePath="/Assets/tpp/fova/mecha/ctv/ctv0_v01.fv2" ContentHash="7583303760FDB7D61A0A9DDAA11569B7" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/mis_common_zoz_cctv.fpk" FilePath="/Assets/tpp/fova/mecha/special_color/nonlethal.fv2" ContentHash="156025786782E1C32D3AEAFBA7FAC34C" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/mis_common_zoz_cctv.fpk" FilePath="/Assets/tpp/fova/mecha/special_color/nonlethal_up.fv2" ContentHash="5FEAFF38A6EDF7EE83FBCDB9F3A6F025" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/mis_common_zoz_cctv.fpk" FilePath="/Assets/tpp/mecha/ctv/Scenes/ctv0_main0_def.fcnp" ContentHash="19EDA1E16F648CC1E95354B65149119B" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/mis_common_zoz_cctv.fpk" FilePath="/Assets/tpp/mecha/ctv/Scenes/ctv0_main0_def.fmdl" ContentHash="8BA18CC96DD6F2F41983902301598901" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/mis_common_zoz_cctv.fpk" FilePath="/Assets/tpp/mecha/ctv/Scenes/ctv0_main0_def.gskl" ContentHash="CD598588885ACA91648B183C0350DF40" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/mis_common_zoz_cctv.fpkd" FilePath="/Assets/tpp/effect/vfx_data/explosion/fx_tpp_expmchcam01_s1.vfx" ContentHash="B6FB8BCE4FDB7E7771A5A3F3CF7AB7D3" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/mis_common_zoz_cctv.fpkd" FilePath="/Assets/tpp/effect/vfx_data/flare/fx_tpp_flrlgtcamgrn01_s0.vfx" ContentHash="78C9CCF1C06113AAA70E2D14C4D884F2" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/mis_common_zoz_cctv.fpkd" FilePath="/Assets/tpp/effect/vfx_data/flare/fx_tpp_flrlgtcamred01_s0.vfx" ContentHash="629E7C898FFFC07E6DD68C7AB5596723" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/mis_common_zoz_cctv.fpkd" FilePath="/Assets/tpp/effect/vfx_data/flare/fx_tpp_flrlgtcamylw01_s0.vfx" ContentHash="F0C7AF13DF5DBADEE352C2D74F495261" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/mis_common_zoz_cctv.fpkd" FilePath="/Assets/tpp/effect/vfx_data/mecha/fx_tpp_mchctvflrchf01_s0.vfx" ContentHash="E46901627524B8840EE4B252FD6DD1B7" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/mis_common_zoz_cctv.fpkd" FilePath="/Assets/tpp/effect/vfx_data/muzzle/fx_tpp_mzfasr10m_s0FG.vfx" ContentHash="7994BD857C55BDC69C83C939A837A912" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/mis_common_zoz_cctv.fpkd" FilePath="/Assets/tpp/parts/mecha/ctv/ctv0_main0_def_v00.parts" ContentHash="98728913DB4B3FE26AB2C03EC43DF189" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/mis_common_zoz_cctv.fpkd" FilePath="/Assets/tpp/parts/mecha/ctv/SecurityCameraDeffense.tgt" ContentHash="EAEF79614ACC564FCA5646D3032B54BA" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/mis_common_zoz_Ir_Sensor.fpk" FilePath="/Assets/tpp/environ/object/mother_base/trap/mtbs_trap003/scenes/mtbs_trap003.fcnp" ContentHash="96FABB4670F8D976403A344D2749070E" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/mis_common_zoz_Ir_Sensor.fpk" FilePath="/Assets/tpp/environ/object/mother_base/trap/mtbs_trap003/scenes/mtbs_trap003.fmdl" ContentHash="41191A8AA39586FE49641834D7BBF094" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/mis_common_zoz_Ir_Sensor.fpk" FilePath="/Assets/tpp/environ/object/mother_base/trap/mtbs_trap003/scenes/mtbs_trap003.geom" ContentHash="69804A7E84BFC133E04B1E223388E54F" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/mis_common_zoz_Ir_Sensor.fpkd" FilePath="/Assets/tpp/effect/vfx_data/explosion/fx_tpp_expmchcam01_s1.vfx" ContentHash="B6FB8BCE4FDB7E7771A5A3F3CF7AB7D3" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/mis_common_zoz_Ir_Sensor.fpkd" FilePath="/Assets/tpp/effect/vfx_data/explosion/fx_tpp_expsmk05_s2.vfx" ContentHash="BA262AB02202EF657F049C6DA83E7CBF" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/mis_common_zoz_Ir_Sensor.fpkd" FilePath="/Assets/tpp/effect/vfx_data/flare/fx_tpp_flrlgtcamgrn01_s0.vfx" ContentHash="78C9CCF1C06113AAA70E2D14C4D884F2" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/mis_common_zoz_Ir_Sensor.fpkd" FilePath="/Assets/tpp/effect/vfx_data/flare/fx_tpp_flrlgtcamred01_s0.vfx" ContentHash="629E7C898FFFC07E6DD68C7AB5596723" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/mis_common_zoz_Ir_Sensor.fpkd" FilePath="/Assets/tpp/effect/vfx_data/flare/fx_tpp_flrlgtcamylw01_s0.vfx" ContentHash="F0C7AF13DF5DBADEE352C2D74F495261" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/mis_common_zoz_Ir_Sensor.fpkd" FilePath="/Assets/tpp/effect/vfx_data/mecha/fx_tpp_mchctvflrchf01_s0.vfx" ContentHash="E46901627524B8840EE4B252FD6DD1B7" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/mis_common_zoz_Ir_Sensor.fpkd" FilePath="/Assets/tpp/effect/vfx_data/muzzle/fx_tpp_mzfasr10m_s0FG.vfx" ContentHash="7994BD857C55BDC69C83C939A837A912" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/mis_common_zoz_Ir_Sensor.fpkd" FilePath="/Assets/tpp/parts/environ/object/mother_base/trap/mtbs_trap003/mtbs_trap003.parts" ContentHash="4DD5417D1F98A6AAC50BC72BDFD262F0" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/s10020_custom_pack.fpkd" FilePath="/Assets/tpp/level/mission2/story/s10020/s10020_cams.fox2" ContentHash="EB992F14DC373B9CC28991391A9D0C7D" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/s10033_custom_pack.fpkd" FilePath="/Assets/tpp/level/mission2/story/s10033/s10033_cams.fox2" ContentHash="F4CF1543E5C1DED653E6081D4F68BACB" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/s10036_custom_pack.fpkd" FilePath="/Assets/tpp/level/mission2/story/s10036/s10036_cams.fox2" ContentHash="D5AF0B26996844C07A7D7108704A9D65" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/s10040_custom_pack.fpkd" FilePath="/Assets/tpp/level/mission2/story/s10040/s10040_cams.fox2" ContentHash="833D338332C56B972DA8C36016F2BBF9" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/s10041_custom_pack.fpkd" FilePath="/Assets/tpp/level/mission2/story/s10041/s10041_cams.fox2" ContentHash="A3D1A6F41B6829AF9814BA84FFEBAF78" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/s10043_custom_pack.fpkd" FilePath="/Assets/tpp/level/mission2/story/s10043/s10043_cams.fox2" ContentHash="DF4FFA04649E740A5BD2118DA9CA89D6" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/s10045_custom_pack.fpkd" FilePath="/Assets/tpp/level/mission2/story/s10045/s10045_cams.fox2" ContentHash="DE17036FDA5C743977E1CAF014EE4B0A" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/s10052_custom_pack.fpkd" FilePath="/Assets/tpp/level/mission2/story/s10052/s10052_cams.fox2" ContentHash="20EE17E97321D9B516EA0297253443C5" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/s10070_custom_pack.fpkd" FilePath="/Assets/tpp/level/mission2/story/s10070/s10070_cams.fox2" ContentHash="B8FD7BD8F227E177937D8522725E78B4" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/s10080_custom_pack.fpkd" FilePath="/Assets/tpp/level/mission2/story/s10080/s10080_cams.fox2" ContentHash="14D9B29988FC9BDD225D9D85B87F75DF" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/s10090_custom_pack.fpkd" FilePath="/Assets/tpp/level/mission2/story/s10090/s10090_cams.fox2" ContentHash="D5EBB5973E47FF6B1F8AEF37D49F3D1B" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/s10093_custom_pack.fpkd" FilePath="/Assets/tpp/level/mission2/story/s10093/s10093_cams.fox2" ContentHash="E0F8FE0802D943E61BCF996080D77D81" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/s10130_custom_pack.fpkd" FilePath="/Assets/tpp/level/mission2/story/s10130/s10130_cams.fox2" ContentHash="8B74C27A6560C5009F26D7CCABFDE178" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/zoz_afgh_Ir_Sensor.fpk" FilePath="/Assets/tpp/level/mission2/free/lba/mafr_trap003.lba" ContentHash="AD39B08A95B87E87E1E105ED62A87CFC" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/zoz_afgh_Ir_Sensor.fpkd" FilePath="/Assets/tpp/level/mission2/free/Zoz_Afgh_Ir_Sensors.fox2" ContentHash="A3F388574CA088EBC60B991CB86BC55C" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/zoz_common_alm.fpk" FilePath="/Assets/tpp/item/alm/Scenes/alm0_main0_def.fcnp" ContentHash="19E170337BF7B89A7DA590DA5201E802" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/zoz_common_alm.fpk" FilePath="/Assets/tpp/item/alm/Scenes/alm0_main0_def.fmdl" ContentHash="E7ADA15064A58745D1ED47C937C5852C" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/zoz_common_alm.fpk" FilePath="/Assets/tpp/item/alm/Scenes/alm0_main0_def.geom" ContentHash="92BC124A328990B28B242D1E78ADCD60" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/zoz_common_alm.fpkd" FilePath="/Assets/tpp/effect/vfx_data/break/fx_tpp_brkalm01_s1.vfx" ContentHash="9ED330625D68F740C7088FC883F251F5" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/zoz_common_alm.fpkd" FilePath="/Assets/tpp/effect/vfx_data/mecha/fx_tpp_mchctvflrchf01_s0.vfx" ContentHash="E46901627524B8840EE4B252FD6DD1B7" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/zoz_common_alm.fpkd" FilePath="/Assets/tpp/parts/item/alm/alm0_main0_def_v00.parts" ContentHash="B28B1AD4306518008947CC27D734E9D4" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/zoz_common_alm.fpkd" FilePath="/Assets/tpp/parts/item/alm/alm0_main0_def_v00.tgt" ContentHash="F75BE04CC20192E00FDEE9C7E1392EEE" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/zoz_mafr_Ir_Sensor.fpk" FilePath="/Assets/tpp/level/mission2/free/lba/mafr_trap003.lba" ContentHash="427285C14D0270B9F9B67CC7D2EBF747" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/zoz_mafr_Ir_Sensor.fpkd" FilePath="/Assets/tpp/level/mission2/free/Zoz_Mafr_Ir_Sensors.fox2" ContentHash="FD9FAB4539864DA413C6F5521C611DDB" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/Zoz_Online_Animation.fpk" FilePath="/Assets/tpp/motion/mtar/player2/player2_online.mtar" ContentHash="ECA63759D23243418C1381A4588FCF7D" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/Zoz_Online_Animation.fpkd" FilePath="/Assets/tpp/level/mission2/custom/player2_online_motion.fox2" ContentHash="BFBEE8ABB248300E2BF5C6ABA4F92C40" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/Zoz_Overhaul.fpk" FilePath="/Assets/tpp/radio/RadioData_zoz_Overhaul.rdf" ContentHash="DBAE1D2AD87C67FBD136CA4AEDA19B63" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/Zoz_Overhaul.fpk" FilePath="/Assets/tpp/spch/zoz_enemy_eq_Custom.spch" ContentHash="F6664D3E42B308469FAB9498BEEA1B30" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/Zoz_Overhaul.fpkd" FilePath="/Assets/tpp/Fox2/Overhaul_radio.fox2" ContentHash="FFB7139FE86AAA1020BA11A42E68B4E2" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/Zoz_Overhaul.fpkd" FilePath="/Assets/tpp/Fox2/Zoz_enemy_Spch_loader.fox2" ContentHash="4E3685BA455C5150A51087C636AC6D71" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/Zoz_Overhaul.fpkd" FilePath="/Assets/tpp/Fox2/Zoz_Phase_music.fox2" ContentHash="9C465A0017B8E45A270128A7C86AA96F" />
-    <FpkEntry FpkFile="/Assets/tpp/pack/zoz/Zoz_Overhaul.fpkd" FilePath="/Assets/tpp/sound/package/Zoz_phase_bgm.sdf" ContentHash="FB66CBFDAF6F08B0454F02B63A164CC5" />
-  </FpkEntries>
-  <FileEntries>
-    <FileEntry FilePath="/mod/modules/Zoz_Enemy_Equipment_Overhaul .lua" ContentHash="A6EF0F4691B8C384D99821575656B510" />
-    <FileEntry FilePath="/mod/modules/Zoz_Enemy_Overhaul.lua" ContentHash="5AB51873BC6517AD644D43017626B4E2" />
-    <FileEntry FilePath="/mod/modules/Zoz_Enemy_Radio_Overhaul.lua" ContentHash="C6ECCC54F80B8B7FF83FB50D98E3A664" />
-    <FileEntry FilePath="/mod/modules/Zoz_Enemy_Voice_Overhaul.lua" ContentHash="DC6119F5D034E4AC710FB2D7F43CB7C4" />
-    <FileEntry FilePath="/mod/modules/Zoz_Idroid_Overhaul.lua" ContentHash="2F9C14D8BE92743FA30DF230A8D48AF6" />
-    <FileEntry FilePath="/mod/modules/Zoz_overhaul_Ivars.lua" ContentHash="4774331B7056DB7F63543CE0FB8CBD1A" />
-    <FileEntry FilePath="/mod/modules/Zoz_Support_Radio_Overhaul.lua" ContentHash="9793D0AEC94B96208DE04067E1ACE24A" />
-  </FileEntries>
+1.2.2
+Adds grades to IR sensors and burglar alarms
+
+this mod wasn't going to be possible without the help of the great community
+
+
+Free room camera</Description>
+  <QarEntries />
+  <FpkEntries />
+  <FileEntries />
   <WmvEntries />
 </ModEntry>

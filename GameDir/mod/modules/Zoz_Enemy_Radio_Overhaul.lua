@@ -100,28 +100,6 @@ function this.Messages()
 					end
 				end
 			},
-			{
-				msg="RequestLoadReinforce",
-				func= function ()
-					InfCore.Log("Zoz_Overhaul Log: RequestLoadReinforce")
-					if not mvars.RequestLoadReinforceVehicle then
-						mvars.RequestLoadReinforceVehicle = true
-						if TppReinforceBlock._HasHeli() then
-							InfCore.Log("Zoz_Overhaul Log: TppReinforceBlock._HasHeli()")
-							Zoz_Enemy_Overhaul.PlayCPOnlyRadio("ZOZ_HQR0100") -- : HQ has deployed helicopter
-						elseif TppReinforceBlock._HasVehicle() then
-							InfCore.Log("Zoz_Overhaul Log: TppReinforceBlock._HasVehicle()")
-							if mvars.reinforce_reinforceType==TppReinforceBlock.REINFORCE_TYPE.EAST_TANK or mvars.reinforce_reinforceType==TppReinforceBlock.REINFORCE_TYPE.WEST_TANK then
-								InfCore.Log("Zoz_Overhaul Log: TppReinforceBlock._HasVehicle(_TANK)")
-								Zoz_Enemy_Overhaul.PlayCPOnlyRadio("ZOZ_HQR0110") -- : HQ has deployed tank
-							else
-								InfCore.Log("Zoz_Overhaul Log: TppReinforceBlock._HasVehicle(_AV)")
-								Zoz_Enemy_Overhaul.PlayCPOnlyRadio("ZOZ_HQR0120") -- : HQ has deployed armored vehicle
-							end
-						end
-					end 
-				end,
-			},
 		},
 		Timer = {
 			{ 	msg = "Finish",
@@ -190,6 +168,29 @@ function this.Messages()
 					GkEventTimerManager.Start("Announce_ShiftChange", 10)
 				end
 			}
+		},
+		Block = {
+			{
+				msg = "OnScriptBlockStateTransition",
+				func = function(blockName, blockState)
+					if blockName == StrCode32( "reinforce_block" ) and blockState == ScriptBlock.TRANSITION_ACTIVATED then
+						InfCore.Log("Zoz_Overhaul Log: RequestLoadReinforce")
+						if TppReinforceBlock._HasVehicle() then
+							InfCore.Log("Zoz_Overhaul Log: TppReinforceBlock._HasVehicle()")
+							if mvars.reinforce_reinforceType==TppReinforceBlock.REINFORCE_TYPE.EAST_TANK or mvars.reinforce_reinforceType==TppReinforceBlock.REINFORCE_TYPE.WEST_TANK then
+								InfCore.Log("Zoz_Overhaul Log: TppReinforceBlock._HasVehicle(_TANK)")
+								Zoz_Enemy_Overhaul.PlayCPOnlyRadio("ZOZ_HQR0110") -- : HQ has deployed tank
+							else
+								InfCore.Log("Zoz_Overhaul Log: TppReinforceBlock._HasVehicle(_AV)")
+								Zoz_Enemy_Overhaul.PlayCPOnlyRadio("ZOZ_HQR0120") -- : HQ has deployed armored vehicle
+							end
+						else
+							InfCore.Log("Zoz_Overhaul Log: TppReinforceBlock._HasHeli()")
+							Zoz_Enemy_Overhaul.PlayCPOnlyRadio("ZOZ_HQR0100") -- : HQ has deployed helicopter
+						end
+					end
+				end
+			},
 		},
     }
 end

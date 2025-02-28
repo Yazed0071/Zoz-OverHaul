@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<ArchiveFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:type="FpkFile" Name="zoz_common_alm.fpkd" FpkType="Fpkd">
+  <Entries>
+    <Entry FilePath="/Assets/tpp/parts/item/alm/alm0_main0_def_v00.parts" />
+    <Entry FilePath="/Assets/tpp/effect/vfx_data/mecha/fx_tpp_mchctvflrchf01_s0.vfx" />
+    <Entry FilePath="/Assets/tpp/effect/vfx_data/break/fx_tpp_brkalm01_s1.vfx" />
+    <Entry FilePath="/Assets/tpp/parts/item/alm/alm0_main0_def_v00.tgt" />
+  </Entries>
+  <References />
+</ArchiveFile>
