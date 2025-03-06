@@ -43,6 +43,7 @@ this.registerIvars={
     -- Enemy_Equipment
     "Zoz_Enemy_Equipment_Fulton",
     "Zoz_Enemy_Equipment_Camera",
+    "Zoz_Enemy_Equipment_Uav",
     "Zoz_Enemy_Equipment_Ir_Sensors",
     "Zoz_Enemy_Equipment_burglar_alarm",
 
@@ -80,6 +81,7 @@ this.Zoz_Enemy_Equipment_Overhaul={
 	options={
 		"Ivars.Zoz_Enemy_Equipment_Fulton",
         "Ivars.Zoz_Enemy_Equipment_Camera",
+        "Ivars.Zoz_Enemy_Equipment_Uav",
         "Ivars.Zoz_Enemy_Equipment_Ir_Sensors",
         "Ivars.Zoz_Enemy_Equipment_burglar_alarm",
 	}
@@ -182,8 +184,13 @@ this.Zoz_Enemy_Equipment_Fulton={
 	save=IvarProc.CATEGORY_EXTERNAL,
 	settings={"OFF","Normal","Balloon","Wormhole"},
 	default=1,
-}
+} 
 this.Zoz_Enemy_Equipment_Camera={
+	save=IvarProc.CATEGORY_EXTERNAL,
+	settings={"OFF","ON"},
+	default=1,
+}
+this.Zoz_Enemy_Equipment_Uav={
 	save=IvarProc.CATEGORY_EXTERNAL,
 	settings={"OFF","ON"},
 	default=1,
@@ -253,6 +260,7 @@ this.langStrings={
         Zoz_Enemy_Equipment_Overhaul = "Enemy Equipment",
         Zoz_Enemy_Equipment_Fulton = "Equip Fulton",
         Zoz_Enemy_Equipment_Camera = "Security Cameras",
+        Zoz_Enemy_Equipment_Uav = "UAVs",
         Zoz_Enemy_Equipment_Ir_Sensors = "Ir Sensors",
         Zoz_Enemy_Equipment_burglar_alarm = "Burglar Alarm",
 
@@ -283,6 +291,7 @@ this.langStrings={
             Zoz_Enemy_Equipment_Overhaul = "Toggle individual options for Enemy Equipment",
             Zoz_Enemy_Equipment_Fulton="Makes the enemy able to fulton the player when unconscious if toggled on.",
             Zoz_Enemy_Equipment_Camera = "When toggled on, surveillance cameras will spawn.\nTHIS OPTION IS FOR MAIN MISSIONS ONLY",
+            Zoz_Enemy_Equipment_Uav = "When toggled on, UAVs will spawn.\nTHIS OPTION IS FOR MAIN MISSIONS ONLY",
             Zoz_Enemy_Equipment_Ir_Sensors = "Enables Ir Sensors in FOB to be in Afghanistan and Africa!",
             Zoz_Enemy_Equipment_burglar_alarm = "Enables Burglar Alarm in FOB to be in Afghanistan and Africa!",
 

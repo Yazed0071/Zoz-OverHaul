@@ -528,9 +528,11 @@ function this.Messages()
 				func = function (action)
 					if action == 3261117285 then -- Press start
 						return
-					elseif action == 1439467306 and (vars.missionCode == 40010) or (vars.missionCode == 40020) or (vars.missionCode == 40050) and Ivars.Zoz_Idroid_Audio_Welcome_Acc:Is(1) then -- (1439467306 Continue) missionCode 40010 40020 40050
-						this.IdroidRadioPlay("idrd1000_106552")
-						this.IdroidRadioPlay("idrd1000_106553")
+					elseif action == 1439467306 and (vars.missionCode == 40010) or (vars.missionCode == 40020) or (vars.missionCode == 40050) then -- (1439467306 Continue) missionCode 40010 40020 40050
+						if Ivars.Zoz_Idroid_Audio_Welcome_Acc:Is(1) then
+							this.IdroidRadioPlay("idrd1000_106552")
+							this.IdroidRadioPlay("idrd1000_106553")
+						end
 					end
 				end
 			},

@@ -24,6 +24,10 @@ function this.LoadLibraries()
     end
 end
 
+function this.randomizeMortarShell(num1, num2 )
+	return math.random(num1, num2)
+end
+
 function this.Messages()
     return StrCode32Table{
 		GameObject = {
@@ -75,6 +79,23 @@ function this.Messages()
 					elseif isSuccess and speechLabel == StrCode32( "CPR0230" ) or speechLabel == StrCode32( "CPR0250" ) or speechLabel == StrCode32( "CPR0270" ) then
 						GkEventTimerManager.Start("Announce_PrisonerNotFound", 180)
 						InfCore.Log("Zoz_Overhaul Log: Timer Announce_PrisonerNotFound Start")
+					elseif speechLabel == StrCode32( "CPR0182" ) then
+						if not Zoz_overhaul_Ivars.IsNotPhase(PHASE_ALERT) then
+							local cRevengeLv = TppRevenge.GetRevengeLv(TppRevenge.REVENGE_TYPE.COMBAT)
+							if cRevengeLv == 1 then
+								GkEventTimerManager.Start("RefireMortarSupport_Timer", 25)
+							elseif cRevengeLv == 2 then
+								GkEventTimerManager.Start("RefireMortarSupport_Timer", 20)
+							elseif cRevengeLv == 3 then
+								GkEventTimerManager.Start("RefireMortarSupport_Timer", 15)
+							elseif cRevengeLv == 4 then
+								GkEventTimerManager.Start("RefireMortarSupport_Timer", 10)
+							elseif cRevengeLv == 5 then
+								GkEventTimerManager.Start("RefireMortarSupport_Timer", 5)
+							end
+						end
+					elseif speechLabel == StrCode32( "CPR0190" ) then
+						TppShell.FireMortar(Vector3(vars.playerPosX + (this.randomizeMortarShell(-100, 100 )),vars.playerPosY+50,vars.playerPosZ + (this.randomizeMortarShell(-100, 100))), Vector3(vars.playerPosX + this.randomizeMortarShell(-10, 10),vars.playerPosY,vars.playerPosZ + this.randomizeMortarShell(-10, 10)), 10)
 					end
 				end
 			},
@@ -82,7 +103,7 @@ function this.Messages()
 				msg = "Neutralize",
 				func = function(gameObjectId, attackerId, neutralizeType, neutralizeCause)
 					if Tpp.IsUav(gameObjectId) and Zoz_overhaul_Ivars.IsNotPhase(PHASE_ALERT) and Zoz_overhaul_Ivars.IsNotPhase(PHASE_EVASION) and Ivars.Zoz_Enemy_Radio_Report_UAV_Down:Is(1) then
-						Zoz_Enemy_Overhaul.PlayCPOnlyRadio("ZOZ0000") -- UAV Feed is down 
+						GkEventTimerManager.Start("Announce_UAVFeedDown", 6)
 					end
 				end
 			},
@@ -94,14 +115,74 @@ function this.Messages()
 							if mvars.gunShipReported == false and attackerId == 7168 or attackerId == 0 and attackId == 269 and mvars.gunShipReported == false then -- heli or player and ATK_HeliMiniGun
 								mvars.gunShipReported = true
 								GkEventTimerManager.Start("gunShipReported_Timer", 5)
-								
 							end
+						end
+					end
+				end
+			},
+			{
+				msg = "ChangePhase",
+				func = function(gameObjectId,phaseId,oldPhaseId)
+					if phaseId == TppGameObject.PHASE_ALERT then
+						mvars.FireMortarLimit = 0
+						local cRevengeLv = TppRevenge.GetRevengeLv(TppRevenge.REVENGE_TYPE.COMBAT)
+						if cRevengeLv == 1 then
+							GkEventTimerManager.Start("MortarSupport_Timer", 120)
+						elseif cRevengeLv == 2 then
+							GkEventTimerManager.Start("MortarSupport_Timer", 100)
+						elseif cRevengeLv == 3 then
+							GkEventTimerManager.Start("MortarSupport_Timer", 80)
+						elseif cRevengeLv == 4 then
+							GkEventTimerManager.Start("MortarSupport_Timer", 60)
+						elseif cRevengeLv == 5 then
+							GkEventTimerManager.Start("MortarSupport_Timer", 30)
 						end
 					end
 				end
 			},
 		},
 		Timer = {
+			{ 	msg = "Finish",
+				sender = "MortarSupport_Timer",
+				func = 	function()
+					if not Zoz_overhaul_Ivars.IsNotPhase(PHASE_ALERT) then
+						Zoz_Enemy_Overhaul.PlayCPOnlyRadio("CPR0182")
+					end
+				end
+			},
+			{ 	msg = "Finish",
+				sender = "RefireMortarSupport_Timer",
+				func = 	function()
+					if not Zoz_overhaul_Ivars.IsNotPhase(PHASE_ALERT) then
+						if mvars.FireMortarLimit == nil then
+							mvars.FireMortarLimit = 1
+						else
+							mvars.FireMortarLimit = mvars.FireMortarLimit + 1
+						end
+						if mvars.FireMortarLimit <= 10 then
+							Zoz_Enemy_Overhaul.PlayCPOnlyRadio("CPR0190")
+							local cRevengeLv = TppRevenge.GetRevengeLv(TppRevenge.REVENGE_TYPE.COMBAT)
+							if cRevengeLv == 1 then
+								GkEventTimerManager.Start("RefireMortarSupport_Timer", 25)
+							elseif cRevengeLv == 2 then
+								GkEventTimerManager.Start("RefireMortarSupport_Timer", 20)
+							elseif cRevengeLv == 3 then
+								GkEventTimerManager.Start("RefireMortarSupport_Timer", 15)
+							elseif cRevengeLv == 4 then
+								GkEventTimerManager.Start("RefireMortarSupport_Timer", 10)
+							elseif cRevengeLv == 5 then
+								GkEventTimerManager.Start("RefireMortarSupport_Timer", 5)
+							end
+						end
+					end
+				end
+			},
+			{ 	msg = "Finish",
+				sender = "Announce_UAVFeedDown",
+				func = 	function()
+					Zoz_Enemy_Overhaul.PlayCPOnlyRadio("ZOZ0000") -- UAV Feed is down 
+				end
+			},
 			{ 	msg = "Finish",
 				sender = "gunShipReported_Timer",
 				func = 	function()
