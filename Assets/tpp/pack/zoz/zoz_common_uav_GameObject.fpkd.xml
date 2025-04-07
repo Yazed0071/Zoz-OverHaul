@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<ArchiveFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:type="FpkFile" Name="zoz_common_uav_GameObject.fpkd" FpkType="Fpkd">
+  <Entries>
+    <Entry FilePath="/Assets/tpp/level/mission2/zoz_uav_GameObject.fox2" />
+    <Entry FilePath="/Assets/tpp/level/mission2/o50050_sound_se.fox2" />
+    <Entry FilePath="/Assets/tpp/level/mission2/o50050_add_sound_se.fox2" />
+    <Entry FilePath="/Assets/tpp/parts/weapon/bul/bu01_whed0_def.parts" />
+    <Entry FilePath="/Assets/tpp/parts/mecha/uav/uav0_main0_def_v00.parts" />
+    <Entry FilePath="/Assets/tpp/effect/vfx_data/weapon/fx_tpp_wepgreexp01_s2LG.vfx" />
+    <Entry FilePath="/Assets/tpp/effect/vfx_data/weapon/fx_tpp_wepbltflt01_s1.vfx" />
+    <Entry FilePath="/Assets/tpp/effect/vfx_data/splash/fx_tpp_splwtr09_s1.vfx" />
+    <Entry FilePath="/Assets/tpp/effect/vfx_data/ricochet/fx_tpp_rctirn01L_s0LG.vfx" />
+    <Entry FilePath="/Assets/tpp/effect/vfx_data/muzzle/fx_tpp_mzfgrl01_s0LG.vfx" />
+    <Entry FilePath="/Assets/tpp/effect/vfx_data/muzzle/fx_tpp_mzfasr10m_s0FG.vfx" />
+    <Entry FilePath="/Assets/tpp/effect/vfx_data/mecha/fx_tpp_mchctvflrchf01_s0.vfx" />
+    <Entry FilePath="/Assets/tpp/effect/vfx_data/flare/fx_tpp_gunlgt02_s5MG.vfx" />
+    <Entry FilePath="/Assets/tpp/effect/vfx_data/explosion/fx_tpp_expuav01_s2.vfx" />
+    <Entry FilePath="/Assets/tpp/effect/vfx_data/explosion/fx_tpp_expgrnd01_s2LG.vfx" />
+    <Entry FilePath="/Assets/tpp/parts/mecha/uav/UavDefenseLmg.tgt" />
+    <Entry FilePath="/Assets/tpp/parts/mecha/uav/UavDefenseGl.tgt" />
+    <Entry FilePath="/Assets/tpp/parts/mecha/uav/UavDefense.tgt" />
+    <Entry FilePath="/Assets/tpp/sound/package/vox_o50050_add.sdf" />
+    <Entry FilePath="/Assets/tpp/sound/package/vox_o50050.sdf" />
+  </Entries>
+  <References />
+</ArchiveFile>

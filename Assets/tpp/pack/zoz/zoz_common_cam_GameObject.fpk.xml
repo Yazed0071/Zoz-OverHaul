@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<ArchiveFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:type="FpkFile" Name="zoz_common_cam_GameObject.fpk" FpkType="Fpk">
+  <Entries>
+    <Entry FilePath="/Assets/tpp/mecha/ctv/Scenes/ctv0_main0_def.fmdl" />
+    <Entry FilePath="/Assets/tpp/mecha/ctv/Scenes/ctv0_main0_def.gskl" />
+    <Entry FilePath="/Assets/tpp/mecha/ctv/Scenes/ctv0_main0_def.fcnp" />
+    <Entry FilePath="/Assets/tpp/fova/mecha/ctv/ctv0_v00.fv2" />
+    <Entry FilePath="/Assets/tpp/fova/mecha/ctv/ctv0_v01.fv2" />
+    <Entry FilePath="/Assets/tpp/fova/mecha/special_color/nonlethal.fv2" />
+    <Entry FilePath="/Assets/tpp/fova/mecha/special_color/nonlethal_up.fv2" />
+  </Entries>
+  <References />
+</ArchiveFile>

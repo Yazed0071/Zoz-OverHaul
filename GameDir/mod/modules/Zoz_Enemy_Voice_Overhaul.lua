@@ -86,15 +86,17 @@ function this.SetSoldierSurrender(soldierId)
 			InfCore.Log("Zoz Log: TppRevenge.GetRevengeLv(TppRevenge.REVENGE_TYPE.COMBAT) == " .. TppRevenge.GetRevengeLv(TppRevenge.REVENGE_TYPE.COMBAT))
 
 			local revengeLevel = TppRevenge.GetRevengeLv(TppRevenge.REVENGE_TYPE.COMBAT)
-
-			if revengeLevel < 3 and randomValue >= 25 then
+			InfCore.Log("Zoz Log: GetDistanceFromPlayer == " .. Zoz_Enemy_Overhaul.GetDistanceFromPlayer( mvars.aliveSoldierName, "TppSoldier2" ))
+			if Zoz_Enemy_Overhaul.GetDistanceFromPlayer( mvars.aliveSoldierName, "TppSoldier2" ) > 411.8 then -- Around 20m
+				InfCore.Log"Zoz Log: wow soldier too far"
+			elseif revengeLevel < 3 and randomValue >= 25 then
 				makeSurrender()
 			elseif revengeLevel == 3 and randomValue <= 50 then
 				makeSurrender()
 			elseif revengeLevel > 3 and randomValue <= 25 then
 				makeSurrender()
 			else
-				InfCore.Log("Zoz Log: wow soldier very brave")
+				InfCore.Log"Zoz Log: wow soldier very brave"
 			end
 		end
 	end
@@ -232,7 +234,7 @@ function this.Messages()
 				func = function ()
 					if not Tpp.IsNotAlert() and mvars.IsEnemyRestrained then
 						GkEventTimerManager.Start("EVC420_Timer", 3)
-						if TppRevenge.GetRevengeLv(TppRevenge.REVENGE_TYPE.COMBAT) > 3 then
+						if TppRevenge.GetRevengeLv(TppRevenge.REVENGE_TYPE.COMBAT) <= 3 then
 							Zoz_Enemy_Overhaul.GetClosestSoldierCQC("EVC430")
 						else
 							Zoz_Enemy_Overhaul.GetClosestSoldierCQC("EVC431")
@@ -255,13 +257,23 @@ function this.Messages()
 				msg = "PlayerHoldWeapon",
 				func = function (equipId, equipType, hasGunLight, isSheild)
 					if Ivars.Zoz_Enemy_Voice_Enemy_Reaction_Player_RPG:Is(1) then
-						if equipType == 8 and not Tpp.IsNotAlert() and not GkEventTimerManager.IsTimerActive("EVR083_Timer") then -- EQP_TYPE_Missile
+						if equipType == TppEquip.EQP_TYPE_Missile and not Tpp.IsNotAlert() and not GkEventTimerManager.IsTimerActive("EVR083_Timer") then -- EQP_TYPE_Missile
 							Zoz_Enemy_Overhaul.GetClosestSoldierSpeak("EVR083") -- INCOMING!!
 							GkEventTimerManager.Start("EVR083_Timer", 15)
 						end
 					end
 				end
 			},
+			{
+				msg = "OnPlayerStaminaOut",
+				func = function (playerIndex, isSelfInflicted)
+					if TppLocation.IsMotherBase()then
+						if isSelfInflicted then
+							Zoz_Enemy_Overhaul.GetClosestSoldierSpeak("EVR083") -- Boss, I don't think that's...
+						end
+					end
+				end
+			}
 		},
     }
 end

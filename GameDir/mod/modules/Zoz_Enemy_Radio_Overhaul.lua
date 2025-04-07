@@ -14,23 +14,36 @@ local NULL_ID = GameObject.NULL_ID
 function this.OnAllocate()end
 function this.OnInitialize()end
 
-function this.LoadLibraries()
-    local ShowAnnounceLog = TppUI.ShowAnnounceLog
-    TppUI.ShowAnnounceLog = function(announceId,param1,param2,delayTime,missionSubGoalNumber) -- value if announceId comes from TppUi.ANNOUNCE_LOG_TYPE
-		ShowAnnounceLog(announceId,param1,param2,delayTime,missionSubGoalNumber)
-		if announceId == "quest_delete" then
-			
+function this.RequestForceReinforce(gameObjectId, phaseName)
+	if phaseName == PHASE_ALERT then
+		if TppRevenge.GetRevengeLv(TppRevenge.REVENGE_TYPE.COMBAT) > 3 and string.find(Zoz_overhaul_Ivars.getClosestCpString(), "_cp") then
+			if mvars.reinforce_activated then
+				InfCore.Log"Zoz Log: reinforce already activated, Can't RequestForceReinforce"
+				return
+			end
+			if TppReinforceBlock._HasVehicle() then
+				InfCore.Log"Zoz Log: TppReinforceBlock._HasVehicle(), Can't RequestForceReinforce"
+			else
+				if TppRevenge.SelectReinforceType() == TppReinforceBlock.REINFORCE_TYPE.HELI and GameObject.DoesGameObjectExistWithTypeName"TppEnemyHeli" then
+					InfCore.Log"Zoz Log: can't fire RequestForceReinforce GameObject.DoesGameObjectExistWithTypeName\"TppEnemyHeli\" is true"
+				end
+				InfCore.Log"Zoz Log: RequestForceReinforce command sent"
+				local gameObjectId = { type="TppCommandPost2", index = Zoz_overhaul_Ivars.getClosestCp()}
+				local command = { id = "RequestForceReinforce" }
+				GameObject.SendCommand( gameObjectId, command )
+			end
+		else
+			InfCore.Log"Zoz Log: can't fire RequestForceReinforce Combat lvl not high enough"
 		end
-    end
+	end
 end
 
-function this.randomizeMortarShell(num1, num2 )
-	return math.random(num1, num2)
-end
+
 
 function this.Messages()
     return StrCode32Table{
 		GameObject = {
+			{msg = "ChangePhase",func = this.RequestForceReinforce},
 			{
 				msg = "BreakGimmick",
 				func = function( gameObjectId , gameObjectName , name, attackerId)
@@ -47,7 +60,7 @@ function this.Messages()
 				func = function ( gameObjectId, cpGameObjectId, speechLabel, isSuccess )
 					if speechLabel == StrCode32( "CPR0022" ) or speechLabel == 3691244289 then -- when spotted by camera and UAV only
 						if Ivars.Zoz_Enemy_Radio_Extra_Camera_Lines:Is(1) then
-							Zoz_Enemy_Overhaul.PlayCPOnlyRadio("CPR0022_1")
+							Zoz_Enemy_Overhaul.PlayCPOnlyRadio("CPR0022_1") -- Responding to intruder!
 						end
 					elseif speechLabel == StrCode32( "ZOZ0000" ) or speechLabel == StrCode32( "ZOZ_CPR0037_0" ) or speechLabel == StrCode32( "ZOZ_CPR0037_1" ) and Zoz_overhaul_Ivars.IsNotPhase(PHASE_ALERT) and Zoz_overhaul_Ivars.IsNotPhase(PHASE_EVASION) then
 						GameObject.SendCommand( Zoz_overhaul_Ivars.getClosestCp(), { id = "SetPhase", phase = TppGameObject.PHASE_CAUTION } )
@@ -74,28 +87,11 @@ function this.Messages()
   						  return
   						end
   						TppUiCommand.AnnounceLogViewLangId("announce_phase_to_caution",n)
-					elseif isSuccess ~= 1 and not Zoz_overhaul_Ivars.IsNotPhase(PHASE_ALERT) and Ivars.Zoz_Enemy_Radio_Repeat_Last:Is(1) and not (vars.locationCode == TppDefine.LOCATION_ID.GNTN) then
+					elseif isSuccess ~= 1 and not Tpp.IsNotAlert() and Ivars.Zoz_Enemy_Radio_Repeat_Last:Is(1) then
 						Zoz_Enemy_Overhaul.PlayCPOnlyRadio("ZOZ_CPI0110")-- Repeat that last
 					elseif isSuccess and speechLabel == StrCode32( "CPR0230" ) or speechLabel == StrCode32( "CPR0250" ) or speechLabel == StrCode32( "CPR0270" ) then
 						GkEventTimerManager.Start("Announce_PrisonerNotFound", 180)
 						InfCore.Log("Zoz_Overhaul Log: Timer Announce_PrisonerNotFound Start")
-					elseif speechLabel == StrCode32( "CPR0182" ) then
-						if not Zoz_overhaul_Ivars.IsNotPhase(PHASE_ALERT) then
-							local cRevengeLv = TppRevenge.GetRevengeLv(TppRevenge.REVENGE_TYPE.COMBAT)
-							if cRevengeLv == 1 then
-								GkEventTimerManager.Start("RefireMortarSupport_Timer", 25)
-							elseif cRevengeLv == 2 then
-								GkEventTimerManager.Start("RefireMortarSupport_Timer", 20)
-							elseif cRevengeLv == 3 then
-								GkEventTimerManager.Start("RefireMortarSupport_Timer", 15)
-							elseif cRevengeLv == 4 then
-								GkEventTimerManager.Start("RefireMortarSupport_Timer", 10)
-							elseif cRevengeLv == 5 then
-								GkEventTimerManager.Start("RefireMortarSupport_Timer", 5)
-							end
-						end
-					elseif speechLabel == StrCode32( "CPR0190" ) then
-						TppShell.FireMortar(Vector3(vars.playerPosX + (this.randomizeMortarShell(-100, 100 )),vars.playerPosY+50,vars.playerPosZ + (this.randomizeMortarShell(-100, 100))), Vector3(vars.playerPosX + this.randomizeMortarShell(-10, 10),vars.playerPosY,vars.playerPosZ + this.randomizeMortarShell(-10, 10)), 10)
 					end
 				end
 			},
@@ -120,63 +116,8 @@ function this.Messages()
 					end
 				end
 			},
-			{
-				msg = "ChangePhase",
-				func = function(gameObjectId,phaseId,oldPhaseId)
-					if phaseId == TppGameObject.PHASE_ALERT then
-						mvars.FireMortarLimit = 0
-						local cRevengeLv = TppRevenge.GetRevengeLv(TppRevenge.REVENGE_TYPE.COMBAT)
-						if cRevengeLv == 1 then
-							GkEventTimerManager.Start("MortarSupport_Timer", 120)
-						elseif cRevengeLv == 2 then
-							GkEventTimerManager.Start("MortarSupport_Timer", 100)
-						elseif cRevengeLv == 3 then
-							GkEventTimerManager.Start("MortarSupport_Timer", 80)
-						elseif cRevengeLv == 4 then
-							GkEventTimerManager.Start("MortarSupport_Timer", 60)
-						elseif cRevengeLv == 5 then
-							GkEventTimerManager.Start("MortarSupport_Timer", 30)
-						end
-					end
-				end
-			},
 		},
 		Timer = {
-			{ 	msg = "Finish",
-				sender = "MortarSupport_Timer",
-				func = 	function()
-					if not Zoz_overhaul_Ivars.IsNotPhase(PHASE_ALERT) then
-						Zoz_Enemy_Overhaul.PlayCPOnlyRadio("CPR0182")
-					end
-				end
-			},
-			{ 	msg = "Finish",
-				sender = "RefireMortarSupport_Timer",
-				func = 	function()
-					if not Zoz_overhaul_Ivars.IsNotPhase(PHASE_ALERT) then
-						if mvars.FireMortarLimit == nil then
-							mvars.FireMortarLimit = 1
-						else
-							mvars.FireMortarLimit = mvars.FireMortarLimit + 1
-						end
-						if mvars.FireMortarLimit <= 10 then
-							Zoz_Enemy_Overhaul.PlayCPOnlyRadio("CPR0190")
-							local cRevengeLv = TppRevenge.GetRevengeLv(TppRevenge.REVENGE_TYPE.COMBAT)
-							if cRevengeLv == 1 then
-								GkEventTimerManager.Start("RefireMortarSupport_Timer", 25)
-							elseif cRevengeLv == 2 then
-								GkEventTimerManager.Start("RefireMortarSupport_Timer", 20)
-							elseif cRevengeLv == 3 then
-								GkEventTimerManager.Start("RefireMortarSupport_Timer", 15)
-							elseif cRevengeLv == 4 then
-								GkEventTimerManager.Start("RefireMortarSupport_Timer", 10)
-							elseif cRevengeLv == 5 then
-								GkEventTimerManager.Start("RefireMortarSupport_Timer", 5)
-							end
-						end
-					end
-				end
-			},
 			{ 	msg = "Finish",
 				sender = "Announce_UAVFeedDown",
 				func = 	function()
@@ -186,7 +127,7 @@ function this.Messages()
 			{ 	msg = "Finish",
 				sender = "gunShipReported_Timer",
 				func = 	function()
-					Zoz_Enemy_Overhaul.PlayCPOnlyRadio("CPR0210")
+					Zoz_Enemy_Overhaul.PlayCPOnlyRadio("CPR0210") -- Taking fire by enemy gunship!
 				end
 			},
 			{ 	msg = "Finish",
@@ -195,10 +136,9 @@ function this.Messages()
 					if Ivars.Zoz_Enemy_Radio_Report_Broken_Communication:Is(1) then
 						if Zoz_overhaul_Ivars.IsNotPhase(PHASE_ALERT) then
 							local options = {"ZOZ_CPR0037_0", "ZOZ_CPR0037_1"}
-							Zoz_Enemy_Overhaul.PlayCPOnlyRadio(options[math.random(#options)])
+							Zoz_Enemy_Overhaul.PlayCPOnlyRadio(options[math.random(#options)]) -- CODE 102/ NETWORK DOWN
 						else
-							local options = {"CPR0038", "ZOZ_CPR0038_1"}
-							Zoz_Enemy_Overhaul.PlayCPOnlyRadio(options[math.random(#options)])
+							Zoz_Enemy_Overhaul.PlayCPOnlyRadio("ZOZ_CPR0038_1") -- CODE 102! CODE 102!
 						end
 					end
 				end
@@ -212,7 +152,7 @@ function this.Messages()
 							InfCore.Log("Zoz_Overhaul Log: Second")
 							local gameObjectId = GameObject.GetGameObjectId( "TppSoldier2", Zoz_Enemy_Overhaul.GetClosestSoldier() )
 							if not Zoz_Enemy_Overhaul.IsCanCommunicate(gameObjectId) then
-								Zoz_Enemy_Overhaul.PlayCPOnlyRadio("CPR0081")
+								Zoz_Enemy_Overhaul.PlayCPOnlyRadio("CPR0081") -- no sign of prisoner standing down
 								InfCore.Log("Zoz_Overhaul Log: CannotCommunicate")
 							else
 								InfCore.Log("Zoz_Overhaul Log: IsCanNotCanCommunicate")
@@ -257,16 +197,12 @@ function this.Messages()
 					if blockName == StrCode32( "reinforce_block" ) and blockState == ScriptBlock.TRANSITION_ACTIVATED then
 						InfCore.Log("Zoz_Overhaul Log: RequestLoadReinforce")
 						if TppReinforceBlock._HasVehicle() then
-							InfCore.Log("Zoz_Overhaul Log: TppReinforceBlock._HasVehicle()")
 							if mvars.reinforce_reinforceType==TppReinforceBlock.REINFORCE_TYPE.EAST_TANK or mvars.reinforce_reinforceType==TppReinforceBlock.REINFORCE_TYPE.WEST_TANK then
-								InfCore.Log("Zoz_Overhaul Log: TppReinforceBlock._HasVehicle(_TANK)")
 								Zoz_Enemy_Overhaul.PlayCPOnlyRadio("ZOZ_HQR0110") -- : HQ has deployed tank
 							else
-								InfCore.Log("Zoz_Overhaul Log: TppReinforceBlock._HasVehicle(_AV)")
 								Zoz_Enemy_Overhaul.PlayCPOnlyRadio("ZOZ_HQR0120") -- : HQ has deployed armored vehicle
 							end
 						else
-							InfCore.Log("Zoz_Overhaul Log: TppReinforceBlock._HasHeli()")
 							Zoz_Enemy_Overhaul.PlayCPOnlyRadio("ZOZ_HQR0100") -- : HQ has deployed helicopter
 						end
 					end

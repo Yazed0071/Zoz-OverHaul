@@ -14,35 +14,21 @@ Current features:
 -Adds unused Enemy Voice Lines and some new gameplay functions
 -Adds IR Sensros, Burglar Alarm for both missions and free room
 
--Adds Security Cameras only for the following missions:
--- PHANTOM LIMBS
- --A HERO’S WAY
- --C2W
- --OVER THE FENCE
- --WHERE DO THE BEES SLEEP?
-- -RED BRASS
- --ANGEL WITH BROKEN WINGS
- --HELLBOUND
--- PITCH DARK
- --TRAITORS’ CARAVAN
- --CODE TALKER
- --TO KNOW TOO MUCH
+-Adds Security Cameras only for main missions
+UCH
  --CURSED LEGACY
 
 And a bonus 3 Phase BGM tracks
 
 1.2.2
-Adds grades to IR sensors and burglar alarms
+Added grades to IR sensors and burglar alarms
 
 1.2.3
-Adds UAVs to Missions
+Added UAVs to Missions
+Added A Player Overhaul menu
 remove static noise when Idroid audio is played
 
-this mod wasn't going to be possible without the help of the great community
-
-
-Free room camera : :(
-UAVs in mission test</Description>
+this mod wasn't going to be possible without the help of the great community</Description>
   <QarEntries />
   <FpkEntries />
   <FileEntries />

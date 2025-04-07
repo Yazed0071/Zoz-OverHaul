@@ -24,6 +24,7 @@ this.Zoz_Overhaul={
 		"Zoz_Idroid_Overhaul.Zoz_Idroid_Overhaul",
         "Zoz_Support_Radio_Overhaul.Zoz_Support_Radio_Overhaul",
 		"Zoz_Enemy_Overhaul.Zoz_Enemy_Overhaul",
+		"Zoz_Player_Overhaul.Zoz_Player_Overhaul",
 	}
 }
 

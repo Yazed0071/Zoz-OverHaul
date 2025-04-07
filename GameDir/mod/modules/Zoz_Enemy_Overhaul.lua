@@ -98,8 +98,9 @@ this.Zoz_Enemy_Phase_Music_Overhaul={
 this.Zoz_BGM_Phase_List = {
 	"None",
     "bgm_paz_escape",
+	"bgm_MGR_Time",
+	"bgm_Deja_Vu",
     "bgm_fob_neutral",
-    "bgm_time_limit",
     "ITSTHEFREAKINBAT",
 }
 
@@ -187,9 +188,9 @@ this.Zoz_Enemy_Equipment_Fulton={
 } 
 this.Zoz_Enemy_Equipment_Camera={
 	save=IvarProc.CATEGORY_EXTERNAL,
-	settings={"OFF","ON"},
-	default=1,
-}
+	settings={"OFF","FreeRoom","Mission","ALL"},
+	default=3,
+} 
 this.Zoz_Enemy_Equipment_Uav={
 	save=IvarProc.CATEGORY_EXTERNAL,
 	settings={"OFF","ON"},
@@ -309,8 +310,8 @@ function this.OnAllocate()end
 function this.OnInitialize()end
 
 function this.PlayCPOnlyRadio(Label)
-	InfCore.Log("Zoz_Overhaul Log: Zoz_Support_Enemy_Overhaul.PlayCPOnlyRadio(" .. Label..") in CP: " .. Zoz_overhaul_Ivars.getClosestCpString())
     if string.find(Zoz_overhaul_Ivars.getClosestCpString(), "_cp") then
+        InfCore.Log("Zoz_Overhaul Log: Zoz_Support_Enemy_Overhaul.PlayCPOnlyRadio(" .. Label..") in CP: " .. Zoz_overhaul_Ivars.getClosestCpString())
         GameObject.SendCommand( Zoz_overhaul_Ivars.getClosestCp(),{ id = "RequestRadio", label=Label } )
     end
 end
@@ -365,6 +366,28 @@ function this.IsCanCommunicate(gameObjectId)
         return false
     end
     return true
+end
+
+function this.GetDistanceFromPlayer( gameObjectName, gameObjectType )
+	local GetGameObjectId = GameObject.GetGameObjectId
+	local SendCommand = GameObject.SendCommand
+
+	
+	local playerPos = {}
+	playerPos = TppPlayer.GetPosition()
+
+	
+	local gameObjectId = GetGameObjectId(gameObjectType, gameObjectName)
+	local command = {
+		id="GetPosition",
+	}
+	local enemyPosVector3 = SendCommand(gameObjectId, command)
+	local enemyPos = {}
+	enemyPos = TppMath.Vector3toTable( enemyPosVector3 )
+
+	
+	local distance = TppMath.FindDistance( playerPos, enemyPos )
+	return distance
 end
 
 

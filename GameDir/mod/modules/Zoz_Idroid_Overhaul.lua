@@ -284,9 +284,9 @@ function this.Messages()
 			{
 				msg = "VehicleBroken",
 				func = function( gameObjectId, state )
-					if state == StrCode32("End") then
+					if state == StrCode32("Start") then
 						local type = GameObject.SendCommand( gameObjectId, { id="GetVehicleType", } )
-						if gameObjectId == 25600 and Ivars.Zoz_Idroid_Audio_Friendly_Vehicle_Destroyed:Is(1) then -- Friendly vehicle
+						if gameObjectId == 25600 and Ivars.Zoz_Idroid_Audio_Friendly_Vehicle_Destroyed:Is(1) then -- 25600 is Friendly vehicle
 							this.IdroidRadioPlay("idrd1000_106444")
 						else
 							if type==Vehicle.type.EASTERN_WHEELED_ARMORED_VEHICLE or type==Vehicle.type.WESTERN_WHEELED_ARMORED_VEHICLE and Ivars.Zoz_Idroid_announce_destroy_APC:Is(1) then
@@ -303,7 +303,7 @@ function this.Messages()
 			{
 				msg = "LostControl",
 				func = function( heliId, sequenceName, attackerId )
-					if  sequenceName == StrCode32("End") and Ivars.Zoz_Idroid_announce_destroy_heli:Is(1) then
+					if  sequenceName == StrCode32("Start") and Ivars.Zoz_Idroid_announce_destroy_heli:Is(1) then
 						TppUiCommand.AnnounceLogViewLangId("announce_destroy_heli")
 					end
 				end
@@ -340,7 +340,7 @@ function this.Messages()
 				msg = "ChangeLife",
 				func = function( gameObjectId, hitPoint )
 					if (gameObjectId == GameObject.GetGameObjectId"BuddyQuietGameObjectLocator") and Ivars.Zoz_Idroid_announce_quiet_request:Is(1)then
-						if hitPoint <= 25 and mvars.QuietSOS == false then
+						if hitPoint <= 10 and mvars.QuietSOS == false then
 							mvars.QuietSOS = true
 							TppUiCommand.AnnounceLogViewLangId("announce_quiet_request")
 						else
@@ -519,6 +519,13 @@ function this.Messages()
 				msg = "MbDvcActHeliGoHere",
 				func = function ()
 					mvars.IsSupportHeliAttacking = true
+				end
+			},
+			{
+				msg = "MbDvcActSelectCboxDelivery",
+				func = function (gameId)
+					mvars.InAngola = true
+					mvars.InZaire = true
 				end
 			},
 		},
