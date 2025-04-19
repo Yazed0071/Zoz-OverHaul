@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<ArchiveFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:type="FpkFile" Name="afgh_village.fpk" FpkType="Fpk">
+  <Entries>
+    <Entry FilePath="/Assets/tpp/level/location/afgh/block_large/village/lba/PowerCutArea_village1.lba" />
+    <Entry FilePath="/Assets/tpp/level/location/afgh/block_large/village/lba/zoz_PowerCutArea_village1.lba" />
+    <Entry FilePath="/Assets/tpp/level/location/afgh/block_large/village/lba/zoz_afgh_gnrt002_gim_i.lba" />
+    <Entry FilePath="/Assets/tpp/level/location/afgh/block_large/village/lba/zoz_afgh_lght001_vrtn002.lba" />
+    <Entry FilePath="/Assets/tpp/level/location/afgh/block_large/village/lba/zoz_afgh_lght006_vrtn001.lba" />
+    <Entry FilePath="/Assets/tpp/level/location/afgh/block_large/village/lba/zoz_afgh_lght007_vrtn001.lba" />
+    <Entry FilePath="/Assets/tpp/level/location/afgh/block_large/village/lba/zoz_afgh_lght007_vrtn002.lba" />
+    <Entry FilePath="/Assets/tpp/level/location/afgh/block_large/village/lba/zoz_gntn_lght008_emit002.lba" />
+    <Entry FilePath="/Assets/tpp/environ/object/afghanistan/light/afgh_lght006/scenes/afgh_lght006_vrtn001.fmdl" />
+    <Entry FilePath="/Assets/tpp/environ/object/afghanistan/light/afgh_lght006/scenes/afgh_lght006_vrtn001.geom" />
+    <Entry FilePath="/Assets/tpp/environ/object/afghanistan/light/afgh_lght006/scenes/afgh_lght006_vrtn001.fcnp" />
+  </Entries>
+  <References />
+</ArchiveFile>

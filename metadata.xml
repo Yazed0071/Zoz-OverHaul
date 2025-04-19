@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ModEntry xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="Zoz OverHaul" Version="1.2.1" Author="Yazed0071" Website="https://www.nexusmods.com/metalgearsolidvtpp/mods/2169?tab=description">
+<ModEntry xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="Zoz OverHaul" Version="1.2.3" Author="Yazed0071" Website="https://www.nexusmods.com/metalgearsolidvtpp/mods/2169?tab=description">
   <MGSVersion Version="1.0.15.3" />
   <SBVersion Version="0.0.0.0" />
   <Description>Thank you for downloading!
@@ -27,6 +27,9 @@ Added grades to IR sensors and burglar alarms
 Added UAVs to Missions
 Added A Player Overhaul menu
 remove static noise when Idroid audio is played
+
+1.3
+Testing Shaha in Village
 
 this mod wasn't going to be possible without the help of the great community</Description>
   <QarEntries />

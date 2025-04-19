@@ -77,6 +77,23 @@ this.IsMachineGun = function(gameObjectId)
     return gameObjectType == TppGameObject.GAME_OBJECT_TYPE_MACHINEGUN
 end
 
+this.zoz_afgh_gimmickIdentifierParamTableExtra={
+	afgh_zoz_village_Generator = {
+		type = TppGameObject.GAME_OBJECT_TYPE_IMPORTANT_BREAKABLE,
+		locatorName = "zoz_afgh_gnrt002_gim_n0000|srt_afgh_gnrt002",
+		dataSetName = "/Assets/tpp/level/location/afgh/block_large/village/zoz_village_asset.fox2",
+		gimmickType = TppGimmick.GIMMICK_TYPE.GNRT,
+		blockLarge  = "afgh_village",
+	},
+}
+
+this.zoz_afgh_gimmickPowerCutConnectTableExtra = {
+	afgh_zoz_village_Generator = {
+		powerCutAreaName = "zoz_PowerCutArea_village1",
+		cpName = "afgh_village_cp",
+	},
+}
+
 this.MISSION_PACKS = {
     CCTV = {
         [10020] = {
@@ -1089,6 +1106,14 @@ function this.Init(missionTable)
         )
     end
 
+    local gimmickIdentifierTable=InfUtil.CopyTable(afgh_gimmick.gimmickIdentifierParamTable)
+    gimmickIdentifierTable.afgh_zoz_village_Generator=this.zoz_afgh_gimmickIdentifierParamTableExtra.afgh_zoz_village_Generator
+
+    local gimmickPowerCutConnectTable=InfUtil.CopyTable(afgh_gimmick.gimmickPowerCutConnectTable)
+	gimmickPowerCutConnectTable.afgh_zoz_village_Generator=this.zoz_afgh_gimmickPowerCutConnectTableExtra.afgh_zoz_village_Generator
+
+    TppGimmick.SetUpIdentifierTable(gimmickIdentifierTable)
+    TppGimmick.SetUpConnectPowerCutTable(gimmickPowerCutConnectTable)
     this.messageExecTable = Tpp.MakeMessageExecTable(this.Messages())
 end
 
