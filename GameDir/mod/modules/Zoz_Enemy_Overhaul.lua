@@ -5,94 +5,23 @@ local missionID = TppMission.GetMissionID()
 
 local NULL_ID = GameObject.NULL_ID
 
-this.registerMenus={
-	"Zoz_Enemy_Overhaul",
-    "Zoz_Enemy_Radio_Overhaul",
-    "Zoz_Enemy_Voice_Overhaul",
-    "Zoz_Enemy_Equipment_Overhaul",
-    "Zoz_Enemy_Phase_Music_Overhaul",
-}
-
-this.Zoz_Enemy_Overhaul={
-	parentRefs={"Zoz_Overhaul.safeSpaceMenu","Zoz_Overhaul.inMissionMenu"},
-	options={
-		"Zoz_Enemy_Overhaul.Zoz_Enemy_Radio_Overhaul",
-		"Zoz_Enemy_Overhaul.Zoz_Enemy_Voice_Overhaul",
-        "Zoz_Enemy_Overhaul.Zoz_Enemy_Equipment_Overhaul",
-        "Zoz_Enemy_Overhaul.Zoz_Enemy_Phase_Music_Overhaul",
-	}
-}
 
 this.registerIvars={
-    -- Enemy_Radio
-	"Zoz_Enemy_Radio_Report_Broken_Communication",
-	"Zoz_Enemy_Radio_Extra_Camera_Lines",
-	"Zoz_Enemy_Radio_Report_UAV_Down",
-	"Zoz_Enemy_Radio_Repeat_Last",
-	"Zoz_Enemy_Radio_Cancel_Prisoner_Search",
-	"Zoz_Enemy_Radio_Report_Damage_From_Gunship",
-	"Zoz_Enemy_Radio_Announce_Shift_Change",
-
-    -- Enemy_Voice
-    "Zoz_Enemy_Voice_Enemy_Reaction_Player_Vehicle",
-    "Zoz_Enemy_Voice_Enemy_Reaction_Player_Aim",
-    "Zoz_Enemy_Voice_Enemy_Reaction_Player_RPG",
-    "Zoz_Enemy_Voice_Enemy_Player_Restrain",
-    "Zoz_Enemy_Voice_Enemy_Surrender",
-
-    -- Enemy_Equipment
-    "Zoz_Enemy_Equipment_Fulton",
-    "Zoz_Enemy_Equipment_Camera",
-    "Zoz_Enemy_Equipment_Uav",
-    "Zoz_Enemy_Equipment_Ir_Sensors",
-    "Zoz_Enemy_Equipment_burglar_alarm",
-
-    -- Enemy_Phase_Music_Overhaul
     "Zoz_BGM_Phase_Select",
     "Zoz_BGM_Select_Stop",
 }
 
-this.Zoz_Enemy_Radio_Overhaul={
-	parentRefs={"Zoz_Enemy_Overhaul.safeSpaceMenu","Zoz_Enemy_Overhaul.inMissionMenu"},
-	options={
-		"Ivars.Zoz_Enemy_Radio_Report_Broken_Communication",
-		"Ivars.Zoz_Enemy_Radio_Extra_Camera_Lines",
-		"Ivars.Zoz_Enemy_Radio_Report_UAV_Down",
-		"Ivars.Zoz_Enemy_Radio_Repeat_Last",
-		"Ivars.Zoz_Enemy_Radio_Cancel_Prisoner_Search",
-		"Ivars.Zoz_Enemy_Radio_Report_Damage_From_Gunship",
-		"Ivars.Zoz_Enemy_Radio_Announce_Shift_Change",
-	}
-}
-
-this.Zoz_Enemy_Voice_Overhaul={
-	parentRefs={"Zoz_Enemy_Overhaul.safeSpaceMenu", "Zoz_Enemy_Overhaul.inMissionMenu"},
-	options={
-		"Ivars.Zoz_Enemy_Voice_Enemy_Reaction_Player_Vehicle",
-        "Ivars.Zoz_Enemy_Voice_Enemy_Reaction_Player_Aim",
-        "Ivars.Zoz_Enemy_Voice_Enemy_Reaction_Player_RPG",
-        "Ivars.Zoz_Enemy_Voice_Enemy_Player_Restrain",
-        "Ivars.Zoz_Enemy_Voice_Enemy_Surrender",
-	}
-}
-
-this.Zoz_Enemy_Equipment_Overhaul={
-	parentRefs={"Zoz_Enemy_Overhaul.safeSpaceMenu"},
-	options={
-		"Ivars.Zoz_Enemy_Equipment_Fulton",
-        "Ivars.Zoz_Enemy_Equipment_Camera",
-        "Ivars.Zoz_Enemy_Equipment_Uav",
-        "Ivars.Zoz_Enemy_Equipment_Ir_Sensors",
-        "Ivars.Zoz_Enemy_Equipment_burglar_alarm",
-	}
-}
-
-this.Zoz_Enemy_Phase_Music_Overhaul={
-	parentRefs={"Zoz_Enemy_Overhaul.safeSpaceMenu", "Zoz_Enemy_Overhaul.inMissionMenu"},
-	options={
-        "Ivars.Zoz_BGM_Phase_Select",
-        "Ivars.Zoz_BGM_Select_Stop",
-	}
+this.langStrings={
+	eng={
+        Zoz_BGM_Phase_Select = "Select Phase BGM",
+        Zoz_BGM_Select_Stop = "Stop BGM",
+    },
+    help={
+		eng={
+            Zoz_BGM_Phase_Select = "Select the desired Phase BGM and hit the action button!",
+            Zoz_BGM_Select_Stop = "Stop the playing BGM, hit the action button!",
+        }
+    }
 }
 
 this.Zoz_BGM_Phase_List = {
@@ -104,110 +33,6 @@ this.Zoz_BGM_Phase_List = {
     "ITSTHEFREAKINBAT",
 }
 
--- Enemy_Radio
-this.Zoz_Enemy_Radio_Report_Broken_Communication={
-	save=IvarProc.CATEGORY_EXTERNAL,
-	range=Ivars.switchRange,
-	settingNames="set_switch",
-	default=1,
-}
-this.Zoz_Enemy_Radio_Extra_Camera_Lines={
-	save=IvarProc.CATEGORY_EXTERNAL,
-	range=Ivars.switchRange,
-	settingNames="set_switch",
-	default=1,
-}
-this.Zoz_Enemy_Radio_Report_UAV_Down={
-	save=IvarProc.CATEGORY_EXTERNAL,
-	range=Ivars.switchRange,
-	settingNames="set_switch",
-	default=1,
-}
-this.Zoz_Enemy_Radio_Repeat_Last={
-	save=IvarProc.CATEGORY_EXTERNAL,
-	range=Ivars.switchRange,
-	settingNames="set_switch",
-	default=1,
-}
-this.Zoz_Enemy_Radio_Cancel_Prisoner_Search={
-	save=IvarProc.CATEGORY_EXTERNAL,
-	range=Ivars.switchRange,
-	settingNames="set_switch",
-	default=1,
-}
-this.Zoz_Enemy_Radio_Report_Damage_From_Gunship={
-	save=IvarProc.CATEGORY_EXTERNAL,
-	range=Ivars.switchRange,
-	settingNames="set_switch",
-	default=1,
-}
-this.Zoz_Enemy_Radio_Announce_Shift_Change={
-	save=IvarProc.CATEGORY_EXTERNAL,
-	range=Ivars.switchRange,
-	settingNames="set_switch",
-	default=1,
-}
-
--- Enemy_Voice
-this.Zoz_Enemy_Voice_Enemy_Reaction_Player_Vehicle={
-	save=IvarProc.CATEGORY_EXTERNAL,
-	range=Ivars.switchRange,
-	settingNames="set_switch",
-	default=1,
-}
-this.Zoz_Enemy_Voice_Enemy_Reaction_Player_Aim={
-	save=IvarProc.CATEGORY_EXTERNAL,
-	range=Ivars.switchRange,
-	settingNames="set_switch",
-	default=1,
-}
-this.Zoz_Enemy_Voice_Enemy_Player_Restrain={
-	save=IvarProc.CATEGORY_EXTERNAL,
-	range=Ivars.switchRange,
-	settingNames="set_switch",
-	default=1,
-}
-this.Zoz_Enemy_Voice_Enemy_Surrender={
-	save=IvarProc.CATEGORY_EXTERNAL,
-	range=Ivars.switchRange,
-	settingNames="set_switch",
-	default=1,
-} 
-this.Zoz_Enemy_Voice_Enemy_Reaction_Player_RPG={
-	save=IvarProc.CATEGORY_EXTERNAL,
-	range=Ivars.switchRange,
-	settingNames="set_switch",
-	default=1,
-}
-
--- Enemy_Equipment
-this.Zoz_Enemy_Equipment_Fulton={
-	save=IvarProc.CATEGORY_EXTERNAL,
-	settings={"OFF","Normal","Balloon","Wormhole"},
-	default=1,
-} 
-this.Zoz_Enemy_Equipment_Camera={
-	save=IvarProc.CATEGORY_EXTERNAL,
-	settings={"OFF","FreeRoom","Mission","ALL"},
-	default=3,
-} 
-this.Zoz_Enemy_Equipment_Uav={
-	save=IvarProc.CATEGORY_EXTERNAL,
-	settings={"OFF","ON"},
-	default=1,
-} 
-this.Zoz_Enemy_Equipment_Ir_Sensors = {
-	save=IvarProc.CATEGORY_EXTERNAL,
-	settings={"OFF","FreeRoom","Mission","ALL"},
-	default=3,
-}
-this.Zoz_Enemy_Equipment_burglar_alarm = {
-	save=IvarProc.CATEGORY_EXTERNAL,
-	settings={"OFF","FreeRoom","Mission","ALL"},
-	default=3,
-}
-
--- Enemy_Phase_Music_Overhaul
 this.Zoz_BGM_Phase_Select = {
     save = IvarProc.CATEGORY_EXTERNAL,
     settings = this.Zoz_BGM_Phase_List,
@@ -237,73 +62,6 @@ this.Zoz_BGM_Select_Stop = {
         TppSound.ResetPhaseBGM()
     end
 }
-
-this.langStrings={
-	eng={
-		Zoz_Enemy_Overhaul = "Enemy Overhaul",
-
-        Zoz_Enemy_Radio_Overhaul = "Enemy Radio",
-        Zoz_Enemy_Radio_Report_Broken_Communication = "CP Report broken Communication equipment",
-		Zoz_Enemy_Radio_Extra_Camera_Lines = "Extra CCTV and UAV Lines",
-		Zoz_Enemy_Radio_Report_UAV_Down = "CP Report UAV down",
-		Zoz_Enemy_Radio_Repeat_Last = "CP Request repeat",
-		Zoz_Enemy_Radio_Cancel_Prisoner_Search = "Request to cancel the search of a prisoner",
-		Zoz_Enemy_Radio_Report_Damage_From_Gunship = "Report fire from enemy gunship",
-		Zoz_Enemy_Radio_Announce_Shift_Change = "Announce Shift Change",
-
-        Zoz_Enemy_Voice_Overhaul = "Enemy Voice",
-        Zoz_Enemy_Voice_Enemy_Reaction_Player_Vehicle = "Enemy react to Player's Vehicle",
-        Zoz_Enemy_Voice_Enemy_Reaction_Player_Aim = "Enemy react to Player when in Hold up",
-        Zoz_Enemy_Voice_Enemy_Reaction_Player_RPG = "Enemy react to Player when aiming an RPG",
-        Zoz_Enemy_Voice_Enemy_Player_Restrain = "Enemy react to restrain",
-        Zoz_Enemy_Voice_Enemy_Surrender = "Enemy Surrender",
-
-        Zoz_Enemy_Equipment_Overhaul = "Enemy Equipment",
-        Zoz_Enemy_Equipment_Fulton = "Equip Fulton",
-        Zoz_Enemy_Equipment_Camera = "Security Cameras",
-        Zoz_Enemy_Equipment_Uav = "UAVs",
-        Zoz_Enemy_Equipment_Ir_Sensors = "Ir Sensors",
-        Zoz_Enemy_Equipment_burglar_alarm = "Burglar Alarm",
-
-        Zoz_Enemy_Phase_Music_Overhaul = "Enemy Phase BGM menu",
-        Zoz_BGM_Phase_Select = "Select Phase BGM",
-        Zoz_BGM_Select_Stop = "Stop BGM",
-	},
-	help={
-		eng={
-			Zoz_Enemy_Overhaul = "Toggle individual options for Enemy Overhaul",
-
-            Zoz_Enemy_Radio_Overhaul = "Toggle individual options for Enemy Radio",
-            Zoz_Enemy_Radio_Report_Broken_Communication = "The CP will report the Communication equipment was destroyed and enemy soldiers will go to Alert statue (Caution Phase)",
-			Zoz_Enemy_Radio_Extra_Camera_Lines = "Adds an extra line when spotted by a security camera or UAV",
-			Zoz_Enemy_Radio_Report_UAV_Down = "CP will report that a UAV was destroyed and enemy soldiers will go to Alert statue (Caution Phase)",
-			Zoz_Enemy_Radio_Repeat_Last = "CP will ask the soldier to repeat if a radio call wasn't successful during Combat (Alert Phase)",
-			Zoz_Enemy_Radio_Cancel_Prisoner_Search = "Enemy soldier will request to cancel the search of a lost prisoner 3 minutes after he was reported (Only SIDE OPS)",
-			Zoz_Enemy_Radio_Report_Damage_From_Gunship = "Soldiers will report to CP when they get damaged from support heli",
-			Zoz_Enemy_Radio_Announce_Shift_Change = "CP will announce shift changes",
-
-            Zoz_Enemy_Voice_Overhaul = "Toggle individual options for Enemy Voice.",
-            Zoz_Enemy_Voice_Enemy_Reaction_Player_Vehicle = "Enemy will react to Player's Vehicle\nArmored Vehicle and tank only",
-            Zoz_Enemy_Voice_Enemy_Reaction_Player_Aim = "Enemy will react to the player aiming at them during a hold up",
-            Zoz_Enemy_Voice_Enemy_Reaction_Player_RPG = "Enemy react to Player when aiming an RPG\n has 15 seconds cooldown",
-            Zoz_Enemy_Voice_Enemy_Player_Restrain = "Enemy will react to the player when restraining them during Alert Phase",
-            Zoz_Enemy_Voice_Enemy_Surrender = "Enemy will surrender when they are the last.\nThis will depend on their combat level.\nLevel 1 and 2: 75% chance\nLevel 3: 50% chance\nLevel 4 and 5: 25% chance\nFully armored enemies will never surrender",
-
-            Zoz_Enemy_Equipment_Overhaul = "Toggle individual options for Enemy Equipment",
-            Zoz_Enemy_Equipment_Fulton="Makes the enemy able to fulton the player when unconscious if toggled on.",
-            Zoz_Enemy_Equipment_Camera = "When toggled on, surveillance cameras will spawn.\nTHIS OPTION IS FOR MAIN MISSIONS ONLY",
-            Zoz_Enemy_Equipment_Uav = "When toggled on, UAVs will spawn.\nTHIS OPTION IS FOR MAIN MISSIONS ONLY",
-            Zoz_Enemy_Equipment_Ir_Sensors = "Enables Ir Sensors in FOB to be in Afghanistan and Africa!",
-            Zoz_Enemy_Equipment_burglar_alarm = "Enables Burglar Alarm in FOB to be in Afghanistan and Africa!",
-
-            Zoz_Enemy_Phase_Music_Overhaul = "Toggle individual options for Phase music!",
-            Zoz_BGM_Phase_Select = "Select the desired Phase BGM and hit the action button!",
-            Zoz_BGM_Select_Stop = "Stop the playing BGM, hit the action button!",
-
-		},
-	},
-}
-
 
 
 function this.OnAllocate()end
@@ -368,34 +126,33 @@ function this.IsCanCommunicate(gameObjectId)
     return true
 end
 
-function this.GetDistanceFromPlayer( gameObjectName, gameObjectType )
-	local GetGameObjectId = GameObject.GetGameObjectId
-	local SendCommand = GameObject.SendCommand
-
-	
+function this.GetClosestFromPlayer(SoldierId)
 	local playerPos = {}
 	playerPos = TppPlayer.GetPosition()
 
-	
-	local gameObjectId = GetGameObjectId(gameObjectType, gameObjectName)
+    if SoldierId == nil then
+        return
+    end
 	local command = {
 		id="GetPosition",
 	}
-	local enemyPosVector3 = SendCommand(gameObjectId, command)
+	local enemyPosVector3 = GameObject.SendCommand(SoldierId, command)
 	local enemyPos = {}
 	enemyPos = TppMath.Vector3toTable( enemyPosVector3 )
 
 	
-	local distance = TppMath.FindDistance( playerPos, enemyPos )
+	local distance = math.sqrt(TppMath.FindDistance( playerPos, enemyPos ))
+    
+    InfCore.Log("Zoz Log: DITANCE " .. distance)
 	return distance
 end
-
 
 function this.GetClosestSoldierSpeak(label)
 	local soldierList = this.GetSoldierList()
 	local closestSoldierName = this.GetClosestSoldierMath(soldierList)
 	local gameObjectId = GameObject.GetGameObjectId( "TppSoldier2", closestSoldierName )
 	local command = { id = "CallVoice", dialogueName = "DD_vox_ene", parameter= label }
+    
 	GameObject.SendCommand( gameObjectId, command )
 end
 

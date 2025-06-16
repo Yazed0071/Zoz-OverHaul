@@ -14,36 +14,88 @@ local NULL_ID = GameObject.NULL_ID
 function this.OnAllocate()end
 function this.OnInitialize()end
 
-function this.RequestForceReinforce(gameObjectId, phaseName)
-	if phaseName == PHASE_ALERT then
-		if TppRevenge.GetRevengeLv(TppRevenge.REVENGE_TYPE.COMBAT) > 3 and string.find(Zoz_overhaul_Ivars.getClosestCpString(), "_cp") then
-			if mvars.reinforce_activated then
-				InfCore.Log"Zoz Log: reinforce already activated, Can't RequestForceReinforce"
-				return
-			end
-			if TppReinforceBlock._HasVehicle() then
-				InfCore.Log"Zoz Log: TppReinforceBlock._HasVehicle(), Can't RequestForceReinforce"
-			else
-				if TppRevenge.SelectReinforceType() == TppReinforceBlock.REINFORCE_TYPE.HELI and GameObject.DoesGameObjectExistWithTypeName"TppEnemyHeli" then
-					InfCore.Log"Zoz Log: can't fire RequestForceReinforce GameObject.DoesGameObjectExistWithTypeName\"TppEnemyHeli\" is true"
-				end
-				InfCore.Log"Zoz Log: RequestForceReinforce command sent"
-				local gameObjectId = { type="TppCommandPost2", index = Zoz_overhaul_Ivars.getClosestCp()}
-				local command = { id = "RequestForceReinforce" }
-				GameObject.SendCommand( gameObjectId, command )
-			end
-		else
-			InfCore.Log"Zoz Log: can't fire RequestForceReinforce Combat lvl not high enough"
-		end
-	end
-end
 
+this.registerIvars= {
+	-- Enemy_Radio
+	"Zoz_Enemy_Radio_Report_Broken_Communication",
+	"Zoz_Enemy_Radio_Extra_Camera_Lines",
+	"Zoz_Enemy_Radio_Report_UAV_Down",
+	"Zoz_Enemy_Radio_Repeat_Last",
+	"Zoz_Enemy_Radio_Cancel_Prisoner_Search",
+	"Zoz_Enemy_Radio_Report_Damage_From_Gunship",
+	"Zoz_Enemy_Radio_Announce_Shift_Change",
+}
+
+this.langStrings={
+	eng={
+		Zoz_Enemy_Radio_Report_Broken_Communication = "CP Report broken Communication equipment",
+		Zoz_Enemy_Radio_Extra_Camera_Lines = "Extra CCTV and UAV Lines",
+		Zoz_Enemy_Radio_Report_UAV_Down = "CP Report UAV down",
+		Zoz_Enemy_Radio_Repeat_Last = "CP Request repeat",
+		Zoz_Enemy_Radio_Cancel_Prisoner_Search = "Request to cancel the search of a prisoner",
+		Zoz_Enemy_Radio_Report_Damage_From_Gunship = "Report fire from enemy gunship",
+		Zoz_Enemy_Radio_Announce_Shift_Change = "Announce Shift Change",
+	},
+	help={
+		eng={
+			Zoz_Enemy_Radio_Report_Broken_Communication = "The CP will report the Communication equipment was destroyed and enemy soldiers will go to Alert statue (Caution Phase)",
+			Zoz_Enemy_Radio_Extra_Camera_Lines = "Adds an extra line when spotted by a security camera or UAV",
+			Zoz_Enemy_Radio_Report_UAV_Down = "CP will report that a UAV was destroyed and enemy soldiers will go to Alert statue (Caution Phase)",
+			Zoz_Enemy_Radio_Repeat_Last = "CP will ask the soldier to repeat if a radio call wasn't successful during Combat (Alert Phase)",
+			Zoz_Enemy_Radio_Cancel_Prisoner_Search = "Enemy soldier will request to cancel the search of a lost prisoner 3 minutes after he was reported (Only SIDE OPS)",
+			Zoz_Enemy_Radio_Report_Damage_From_Gunship = "Soldiers will report to CP when they get damaged from support heli",
+			Zoz_Enemy_Radio_Announce_Shift_Change = "CP will announce shift changes",
+		},
+	},
+}
+
+this.Zoz_Enemy_Radio_Report_Broken_Communication={
+	save=IvarProc.CATEGORY_EXTERNAL,
+	range=Ivars.switchRange,
+	settingNames="set_switch",
+	default=1,
+}
+this.Zoz_Enemy_Radio_Extra_Camera_Lines={
+	save=IvarProc.CATEGORY_EXTERNAL,
+	range=Ivars.switchRange,
+	settingNames="set_switch",
+	default=1,
+}
+this.Zoz_Enemy_Radio_Report_UAV_Down={
+	save=IvarProc.CATEGORY_EXTERNAL,
+	range=Ivars.switchRange,
+	settingNames="set_switch",
+	default=1,
+}
+this.Zoz_Enemy_Radio_Repeat_Last={
+	save=IvarProc.CATEGORY_EXTERNAL,
+	range=Ivars.switchRange,
+	settingNames="set_switch",
+	default=1,
+}
+this.Zoz_Enemy_Radio_Cancel_Prisoner_Search={
+	save=IvarProc.CATEGORY_EXTERNAL,
+	range=Ivars.switchRange,
+	settingNames="set_switch",
+	default=1,
+}
+this.Zoz_Enemy_Radio_Report_Damage_From_Gunship={
+	save=IvarProc.CATEGORY_EXTERNAL,
+	range=Ivars.switchRange,
+	settingNames="set_switch",
+	default=1,
+}
+this.Zoz_Enemy_Radio_Announce_Shift_Change={
+	save=IvarProc.CATEGORY_EXTERNAL,
+	range=Ivars.switchRange,
+	settingNames="set_switch",
+	default=1,
+}
 
 
 function this.Messages()
     return StrCode32Table{
 		GameObject = {
-			{msg = "ChangePhase",func = this.RequestForceReinforce},
 			{
 				msg = "BreakGimmick",
 				func = function( gameObjectId , gameObjectName , name, attackerId)

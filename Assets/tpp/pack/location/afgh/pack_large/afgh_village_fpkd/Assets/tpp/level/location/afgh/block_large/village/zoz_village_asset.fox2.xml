@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<fox formatVersion="2" fileVersion="0" originalVersion="Wed Apr 16 12:57:35 UTC+03:00 2025">
+<fox formatVersion="2" fileVersion="0" originalVersion="Fri Jun 06 16:17:36 UTC+03:00 2025">
   <classes>
     <class name="Entity" super="" version="2" />
     <class name="Data" super="Entity" version="2" />
@@ -334,13 +334,13 @@
           <value>0x10000150</value>
         </property>
         <property name="transform_scale" type="Vector3" container="StaticArray" arraySize="1">
-          <value x="28.9747944" y="14.6218309" z="19.6564465" w="0" />
+          <value x="40.63715" y="14.6218309" z="58.75491" w="0" />
         </property>
         <property name="transform_rotation_quat" type="Quat" container="StaticArray" arraySize="1">
           <value x="0.008487029" y="-0.247776121" z="0.00217101746" w="0.9687777" />
         </property>
         <property name="transform_translation" type="Vector3" container="StaticArray" arraySize="1">
-          <value x="2.46528435" y="3.26379323" z="11.9179468" w="0" />
+          <value x="1.84" y="3.26" z="30.15" w="0" />
         </property>
       </staticProperties>
       <dynamicProperties />
@@ -2974,7 +2974,7 @@
           <value>0x10000070</value>
         </property>
         <property name="numLightGimmick" type="uint32" container="StaticArray" arraySize="1">
-          <value>2</value>
+          <value>3</value>
         </property>
         <property name="ownerGimmick" type="EntityLink" container="StaticArray" arraySize="1">
           <value packagePath="" archivePath="/Assets/tpp/level/location/afgh/block_large/village/zoz_village_asset.fox2" nameInArchive="zoz_afgh_lght007_vrtn001_gim_i0000|TppSharedGimmick_afgh_lght007_vrtn001">0x10002530</value>

@@ -4,34 +4,8 @@
   <SBVersion Version="0.0.0.0" />
   <Description>Thank you for downloading!
 
-This mod aims to do what Enemy OverHaul did, better and more!!
-Uninstall Enemy OverHaul to avoid known conflicts!
-
-Current features:
--Adds Idroid notifications and new voice lines
--Adds unused Radio calls and unused Voice lines for Pequad
--Adds unused Enemy Radio Calls and some new gameplay functions
--Adds unused Enemy Voice Lines and some new gameplay functions
--Adds IR Sensros, Burglar Alarm for both missions and free room
-
--Adds Security Cameras only for main missions
-UCH
- --CURSED LEGACY
-
-And a bonus 3 Phase BGM tracks
-
-1.2.2
-Added grades to IR sensors and burglar alarms
-
-1.2.3
-Added UAVs to Missions
-Added A Player Overhaul menu
-remove static noise when Idroid audio is played
-
-1.3
-Testing Shaha in Village
-
-this mod wasn't going to be possible without the help of the great community</Description>
+Added more Support Radio!
+Added a voice line when the player get's damages infornt of a saluting Mother Base Staff</Description>
   <QarEntries />
   <FpkEntries />
   <FileEntries />

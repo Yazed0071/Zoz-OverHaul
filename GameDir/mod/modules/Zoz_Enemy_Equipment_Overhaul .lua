@@ -1,9 +1,6 @@
 local this = {}
 local StrCode32 = Fox.StrCode32
 local StrCode32Table = Tpp.StrCode32Table
-
-local missionID = TppMission.GetMissionID()
-local IsTypeString = Tpp.IsTypeString
 local GetGameObjectId = GameObject.GetGameObjectId
 local SendCommand = GameObject.SendCommand
 
@@ -14,31 +11,51 @@ local PHASE_SNEAK = TppGameObject.PHASE_SNEAK
 
 local NULL_ID = GameObject.NULL_ID
 
-function this.OnAllocate()
-end
-function this.OnInitialize()
-end
 
+this.registerIvars={
+    "Zoz_Enemy_Equipment_Fulton",
+    "Zoz_Enemy_Equipment_Camera",
+    "Zoz_Enemy_Equipment_Ir_Sensors",
+    "Zoz_Enemy_Equipment_burglar_alarm",
+}
 
-
-function this.OnMissionCanStart()
-    InfCore.Log("Zoz Log: Zoz_Enemy_Equipment_Overhaul.OnMissionCanStart()")
-	local missionCode = TppMission.GetMissionID()
-    if TppMission.IsHardMission(missionCode) then
-        missionCode = TppMission.GetNormalMissionCodeFromHardMission(missionCode)
-    end
-    if not this.MISSION_PACKS.UAVs[missionCode] then
-        return
-    end
-	if this.SECURITY_LIST.UAVs[missionCode] then
-        InfCore.Log("Zoz Log: UAV info: ")
-        for _, uavInfo in ipairs(this.SECURITY_LIST.UAVs[missionCode]) do
-			local gameId = GetGameObjectId(uavInfo.name)
-			TppMarker2System.DisableMarker{gameObjectId=gameId}
-			TppMarker2System.SetMarkerImportant{gameObjectId=gameId ,isImportant=false}
-        end
-    end
-end
+this.langStrings={
+	eng={
+        Zoz_Enemy_Equipment_Fulton = "Equip Fulton",
+        Zoz_Enemy_Equipment_Camera = "Security Cameras",
+        Zoz_Enemy_Equipment_Ir_Sensors = "Ir Sensors",
+        Zoz_Enemy_Equipment_burglar_alarm = "Burglar Alarm",
+    },
+    help={
+        eng={
+            Zoz_Enemy_Equipment_Fulton="Makes the enemy able to fulton the player when unconscious if toggled on.",
+            Zoz_Enemy_Equipment_Camera = "When toggled on, surveillance cameras will spawn.\nTHIS OPTION IS FOR MAIN MISSIONS ONLY",
+            Zoz_Enemy_Equipment_Ir_Sensors = "Enables Ir Sensors in FOB to be in Afghanistan and Africa!",
+            Zoz_Enemy_Equipment_burglar_alarm = "Enables Burglar Alarm in FOB to be in Afghanistan and Africa!",
+        }
+    }
+	
+}
+this.Zoz_Enemy_Equipment_Fulton={
+	save=IvarProc.CATEGORY_EXTERNAL,
+	settings={"OFF","Normal","Balloon","Wormhole"},
+	default=1,
+} 
+this.Zoz_Enemy_Equipment_Camera={
+	save=IvarProc.CATEGORY_EXTERNAL,
+	settings={"OFF","FreeRoom","Mission","ALL"},
+	default=3,
+} 
+this.Zoz_Enemy_Equipment_Ir_Sensors = {
+	save=IvarProc.CATEGORY_EXTERNAL,
+	settings={"OFF","FreeRoom","Mission","ALL"},
+	default=3,
+}
+this.Zoz_Enemy_Equipment_burglar_alarm = {
+	save=IvarProc.CATEGORY_EXTERNAL,
+	settings={"OFF","FreeRoom","Mission","ALL"},
+	default=3,
+}
 
 function this.RequestNoticeGimmick(cp, gimmickId, sourceId)
     local command = {id = "RequestNotice", type = 0, targetId = gimmickId, sourceId = sourceId}
@@ -159,51 +176,6 @@ this.MISSION_PACKS = {
             "/Assets/tpp/pack/zoz/zoz_lab_Cameras_custom.fpk"
         }
     },
-    UAVs = {
-        [10033] = {
-            -- OVER THE FENCE
-            "/Assets/tpp/pack/zoz/zoz_afgh_uav_enemyBase.fpk"
-        },
-        [10040] = {
-            -- WHERE DO THE BEES SLEEP?
-            "/Assets/tpp/pack/zoz/zoz_afgh_uav_bridge.fpk",
-            "/Assets/tpp/pack/zoz/zoz_afgh_uav_fort.fpk"
-        },
-        [10041] = {
-            -- RED BRASS
-            "/Assets/tpp/pack/zoz/zoz_afgh_uav_enemyBase.fpk"
-        },
-        [10044] = {
-            -- OCCUPATION FORCES
-            "/Assets/tpp/pack/zoz/zoz_afgh_uav_fort.fpk"
-        },
-        [10052] = {
-            -- ANGEL WITH BROKEN WINGS
-            "/Assets/tpp/pack/zoz/zoz_afgh_uav_Tent.fpk"
-        },
-		[10070] = {
-            -- HELLBOUND (Power Plant)
-            "/Assets/tpp/pack/zoz/zoz_afgh_uav_powerPlant.fpk",
-            "/Assets/tpp/pack/zoz/zoz_afgh_uav_sovietBase.fpk"
-        },
-        [10080] = {
-            -- PITCH DARK
-            "/Assets/tpp/pack/zoz/zoz_mafr_uav_flowStation.fpk"
-        },
-        [10090] = {
-            -- TRAITORS’ CARAVAN
-            "/Assets/tpp/pack/zoz/zoz_mafr_uav_flowStation.fpk",
-            --"/Assets/tpp/pack/zoz/zoz_pfCamp_Cameras_custom.fpk"
-        }, 
-        [10130] = {
-            -- CODE TALKER (Lab)
-            "/Assets/tpp/pack/zoz/zoz_mafr_uav_lab.fpk"
-        },
-        [10150] = {
-            -- SKULL FACE (citadel)
-            "/Assets/tpp/pack/zoz/zoz_afgh_uav_citadel.fpk"
-        }
-    }
 }
 
 function this.MissionPrepare()
@@ -350,83 +322,6 @@ this.SECURITY_LIST = {
             {name = "Camera_lab_2", cp = "mafr_lab_cp"},
             {name = "Camera_lab_3", cp = "mafr_lab_cp"},
             {name = "Camera_lab_4", cp = "mafr_lab_cp"}
-        }
-    },
-    UAVs = {
-        [10033] = {
-            -- OVER THE FENCE
-            {name = "zoz_uav_enemyBase_0000",cp = "afgh_enemyBase_cp",DeployRoute = "rt_enemyBase_UAV_d_0000",sendM = "zoz_uav_enemyBase_0000_Start",PatrolRoute = "rt_enemyBase_UAV_a_0000",CombatRoute = "rt_enemyBase_UAV_a_0000"}, -- _a_ for ALL
-            {name = "zoz_uav_enemyBase_0001",cp = "afgh_enemyBase_cp",DeployRoute = "rt_enemyBase_UAV_d_0001",sendM = "zoz_uav_enemyBase_0001_Start",PatrolRoute = "rt_enemyBase_UAV_p_0001",CombatRoute = "rt_enemyBase_UAV_c_0001"},
-            {name = "zoz_uav_enemyBase_0002",cp = "afgh_enemyBase_cp",DeployRoute = "rt_enemyBase_UAV_d_0002",sendM = "zoz_uav_enemyBase_0002_Start",PatrolRoute = "rt_enemyBase_UAV_p_0002",CombatRoute = "rt_enemyBase_UAV_c_0002"},
-            {name = "zoz_uav_enemyBase_0003",cp = "afgh_enemyBase_cp",DeployRoute = "rt_enemyBase_UAV_d_0003",sendM = "zoz_uav_enemyBase_0003_Start",PatrolRoute = "rt_enemyBase_UAV_p_0003",CombatRoute = "rt_enemyBase_UAV_c_0003"}
-        },
-        [10040] = {
-            -- WHERE DO THE BEES SLEEP?
-            {name = "zoz_uav_bridge_0000",cp = "afgh_bridge_cp",DeployRoute = "rt_bridge_UAV_d_0000",sendM = "zoz_uav_bridge_0000_Start",PatrolRoute = "rt_bridge_UAV_p_0000",CombatRoute = "rt_bridge_UAV_c_0000"},
-            {name = "zoz_uav_bridge_0001",cp = "afgh_bridge_cp",DeployRoute = "rt_bridge_UAV_d_0001",sendM = "zoz_uav_bridge_0001_Start",PatrolRoute = "rt_bridge_UAV_p_0001",CombatRoute = "rt_bridge_UAV_c_0001"},
-            {name = "zoz_uav_bridge_0002",cp = "afgh_bridge_cp",DeployRoute = "rt_bridge_UAV_d_0002",sendM = "zoz_uav_bridge_0002_Start",PatrolRoute = "rt_bridge_UAV_p_0002",CombatRoute = "rt_bridge_UAV_c_0002"},
-            {name = "zoz_uav_bridge_0003",cp = "afgh_bridge_cp",DeployRoute = "rt_bridge_UAV_d_0003",sendM = "zoz_uav_bridge_0003_Start",PatrolRoute = "rt_bridge_UAV_p_0003",CombatRoute = "rt_bridge_UAV_c_0003"},
-            {name = "zoz_uav_fort_0000",cp = "afgh_fort_cp",DeployRoute = "rt_fort_UAV_d_0000",sendM = "zoz_uav_fort_0000_Start",PatrolRoute = "rt_fort_UAV_p_0000",CombatRoute = "rt_fort_UAV_c_0000"},
-            {name = "zoz_uav_fort_0001",cp = "afgh_fort_cp",DeployRoute = "rt_fort_UAV_d_0001",sendM = "zoz_uav_fort_0001_Start",PatrolRoute = "rt_fort_UAV_p_0001",CombatRoute = "rt_fort_UAV_c_0001"},
-            {name = "zoz_uav_fort_0002",cp = "afgh_fort_cp",DeployRoute = "rt_fort_UAV_d_0002",sendM = "zoz_uav_fort_0002_Start",PatrolRoute = "rt_fort_UAV_p_0002",CombatRoute = "rt_fort_UAV_c_0002"}
-        },
-        [10041] = {
-            -- RED BRASS
-            {name = "zoz_uav_enemyBase_0000",cp = "afgh_enemyBase_cp",DeployRoute = "rt_enemyBase_UAV_d_0000",sendM = "zoz_uav_enemyBase_0000_Start",PatrolRoute = "rt_enemyBase_UAV_a_0000",CombatRoute = "rt_enemyBase_UAV_a_0000"}, -- _a_ for ALL
-            {name = "zoz_uav_enemyBase_0001",cp = "afgh_enemyBase_cp",DeployRoute = "rt_enemyBase_UAV_d_0001",sendM = "zoz_uav_enemyBase_0001_Start",PatrolRoute = "rt_enemyBase_UAV_p_0001",CombatRoute = "rt_enemyBase_UAV_c_0001"},
-            {name = "zoz_uav_enemyBase_0002",cp = "afgh_enemyBase_cp",DeployRoute = "rt_enemyBase_UAV_d_0002",sendM = "zoz_uav_enemyBase_0002_Start",PatrolRoute = "rt_enemyBase_UAV_p_0002",CombatRoute = "rt_enemyBase_UAV_c_0002"},
-            {name = "zoz_uav_enemyBase_0003",cp = "afgh_enemyBase_cp",DeployRoute = "rt_enemyBase_UAV_d_0003",sendM = "zoz_uav_enemyBase_0003_Start",PatrolRoute = "rt_enemyBase_UAV_p_0003",CombatRoute = "rt_enemyBase_UAV_c_0003"}
-        },
-        [10044] = {
-            -- OCCUPATION FORCES
-            {name = "zoz_uav_fort_0000",cp = "afgh_fort_cp",DeployRoute = "rt_fort_UAV_d_0000",sendM = "zoz_uav_fort_0000_Start",PatrolRoute = "rt_fort_UAV_p_0000",CombatRoute = "rt_fort_UAV_c_0000"},
-            {name = "zoz_uav_fort_0001",cp = "afgh_fort_cp",DeployRoute = "rt_fort_UAV_d_0001",sendM = "zoz_uav_fort_0001_Start",PatrolRoute = "rt_fort_UAV_p_0001",CombatRoute = "rt_fort_UAV_c_0001"},
-            {name = "zoz_uav_fort_0002",cp = "afgh_fort_cp",DeployRoute = "rt_fort_UAV_d_0002",sendM = "zoz_uav_fort_0002_Start",PatrolRoute = "rt_fort_UAV_p_0002",CombatRoute = "rt_fort_UAV_c_0002"}
-        },
-        [10052] = {
-            -- ANGEL WITH BROKEN WINGS
-            {name = "zoz_uav_tent_0000",cp = "afgh_tent_cp",DeployRoute = "rt_tent_UAV_d_0000",sendM = "zoz_uav_tent_0000_Start",PatrolRoute = "rt_tent_UAV_p_0000",CombatRoute = "rt_tent_UAV_c_0000"},
-            {name = "zoz_uav_tent_0001",cp = "afgh_tent_cp",DeployRoute = "rt_tent_UAV_d_0001",sendM = "zoz_uav_tent_0001_Start",PatrolRoute = "rt_tent_UAV_p_0001",CombatRoute = "rt_tent_UAV_c_0001"},
-            {name = "zoz_uav_tent_0002",cp = "afgh_tent_cp",DeployRoute = "rt_tent_UAV_d_0002",sendM = "zoz_uav_tent_0002_Start",PatrolRoute = "rt_tent_UAV_p_0002",CombatRoute = "rt_tent_UAV_c_0002"},
-            {name = "zoz_uav_tent_0003",cp = "afgh_tent_cp",DeployRoute = "rt_tent_UAV_d_0003",sendM = "zoz_uav_tent_0003_Start",PatrolRoute = "rt_tent_UAV_p_0003",CombatRoute = "rt_tent_UAV_c_0003"}
-        },
-		[10070] = {
-            -- HELLBOUND
-            {name = "zoz_uav_powerPlant_0000",cp = "afgh_powerPlant_cp",DeployRoute = "rt_powerPlant_UAV_d_0000",sendM = "zoz_uav_powerPlant_0000_Start",PatrolRoute = "rt_powerPlant_UAV_p_0000",CombatRoute = "rt_powerPlant_UAV_c_0000"},
-            {name = "zoz_uav_powerPlant_0001",cp = "afgh_powerPlant_cp",DeployRoute = "rt_powerPlant_UAV_d_0001",sendM = "zoz_uav_powerPlant_0001_Start",PatrolRoute = "rt_powerPlant_UAV_p_0001",CombatRoute = "rt_powerPlant_UAV_c_0001"},
-
-            {name = "zoz_uav_sovietBase_0000",cp = "afgh_sovietBase_cp",DeployRoute = "rt_sovietBase_UAV_d_0000",sendM = "zoz_uav_sovietBase_0000_Start",PatrolRoute = "rt_sovietBase_UAV_p_0000",CombatRoute = "rt_sovietBase_UAV_c_0000"},
-            {name = "zoz_uav_sovietBase_0001",cp = "afgh_sovietBase_cp",DeployRoute = "rt_sovietBase_UAV_d_0001",sendM = "zoz_uav_sovietBase_0001_Start",PatrolRoute = "rt_sovietBase_UAV_p_0001",CombatRoute = "rt_sovietBase_UAV_c_0001"},
-            {name = "zoz_uav_sovietBase_0002",cp = "afgh_sovietBase_cp",DeployRoute = "rt_sovietBase_UAV_d_0002",sendM = "zoz_uav_sovietBase_0002_Start",PatrolRoute = "rt_sovietBase_UAV_p_0002",CombatRoute = "rt_sovietBase_UAV_c_0002"},
-            {name = "zoz_uav_sovietBase_0003",cp = "afgh_sovietBase_cp",DeployRoute = "rt_sovietBase_UAV_d_0003",sendM = "zoz_uav_sovietBase_0003_Start",PatrolRoute = "rt_sovietBase_UAV_p_0003",CombatRoute = "rt_sovietBase_UAV_c_0003"}
-
-
-        },
-        [10080] = {
-            -- PITCH DARK (Flow Station)
-            {name = "zoz_uav_flowStation_0000",cp = "mafr_flowStation_cp",DeployRoute = "rt_flowStation_UAV_d_0000",sendM = "zoz_uav_flowStation_0000_Start",PatrolRoute = "rt_flowStation_UAV_p_0000",CombatRoute = "rt_flowStation_UAV_c_0000"},
-            {name = "zoz_uav_flowStation_0001",cp = "mafr_flowStation_cp",DeployRoute = "rt_flowStation_UAV_d_0001",sendM = "zoz_uav_flowStation_0001_Start",PatrolRoute = "rt_flowStation_UAV_p_0001",CombatRoute = "rt_flowStation_UAV_c_0001"},
-            {name = "zoz_uav_flowStation_0002",cp = "mafr_flowStation_cp",DeployRoute = "rt_flowStation_UAV_d_0002",sendM = "zoz_uav_flowStation_0002_Start",PatrolRoute = "rt_flowStation_UAV_p_0002",CombatRoute = "rt_flowStation_UAV_c_0002"},
-        },
-        [10090] = {
-            -- TRAITORS’ CARAVAN (Flow Station)
-            {name = "zoz_uav_flowStation_0000",cp = "mafr_flowStation_cp",DeployRoute = "rt_flowStation_UAV_d_0000",sendM = "zoz_uav_flowStation_0000_Start",PatrolRoute = "rt_flowStation_UAV_p_0000",CombatRoute = "rt_flowStation_UAV_c_0000"},
-            {name = "zoz_uav_flowStation_0001",cp = "mafr_flowStation_cp",DeployRoute = "rt_flowStation_UAV_d_0001",sendM = "zoz_uav_flowStation_0001_Start",PatrolRoute = "rt_flowStation_UAV_p_0001",CombatRoute = "rt_flowStation_UAV_c_0001"},
-            {name = "zoz_uav_flowStation_0002",cp = "mafr_flowStation_cp",DeployRoute = "rt_flowStation_UAV_d_0002",sendM = "zoz_uav_flowStation_0002_Start",PatrolRoute = "rt_flowStation_UAV_p_0002",CombatRoute = "rt_flowStation_UAV_c_0002"},
-        },
-        [10130] = {
-            -- CODE TALKER (Lab)
-            {name = "zoz_uav_lab_0000",cp = "mafr_lab_cp",DeployRoute = "rt_lab_UAV_d_0000",sendM = "zoz_uav_lab_0000_Start",PatrolRoute = "rt_lab_UAV_p_0000",CombatRoute = "rt_lab_UAV_c_0000"},
-            {name = "zoz_uav_lab_0001",cp = "mafr_lab_cp",DeployRoute = "rt_lab_UAV_d_0001",sendM = "zoz_uav_lab_0001_Start",PatrolRoute = "rt_lab_UAV_p_0001",CombatRoute = "rt_lab_UAV_c_0001"},
-            {name = "zoz_uav_lab_0002",cp = "mafr_lab_cp",DeployRoute = "rt_lab_UAV_d_0002",sendM = "zoz_uav_lab_0002_Start",PatrolRoute = "rt_lab_UAV_p_0002",CombatRoute = "rt_lab_UAV_c_0002"},
-            {name = "zoz_uav_lab_0003",cp = "mafr_lab_cp",DeployRoute = "rt_lab_UAV_d_0003",sendM = "zoz_uav_lab_0003_Start",PatrolRoute = "rt_lab_UAV_p_0003",CombatRoute = "rt_lab_UAV_c_0003"},
-            {name = "zoz_uav_lab_0004",cp = "mafr_lab_cp",DeployRoute = "rt_lab_UAV_d_0004",sendM = "zoz_uav_lab_0004_Start",PatrolRoute = "rt_lab_UAV_p_0004",CombatRoute = "rt_lab_UAV_c_0004"},
-        },
-        [10150] = {
-            -- SKULL FACE (citadel)
-            {name = "zoz_uav_citadel_0000",cp = "afgh_citadel_cp",DeployRoute = "rt_citadel_UAV_d_0000",sendM = "zoz_uav_citadel_0000_Start",PatrolRoute = "rt_citadel_UAV_p_0000",CombatRoute = "rt_citadel_UAV_c_0000"},
-            {name = "zoz_uav_citadel_0001",cp = "afgh_citadel_cp",DeployRoute = "rt_citadel_UAV_d_0001",sendM = "zoz_uav_citadel_0001_Start",PatrolRoute = "rt_citadel_UAV_p_0001",CombatRoute = "rt_citadel_UAV_c_0001"},
-            {name = "zoz_uav_citadel_0002",cp = "afgh_citadel_cp",DeployRoute = "rt_citadel_UAV_d_0002",sendM = "zoz_uav_citadel_0002_Start",PatrolRoute = "rt_citadel_UAV_p_0002",CombatRoute = "rt_citadel_UAV_c_0002"},
         }
     },
     IRSensors = {
@@ -696,68 +591,6 @@ function this.SetUpZozCam()
     end
 end
 
-function this.SetUpZozUAV()
-    local missionCode = TppMission.GetMissionID()
-    if TppMission.IsHardMission(missionCode) then
-        missionCode = TppMission.GetNormalMissionCodeFromHardMission(missionCode)
-    end
-    if not this.MISSION_PACKS.UAVs[missionCode] and not TppStory.IsMissionCleard(10121) then
-        return
-    end
-
-    local revengeLv = TppRevenge.GetRevengeLv(TppRevenge.REVENGE_TYPE.NIGHT_C)
-    local isNonLethal = Ivars.mbDDEquipNonLethal:Is(1)
-
-    local lethalDevelopLevel = {
-        [1] = TppUav.DEVELOP_LEVEL_LMG_0,
-        [2] = TppUav.DEVELOP_LEVEL_LMG_0,
-        [3] = TppUav.DEVELOP_LEVEL_LMG_1,
-        [4] = TppUav.DEVELOP_LEVEL_LMG_2,
-        [5] = TppUav.DEVELOP_LEVEL_LMG_2
-    }
-
-    local nonLethalDevelopLevel = {
-        [1] = TppUav.DEVELOP_LEVEL_SMOKE_0,
-        [2] = TppUav.DEVELOP_LEVEL_SMOKE_1,
-        [3] = TppUav.DEVELOP_LEVEL_SMOKE_2,
-        [4] = TppUav.DEVELOP_LEVEL_SLEEP_0,
-        [5] = TppUav.DEVELOP_LEVEL_SLEEP_0
-    }
-
-    local function GetEmpLevel(revengeLv)
-        if revengeLv <= 2 then
-            return 0
-        elseif revengeLv >= 3 then
-            return 1
-        end
-    end
-
-    local developLevel = isNonLethal and nonLethalDevelopLevel or lethalDevelopLevel
-    if this.SECURITY_LIST.UAVs[missionCode] then
-        InfCore.Log("Zoz Log: UAV info: ")
-        for _, uavInfo in ipairs(this.SECURITY_LIST.UAVs[missionCode]) do
-            InfCore.Log("Zoz Log: UAV name: " .. uavInfo.name)
-            InfCore.Log("Zoz Log: UAV Command Post: " .. uavInfo.cp)
-            InfCore.Log("Zoz Log: UAV Level: " .. developLevel[revengeLv])
-            InfCore.Log("Zoz Log: UAV emp Level: " .. GetEmpLevel(revengeLv))
-            local gameId = GetGameObjectId(uavInfo.name)
-            if gameId ~= NULL_ID then
-                SendCommand(gameId, {id = "SetEnabled", enabled = false})
-                if developLevel[revengeLv] then
-                    SendCommand(
-                        gameId,
-                        {
-                            id = "SetDevelopLevel",
-                            developLevel = developLevel[revengeLv],
-                            empLevel = GetEmpLevel(revengeLv)
-                        }
-                    )
-                end
-            end
-        end
-    end
-end
-
 function this.SetUpIRBurglarLevel()
     if not TppStory.IsMissionCleard(10121) then
         return
@@ -811,64 +644,10 @@ function this.SetUpIRBurglarLevel()
     end
 end
 
-function this.deployUAVs(cpId, phase, oldPhaseId)
-    if not Ivars.Zoz_Enemy_Equipment_Uav:Is "OFF" and not TppMission.IsBossBattle() then
-        local missionCode = TppMission.GetMissionID()
-        local revengeStealthLevel = TppRevenge.GetRevengeLv(TppRevenge.REVENGE_TYPE.STEALTH)
-        if TppMission.IsHardMission(missionCode) then
-            missionCode = TppMission.GetNormalMissionCodeFromHardMission(missionCode)
-        end
-        if phase > PHASE_SNEAK and oldPhaseId == PHASE_SNEAK or revengeStealthLevel >= 3 then
-            if this.SECURITY_LIST.UAVs[missionCode] then
-                InfCore.Log("Zoz log: UAVs deployed")
-                if phase ==  PHASE_ALERT or phase ==  PHASE_CAUTION and oldPhaseId == TppGameObject.PHASE_SNEAK then
-                    if not mvars.HQUAVRadio then
-                        mvars.HQUAVRadio = true
-                        Zoz_Enemy_Overhaul.PlayCPOnlyRadio("ZOZ_HQR0140")
-                    end
-                end
-                for _, uavInfo in ipairs(this.SECURITY_LIST.UAVs[missionCode]) do
-                    local gameId = GetGameObjectId(uavInfo.name)
-                    if gameId ~= NULL_ID and cpId == GetGameObjectId(uavInfo.cp) then
-                        if oldPhaseId == PHASE_SNEAK then
-                            SendCommand(gameId, {id = "SetEnabled", enabled = true})
-                            SendCommand(gameId, {id = "SetPatrolRoute", route = uavInfo.DeployRoute})
-                            SendCommand(gameId, {id = "SetCombatRoute", route = uavInfo.DeployRoute})
-                            SendCommand(gameId, {id = "SetCommandPost", cp = uavInfo.cp})
-                        end
-                    end
-                end
-            end
-        end
-    end
-end
-
-function this.SetUAVsRoutes(gameObjectId, routeID, nodeNo, msgID)
-    if not Ivars.Zoz_Enemy_Equipment_Uav:Is "OFF" then
-        local missionCode = TppMission.GetMissionID()
-        if TppMission.IsHardMission(missionCode) then
-            missionCode = TppMission.GetNormalMissionCodeFromHardMission(missionCode)
-        end
-        if this.SECURITY_LIST.UAVs[missionCode] then
-            for _, uavInfo in ipairs(this.SECURITY_LIST.UAVs[missionCode]) do
-                local gameId = GetGameObjectId(uavInfo.name)
-                if gameId ~= NULL_ID then
-                    if gameObjectId == gameId then
-                        SendCommand(gameId, {id = "SetPatrolRoute", route = uavInfo.PatrolRoute})
-                        SendCommand(gameId, {id = "SetCombatRoute", route = uavInfo.CombatRoute})
-                    else
-                    end
-                end
-            end
-        end
-    end
-end
 
 function this.Messages()
     return StrCode32Table {
         GameObject = {
-            {msg = "ChangePhase", func = this.deployUAVs},
-            {msg = "RoutePoint2", func = this.SetUAVsRoutes},
             {
                 msg = "WarningGimmick",
                 func = function(irSensorId, irHash, irDataSetName, gameObjectId)
@@ -1028,15 +807,6 @@ function this.AddMissionPacks(missionCode, packPaths)
             end
         end
     end
-    if
-        not Ivars.Zoz_Enemy_Equipment_Uav:Is "OFF"  then
-        if this.MISSION_PACKS.UAVs[missionCode] then
-            packPaths[#packPaths + 1] = "/Assets/tpp/pack/zoz/zoz_common_uav_GameObject.fpk"
-            for _, packPath in ipairs(this.MISSION_PACKS.UAVs[missionCode]) do
-                packPaths[#packPaths + 1] = packPath
-            end
-        end
-    end
 end
 
 function this.SetUpEnemy()
@@ -1051,9 +821,6 @@ function this.SetUpEnemy()
     end
     if not Ivars.Zoz_Enemy_Equipment_Camera:Is "OFF" then
         this.SetUpZozCam()
-    end
-    if not Ivars.Zoz_Enemy_Equipment_Uav:Is "OFF" then
-        this.SetUpZozUAV()
     end
 end
 
@@ -1090,10 +857,6 @@ function this.Init(missionTable)
         this.SetUpIRBurglarLevel()
     end
 
-    if not Ivars.Zoz_Enemy_Equipment_Uav:Is"OFF" then
-        mvars.HQUAVRadio = false
-    end
-
     if Ivars.mbDDEquipNonLethal:Is(1) then
         SendCommand(
             {type = "TppSoldier2"},
@@ -1106,23 +869,19 @@ function this.Init(missionTable)
         )
     end
 
-    local gimmickIdentifierTable=InfUtil.CopyTable(afgh_gimmick.gimmickIdentifierParamTable)
-    gimmickIdentifierTable.afgh_zoz_village_Generator=this.zoz_afgh_gimmickIdentifierParamTableExtra.afgh_zoz_village_Generator
+    if TppLocation.IsAfghan() then
+        local gimmickIdentifierTable=InfUtil.CopyTable(afgh_gimmick.gimmickIdentifierParamTable)
+        gimmickIdentifierTable.afgh_zoz_village_Generator=this.zoz_afgh_gimmickIdentifierParamTableExtra.afgh_zoz_village_Generator
 
-    local gimmickPowerCutConnectTable=InfUtil.CopyTable(afgh_gimmick.gimmickPowerCutConnectTable)
-	gimmickPowerCutConnectTable.afgh_zoz_village_Generator=this.zoz_afgh_gimmickPowerCutConnectTableExtra.afgh_zoz_village_Generator
+        local gimmickPowerCutConnectTable=InfUtil.CopyTable(afgh_gimmick.gimmickPowerCutConnectTable)
+	    gimmickPowerCutConnectTable.afgh_zoz_village_Generator=this.zoz_afgh_gimmickPowerCutConnectTableExtra.afgh_zoz_village_Generator
 
-    TppGimmick.SetUpIdentifierTable(gimmickIdentifierTable)
-    TppGimmick.SetUpConnectPowerCutTable(gimmickPowerCutConnectTable)
+        TppGimmick.SetUpIdentifierTable(gimmickIdentifierTable)
+        TppGimmick.SetUpConnectPowerCutTable(gimmickPowerCutConnectTable)
+    end
+
     this.messageExecTable = Tpp.MakeMessageExecTable(this.Messages())
 end
 
-this.OnChangeSVars = function()
-    local getSequenceName = TppSequence.GetSequenceNameWithIndex(TppSequence.GetCurrentSequenceIndex())
-    InfCore.Log("Zoz Log: Current Sequence: " .. tostring(getSequenceName))
-    if TppMission.IsBossBattle() then
-        InfCore.Log("Zoz Log: Disable UAVS!!!")
-    end
-end
 
 return this

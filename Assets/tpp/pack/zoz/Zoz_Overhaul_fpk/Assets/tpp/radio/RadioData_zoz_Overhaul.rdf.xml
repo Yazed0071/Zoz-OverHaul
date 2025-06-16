@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<rdf version="TPP">
+  <group2 id="1355815024" FLAGS="0" radioType="real_time">
+    <phase sneak="True" caution="True" evasion="True" clearing="True" alert="True" />
+    <info invalidTimeId="0" u2="2" priorityId="9" playType="4" startId="0" endId="0" />
+    <labelPart condition="1184166791" dialogueEvent="3355842875" chara="3299004024" intervalNextLabelId="0" />
+  </group2>
+  <group2 id="idrd1000_1j1010" FLAGS="0" radioType="real_time">
+    <phase sneak="True" caution="True" evasion="True" clearing="True" alert="True" />
+    <info invalidTimeId="0" u2="2" priorityId="9" playType="4" startId="0" endId="0" />
+    <labelPart condition="1167389211" dialogueEvent="3355842875" chara="3299004024" intervalNextLabelId="0" />
+  </group2>
+  <group2 id="1282836081" FLAGS="0" radioType="real_time">
+    <phase sneak="True" caution="True" evasion="True" clearing="True" alert="True" />
+    <info invalidTimeId="0" u2="2" priorityId="9" playType="4" startId="0" endId="0" />
+    <labelPart condition="1268054949" dialogueEvent="3355842875" chara="3299004024" intervalNextLabelId="0" />
+  </group2>
+  <group2 id="1150307029" FLAGS="0" radioType="real_time">
+    <phase sneak="True" caution="True" evasion="True" clearing="True" alert="True" />
+    <info invalidTimeId="0" u2="2" priorityId="9" playType="4" startId="0" endId="0" />
+    <labelPart condition="1066723467" dialogueEvent="3355842875" chara="3299004024" intervalNextLabelId="0" />
+  </group2>
+  <group2 id="4113538849" FLAGS="0" radioType="real_time">
+    <phase sneak="True" caution="True" evasion="True" clearing="True" alert="True" />
+    <info invalidTimeId="0" u2="2" priorityId="9" playType="4" startId="0" endId="0" />
+    <labelPart condition="1116909293" dialogueEvent="3355842875" chara="3299004024" intervalNextLabelId="0" />
+  </group2>
+  <group2 id="3838036828" FLAGS="0" radioType="real_time">
+    <phase sneak="True" caution="True" evasion="True" clearing="True" alert="True" />
+    <info invalidTimeId="0" u2="2" priorityId="9" playType="4" startId="0" endId="0" />
+    <labelPart condition="1116909292" dialogueEvent="3355842875" chara="3299004024" intervalNextLabelId="0" />
+  </group2>
+  <group2 id="2912773429" FLAGS="0" radioType="real_time">
+    <phase sneak="True" caution="True" evasion="True" clearing="True" alert="True" />
+    <info invalidTimeId="0" u2="2" priorityId="9" playType="4" startId="0" endId="0" />
+    <labelPart condition="1116909283" dialogueEvent="3355842875" chara="3299004024" intervalNextLabelId="0" />
+  </group2>
+  <group2 id="1843988241" FLAGS="0" radioType="real_time">
+    <phase sneak="True" caution="True" evasion="True" clearing="True" alert="True" />
+    <info invalidTimeId="0" u2="2" priorityId="9" playType="4" startId="0" endId="0" />
+    <labelPart condition="1251277371" dialogueEvent="3355842875" chara="3299004024" intervalNextLabelId="0" />
+  </group2>
+  <group2 id="3730631255" FLAGS="0" radioType="real_time">
+    <phase sneak="True" caution="True" evasion="True" clearing="True" alert="True" />
+    <info invalidTimeId="0" u2="2" priorityId="9" playType="4" startId="0" endId="0" />
+    <labelPart condition="2309489215" dialogueEvent="1275375479" chara="miller" intervalNextLabelId="0" />
+  </group2>
+  <group2 id="4073750344" FLAGS="0" radioType="real_time">
+    <phase sneak="True" caution="True" evasion="True" clearing="True" alert="True" />
+    <info invalidTimeId="0" u2="2" priorityId="9" playType="4" startId="0" endId="0" />
+    <labelPart condition="276410620" dialogueEvent="296792263" chara="1842327993" intervalNextLabelId="0" />
+  </group2>
+  <group2 id="2341406894" FLAGS="0" radioType="real_time">
+    <phase sneak="True" caution="True" evasion="True" clearing="True" alert="True" />
+    <info invalidTimeId="0" u2="2" priorityId="9" playType="4" startId="0" endId="0" />
+    <labelPart condition="1598550753" dialogueEvent="2783234208" chara="1842327993" intervalNextLabelId="0" />
+  </group2>
+  <group2 id="537600925" FLAGS="0" radioType="real_time">
+    <phase sneak="True" caution="True" evasion="True" clearing="True" alert="True" />
+    <info invalidTimeId="0" u2="2" priorityId="9" playType="4" startId="0" endId="0" />
+    <labelPart condition="1548217896" dialogueEvent="2783234208" chara="1842327993" intervalNextLabelId="0" />
+  </group2>
+  <group2 id="3424502927" FLAGS="0" radioType="real_time">
+    <phase sneak="True" caution="True" evasion="True" clearing="True" alert="True" />
+    <info invalidTimeId="0" u2="2" priorityId="9" playType="4" startId="0" endId="0" />
+    <labelPart condition="1480960261" dialogueEvent="2783234208" chara="1842327993" intervalNextLabelId="0" />
+  </group2>
+  <group2 id="3258648026" FLAGS="0" radioType="real_time">
+    <phase sneak="True" caution="True" evasion="True" clearing="True" alert="True" />
+    <info invalidTimeId="0" u2="2" priorityId="9" playType="4" startId="0" endId="0" />
+    <labelPart condition="1430627404" dialogueEvent="2783234208" chara="1842327993" intervalNextLabelId="0" />
+  </group2>
+  <group2 id="3617932929" FLAGS="0" radioType="real_time">
+    <phase sneak="True" caution="True" evasion="True" clearing="True" alert="True" />
+    <info invalidTimeId="0" u2="2" priorityId="9" playType="4" startId="0" endId="0" />
+    <labelPart condition="1413849817" dialogueEvent="2783234208" chara="1842327993" intervalNextLabelId="0" />
+  </group2>
+  <group2 id="3091364716" FLAGS="0" radioType="real_time">
+    <phase sneak="True" caution="True" evasion="True" clearing="True" alert="True" />
+    <info invalidTimeId="0" u2="2" priorityId="9" playType="4" startId="0" endId="0" />
+    <labelPart condition="1363516928" dialogueEvent="2783234208" chara="1842327993" intervalNextLabelId="0" />
+  </group2>
+  <group2 id="302867136" FLAGS="0" radioType="real_time">
+    <phase sneak="True" caution="True" evasion="True" clearing="True" alert="True" />
+    <info invalidTimeId="0" u2="2" priorityId="9" playType="4" startId="0" endId="0" />
+    <labelPart condition="1313037008" dialogueEvent="2783234208" chara="1842327993" intervalNextLabelId="0" />
+  </group2>
+  <group2 id="1051903993" FLAGS="0" radioType="real_time">
+    <phase sneak="True" caution="True" evasion="True" clearing="True" alert="True" />
+    <info invalidTimeId="0" u2="2" priorityId="9" playType="4" startId="0" endId="0" />
+    <labelPart condition="1346592311" dialogueEvent="2783234208" chara="1842327993" intervalNextLabelId="0" />
+  </group2>
+  <group2 id="4084768014" FLAGS="0" radioType="real_time">
+    <phase sneak="True" caution="True" evasion="True" clearing="True" alert="True" />
+    <info invalidTimeId="0" u2="2" priorityId="9" playType="4" startId="0" endId="0" />
+    <labelPart condition="1346592310" dialogueEvent="2783234208" chara="1842327993" intervalNextLabelId="0" />
+  </group2>
+  <group2 id="4084768014" FLAGS="0" radioType="real_time">
+    <phase sneak="True" caution="True" evasion="True" clearing="True" alert="True" />
+    <info invalidTimeId="0" u2="2" priorityId="9" playType="4" startId="0" endId="0" />
+    <labelPart condition="1346592310" dialogueEvent="2783234208" chara="1842327993" intervalNextLabelId="0" />
+  </group2>
+</rdf>

@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-<ArchiveFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:type="FpkFile" Name="Zoz_Online_Animation.fpk" FpkType="Fpk">
-  <Entries>
-    <Entry FilePath="/Assets/tpp/motion/mtar/player2/player2_online.mtar" />
-  </Entries>
-  <References />
-</ArchiveFile>

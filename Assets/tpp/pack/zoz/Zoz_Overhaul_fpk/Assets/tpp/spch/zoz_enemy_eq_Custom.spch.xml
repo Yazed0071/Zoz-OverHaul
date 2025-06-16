@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<spch>
+  <label labelName="CPR0022_1" sbpListId="0">
+    <voiceClip voiceType="enemy" sbpVoiceClipId="2900331022" animationAct="0" beforePause="0" afterPause="0" />
+    <voiceClip voiceType="enemy" sbpVoiceClipId="1950350584" animationAct="0" beforePause="0" afterPause="0" />
+    <voiceClip voiceType="cp" sbpVoiceClipId="cpr0023_00" animationAct="0" beforePause="0" afterPause="0" />
+    <voiceClip voiceType="cp" sbpVoiceClipId="1820089660" animationAct="0" beforePause="0" afterPause="0" />
+  </label>
+  <label labelName="ZOZ0000" sbpListId="0">
+    <voiceClip voiceType="cp" sbpVoiceClipId="cpr0510_00" animationAct="0" beforePause="0" afterPause="0" />
+  </label>
+  <label labelName="ZOZ_CPI0110" sbpListId="0">
+    <voiceClip voiceType="cp" sbpVoiceClipId="3957566690" animationAct="0" beforePause="0" afterPause="2" />
+    <voiceClip voiceType="cp" sbpVoiceClipId="3957566691" animationAct="0" beforePause="0" afterPause="2" />
+    <voiceClip voiceType="cp" sbpVoiceClipId="3957566688" animationAct="0" beforePause="0" afterPause="0" />
+  </label>
+  <label labelName="ZOZ_CPR0037_0" sbpListId="0">
+    <voiceClip voiceType="cp" sbpVoiceClipId="2699079507" animationAct="0" beforePause="0" afterPause="0" />
+    <voiceClip voiceType="cp" sbpVoiceClipId="2699079506" animationAct="0" beforePause="0" afterPause="0" />
+    <voiceClip voiceType="cp" sbpVoiceClipId="2699079505" animationAct="0" beforePause="0" afterPause="0" />
+    <voiceClip voiceType="cp" sbpVoiceClipId="3773736567" animationAct="0" beforePause="0" afterPause="0" />
+  </label>
+  <label labelName="ZOZ_CPR0037_1" sbpListId="0">
+    <voiceClip voiceType="cp" sbpVoiceClipId="2699079504" animationAct="0" beforePause="0" afterPause="0" />
+    <voiceClip voiceType="cp" sbpVoiceClipId="2699079511" animationAct="0" beforePause="0" afterPause="0" />
+    <voiceClip voiceType="cp" sbpVoiceClipId="2699079510" animationAct="0" beforePause="0" afterPause="0" />
+    <voiceClip voiceType="cp" sbpVoiceClipId="2699079509" animationAct="0" beforePause="0" afterPause="0" />
+    <voiceClip voiceType="cp" sbpVoiceClipId="3773736567" animationAct="0" beforePause="0" afterPause="0" />
+  </label>
+  <label labelName="ZOZ_CPR0038_1" sbpListId="0">
+    <voiceClip voiceType="cp" sbpVoiceClipId="3441328342" animationAct="0" beforePause="0" afterPause="0" />
+    <voiceClip voiceType="cp" sbpVoiceClipId="3441328343" animationAct="0" beforePause="0" afterPause="0" />
+    <voiceClip voiceType="cp" sbpVoiceClipId="3441328340" animationAct="0" beforePause="0" afterPause="0" />
+    <voiceClip voiceType="cp" sbpVoiceClipId="1820089660" animationAct="0" beforePause="0" afterPause="0" />
+  </label>
+  <label labelName="ZOZ_CPR0181" sbpListId="0">
+    <voiceClip voiceType="enemy" sbpVoiceClipId="3495247209" animationAct="0" beforePause="0" afterPause="0" />
+    <voiceClip voiceType="enemy" sbpVoiceClipId="cpr0182_00" animationAct="0" beforePause="0" afterPause="0" />
+    <voiceClip voiceType="enemy" sbpVoiceClipId="3434381957" animationAct="0" beforePause="0" afterPause="0" />
+    <voiceClip voiceType="cp" sbpVoiceClipId="2917108735" animationAct="0" beforePause="0" afterPause="0" />
+    <voiceClip voiceType="cp" sbpVoiceClipId="cpr0181_00" animationAct="0" beforePause="0" afterPause="0" />
+    <voiceClip voiceType="cp" sbpVoiceClipId="365330910" animationAct="0" beforePause="0" afterPause="0" />
+  </label>
+  <label labelName="ZOZ_CPR0190" sbpListId="0">
+    <voiceClip voiceType="enemy" sbpVoiceClipId="cpr0190_00" animationAct="0" beforePause="0" afterPause="0" />
+    <voiceClip voiceType="cp" sbpVoiceClipId="cpr0190_01" animationAct="0" beforePause="0" afterPause="0" />
+  </label>
+  <label labelName="ZOZ_HQR0100" sbpListId="0">
+    <voiceClip voiceType="hq" sbpVoiceClipId="1975167023" animationAct="0" beforePause="0" afterPause="0" />
+    <voiceClip voiceType="hq" sbpVoiceClipId="2152145386" animationAct="0" beforePause="0" afterPause="0" />
+    <voiceClip voiceType="hq" sbpVoiceClipId="2339472617" animationAct="0" beforePause="0" afterPause="0" />
+  </label>
+  <label labelName="ZOZ_HQR0110" sbpListId="0">
+    <voiceClip voiceType="hq" sbpVoiceClipId="1975167023" animationAct="0" beforePause="0" afterPause="0" />
+    <voiceClip voiceType="hq" sbpVoiceClipId="3632182811" animationAct="0" beforePause="0" afterPause="0" />
+    <voiceClip voiceType="hq" sbpVoiceClipId="2339472617" animationAct="0" beforePause="0" afterPause="0" />
+  </label>
+  <label labelName="ZOZ_HQR0120" sbpListId="0">
+    <voiceClip voiceType="hq" sbpVoiceClipId="1975167023" animationAct="0" beforePause="0" afterPause="0" />
+    <voiceClip voiceType="hq" sbpVoiceClipId="2929262440" animationAct="0" beforePause="0" afterPause="0" />
+    <voiceClip voiceType="hq" sbpVoiceClipId="2339472617" animationAct="0" beforePause="0" afterPause="0" />
+  </label>
+  <label labelName="ZOZ_HQR0140" sbpListId="0">
+    <voiceClip voiceType="hq" sbpVoiceClipId="1975167023" animationAct="0" beforePause="0" afterPause="0" />
+    <voiceClip voiceType="hq" sbpVoiceClipId="767386734" animationAct="0" beforePause="0" afterPause="0" />
+    <voiceClip voiceType="hq" sbpVoiceClipId="2339472617" animationAct="0" beforePause="0" afterPause="0" />
+  </label>
+</spch>

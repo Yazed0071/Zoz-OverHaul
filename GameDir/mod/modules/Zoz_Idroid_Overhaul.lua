@@ -1,26 +1,10 @@
 local this = {}
 local StrCode32 = Fox.StrCode32
 local StrCode32Table = Tpp.StrCode32Table
-local missionID = TppMission.GetMissionID()
 
-this.registerMenus={
-	"Zoz_Idroid_Overhaul",
-	"Zoz_Idroid_Overhaul_Notification",
-	"Zoz_Idroid_Overhaul_Audio_Notification",
-}
-
-
-
-this.Zoz_Idroid_Overhaul={
-	parentRefs={"Zoz_Overhaul.safeSpaceMenu","Zoz_Overhaul.inMissionMenu"},
-	options={
-		"Zoz_Idroid_Overhaul.Zoz_Idroid_Overhaul_Notification",
-		"Zoz_Idroid_Overhaul.Zoz_Idroid_Overhaul_Audio_Notification",
-	}
-}
 
 this.registerIvars={
-    "Zoz_Idroid_announce_enemyRecovered",
+	"Zoz_Idroid_announce_enemyRecovered",
 	"Zoz_Idroid_announce_destroy_APC",
 	"Zoz_Idroid_announce_destroy_vehicle",
 	"Zoz_Idroid_announce_destroy_truck",
@@ -40,45 +24,11 @@ this.registerIvars={
 	"Zoz_Idroid_Audio_Friendly_Vehicle_Destroyed",
 	"Zoz_Idroid_Audio_Heli_Withdrawn",
 	"Zoz_Idroid_Audio_OnRequested_AirStrike",
-
 }
 
-this.Zoz_Idroid_Overhaul_Notification={
-	parentRefs={"Zoz_Idroid_Overhaul.safeSpaceMenu","Zoz_Idroid_Overhaul.inMissionMenu"},
-	options={
-		"Ivars.Zoz_Idroid_announce_enemyRecovered",
-		"Ivars.Zoz_Idroid_announce_destroy_APC",
-		"Ivars.Zoz_Idroid_announce_destroy_vehicle",
-		"Ivars.Zoz_Idroid_announce_destroy_truck",
-		"Ivars.Zoz_Idroid_announce_destroy_heli",
-		"Ivars.Zoz_Idroid_announce_destroy_AntiAirCraftGun",
-		"Ivars.Zoz_Idroid_announce_destroy_WatchTower",
-		"Ivars.Zoz_Idroid_announce_enemyIncrease",
-		"Ivars.Zoz_Idroid_announce_quiet_request",
-		"Ivars.Zoz_Idroid_announce_enemy_checkpoint",
-		"Ivars.Zoz_Idroid_announce_enemyReplacement",
-		"Ivars.Zoz_Idroid_announce_approach_border",
-		"Ivars.Zoz_Idroid_announce_FOB_Alert",
-	}
-}
-
-this.Zoz_Idroid_Overhaul_Audio_Notification={
-	parentRefs={"Zoz_Idroid_Overhaul.safeSpaceMenu","Zoz_Idroid_Overhaul.inMissionMenu"},
-	options={
-		"Ivars.Zoz_Idroid_Audio_Welcome_Acc",
-		"Ivars.Zoz_Idroid_Audio_OpenStaffManagement",
-		"Ivars.Zoz_Idroid_Audio_Prepare_Sortie",
-		"Ivars.Zoz_Idroid_Audio_Friendly_Vehicle_Destroyed",
-		"Ivars.Zoz_Idroid_Audio_Heli_Withdrawn",
-		"Ivars.Zoz_Idroid_Audio_OnRequested_AirStrike",
-	}
-}
 
 this.langStrings={
 	eng={
-		Zoz_Idroid_Overhaul = "Idroid Overhaul",
-
-		Zoz_Idroid_Overhaul_Notification = "Idroid Notifications",
 		Zoz_Idroid_announce_enemyRecovered = "Enemy recovred",
 		Zoz_Idroid_announce_destroy_APC = "Destroy APC",
 		Zoz_Idroid_announce_destroy_vehicle = "Destroy vehicle",
@@ -93,7 +43,6 @@ this.langStrings={
 		Zoz_Idroid_announce_approach_border = "Approach border",
 		Zoz_Idroid_announce_FOB_Alert = "Intruder on FOB",
 
-		Zoz_Idroid_Overhaul_Audio_Notification = "Idroid Audio Notifications",
 		Zoz_Idroid_Audio_Welcome_Acc = "ACC Welcome Message",
 		Zoz_Idroid_Audio_OpenStaffManagement = "On opening Staff Management",
 		Zoz_Idroid_Audio_Prepare_Sortie = "On Sortie prep",
@@ -103,7 +52,6 @@ this.langStrings={
 	},
 	help={
 		eng={
-			Zoz_Idroid_Overhaul = "Toggle individual options for Idroid.",
 			Zoz_Idroid_announce_enemyRecovered = "Announce when enemy regains consciousness",
 			Zoz_Idroid_announce_destroy_APC = "Announce when an enemy Armored Vehicle is destroyed",
 			Zoz_Idroid_announce_destroy_vehicle = "Announce when an enemy 4 wheel drive is destroyed",
@@ -124,9 +72,10 @@ this.langStrings={
 			Zoz_Idroid_Audio_Friendly_Vehicle_Destroyed = "Play an audio when a Friendly Vehicle Destroyed",
 			Zoz_Idroid_Audio_Heli_Withdrawn = "Play an audio when the Support Heli Dismissed",
 			Zoz_Idroid_Audio_OnRequested_AirStrike = "Play an audio when calling for Fire Support or Modifying Weather",
-		},
-	},
+		}
+	}
 }
+	
 
 this.Zoz_Idroid_announce_enemyRecovered={
 	save=IvarProc.CATEGORY_EXTERNAL,
@@ -153,6 +102,12 @@ this.Zoz_Idroid_announce_destroy_truck={
 	default=1,
 }
 this.Zoz_Idroid_announce_destroy_AntiAirCraftGun={
+	save=IvarProc.CATEGORY_EXTERNAL,
+	range=Ivars.switchRange,
+	settingNames="set_switch",
+	default=1,
+}
+this.Zoz_Idroid_announce_destroy_WatchTower={
 	save=IvarProc.CATEGORY_EXTERNAL,
 	range=Ivars.switchRange,
 	settingNames="set_switch",
@@ -236,16 +191,6 @@ this.Zoz_Idroid_Audio_OnRequested_AirStrike={
 	settingNames="set_switch",
 	default=1,
 }
-this.Zoz_Idroid_announce_destroy_WatchTower={
-	save=IvarProc.CATEGORY_EXTERNAL,
-	range=Ivars.switchRange,
-	settingNames="set_switch",
-	default=1,
-}
-
-
-function this.OnAllocate()end
-function this.OnInitialize()end
 
 function this.GetSoldierSubType(n,e)
 	local e=nil
@@ -257,7 +202,7 @@ end
 
 function this.LoadLibraries()
     local ShowAnnounceLog = TppUI.ShowAnnounceLog
-    TppUI.ShowAnnounceLog = function(announceId,param1,param2,delayTime,missionSubGoalNumber) -- value if announceId comes from TppUi.ANNOUNCE_LOG_TYPE
+    TppUI.ShowAnnounceLog = function(announceId,param1,param2,delayTime,missionSubGoalNumber) -- value of announceId comes from TppUi.ANNOUNCE_LOG_TYPE
 		ShowAnnounceLog(announceId,param1,param2,delayTime,missionSubGoalNumber)
 		if announceId == "mine_quest_log" and param1 == param2 then
 			TppUiCommand.AnnounceLogViewLangId("announce_disposal_minefield")
@@ -413,7 +358,7 @@ function this.Messages()
 				msg = "Finish",
 				sender = "SupportAttackOnRequested_BOMBARDMENT",
 				func = 	function()
-					this.IdroidRadioPlay("idrd1000_121010")
+					TppTerminal.PlayTerminalVoice("VOICE_SUPPORT_FIRE_INCOMING")
 				end
 			},
 			{
@@ -498,9 +443,9 @@ function this.Messages()
 				func = function (playerIndex, supportStrikeId, gradeId)
 					if Ivars.Zoz_Idroid_Audio_OnRequested_AirStrike:Is(1) then
 						if supportStrikeId == 1 then -- BOMBARDMENT
-							GkEventTimerManager.Start("SupportAttackOnRequested_BOMBARDMENT", 1)
+							GkEventTimerManager.Start("SupportAttackOnRequested_BOMBARDMENT", 1.5)
 						elseif supportStrikeId == 5 then -- 5 == WEATHER_MODIFICATION
-							GkEventTimerManager.Start("SupportAttackOnRequested_WEATHER_MODIFICATION", 1)
+							GkEventTimerManager.Start("SupportAttackOnRequested_WEATHER_MODIFICATION", 1.5)
 						end
 					end
 				end
@@ -552,6 +497,18 @@ function this.Messages()
 				end
 			},
 		},
+		Block = {
+			{
+				msg = "OnScriptBlockStateTransition",
+				func = function(blockName, blockState)
+					if blockName == StrCode32( "reinforce_block" ) and blockState == ScriptBlock.TRANSITION_ACTIVATED then
+						if Ivars.Zoz_Idroid_announce_enemyIncrease:Is(1) then
+						TppUiCommand.AnnounceLogViewLangId("announce_enemyIncrease")
+					end
+					end
+				end
+			},
+		},
     }
 end
 
@@ -560,10 +517,6 @@ function this.OnMessage(sender, messageId, arg0, arg1, arg2, arg3, strLogText)
 		return
 	end
     Tpp.DoMessage(this.messageExecTable, TppMission.CheckMessageOption, sender, messageId, arg0, arg1, arg2, arg3, strLogText)
-end
-
-function this.OnLoad()
-	InfCore.Log("Zoz_Overhaul Log: Zoz_Idroid_Overhaul.OnLoad()")
 end
 
 function this.Init(missionTable)

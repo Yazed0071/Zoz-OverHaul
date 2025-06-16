@@ -12,8 +12,64 @@ local PHASE_EVASION = TppGameObject.PHASE_EVASION
 local PHASE_CAUTION = TppGameObject.PHASE_CAUTION
 local PHASE_SNEAK = TppGameObject.PHASE_SNEAK
 
-local NULL_ID = GameObject.NULL_ID
+this.registerIvars={
+	"Zoz_Enemy_Voice_Enemy_Reaction_Player_Vehicle",
+    "Zoz_Enemy_Voice_Enemy_Reaction_Player_Aim",
+    "Zoz_Enemy_Voice_Enemy_Reaction_Player_RPG",
+    "Zoz_Enemy_Voice_Enemy_Player_Restrain",
+    "Zoz_Enemy_Voice_Enemy_Surrender",
+}
 
+this.langStrings={
+	eng={
+		Zoz_Enemy_Voice_Enemy_Reaction_Player_Vehicle = "Enemy react to Player's Vehicle",
+        Zoz_Enemy_Voice_Enemy_Reaction_Player_Aim = "Enemy react to Player when in Hold up",
+        Zoz_Enemy_Voice_Enemy_Reaction_Player_RPG = "Enemy react to Player when aiming an RPG",
+        Zoz_Enemy_Voice_Enemy_Player_Restrain = "Enemy react to restrain",
+        Zoz_Enemy_Voice_Enemy_Surrender = "Enemy Surrender",
+	},
+	help={
+		eng={
+			
+            Zoz_Enemy_Voice_Enemy_Reaction_Player_Vehicle = "Enemy will react to Player's Vehicle\nArmored Vehicle and tank only",
+            Zoz_Enemy_Voice_Enemy_Reaction_Player_Aim = "Enemy will react to the player aiming at them during a hold up",
+            Zoz_Enemy_Voice_Enemy_Reaction_Player_RPG = "Enemy react to Player when aiming an RPG\n has 15 seconds cooldown",
+            Zoz_Enemy_Voice_Enemy_Player_Restrain = "Enemy will react to the player when restraining them during Alert Phase",
+            Zoz_Enemy_Voice_Enemy_Surrender = "Enemy will surrender when they are the last.\nThis will depend on their combat level.\nLevel 1 and 2: 75% chance\nLevel 3: 50% chance\nLevel 4 and 5: 25% chance\nFully armored enemies will never surrender",
+		}
+	}
+}
+
+this.Zoz_Enemy_Voice_Enemy_Reaction_Player_Vehicle={
+	save=IvarProc.CATEGORY_EXTERNAL,
+	range=Ivars.switchRange,
+	settingNames="set_switch",
+	default=1,
+}
+this.Zoz_Enemy_Voice_Enemy_Reaction_Player_Aim={
+	save=IvarProc.CATEGORY_EXTERNAL,
+	range=Ivars.switchRange,
+	settingNames="set_switch",
+	default=1,
+}
+this.Zoz_Enemy_Voice_Enemy_Player_Restrain={
+	save=IvarProc.CATEGORY_EXTERNAL,
+	range=Ivars.switchRange,
+	settingNames="set_switch",
+	default=1,
+}
+this.Zoz_Enemy_Voice_Enemy_Surrender={
+	save=IvarProc.CATEGORY_EXTERNAL,
+	range=Ivars.switchRange,
+	settingNames="set_switch",
+	default=1,
+} 
+this.Zoz_Enemy_Voice_Enemy_Reaction_Player_RPG={
+	save=IvarProc.CATEGORY_EXTERNAL,
+	range=Ivars.switchRange,
+	settingNames="set_switch",
+	default=1,
+}
 
 function this.OnAllocate()end
 function this.OnInitialize()end
@@ -214,6 +270,13 @@ function this.Messages()
 					end
 				end
 			},
+
+			{
+				msg = "SaluteRaiseMorale",
+				func = function (saluter)
+					mvars.MtbsSaluter = saluter
+				end
+			}
 		},
 		Timer = {
 			{
@@ -251,6 +314,12 @@ function this.Messages()
 					end
 				end
 			},
+			{
+				msg = "Finish", sender = "EVF030_Timer",
+				func = function ()
+					mvars.MtbsSaluter = nil
+				end
+			},
 		},
 		Player = {
 			{
@@ -268,12 +337,26 @@ function this.Messages()
 				msg = "OnPlayerStaminaOut",
 				func = function (playerIndex, isSelfInflicted)
 					if TppLocation.IsMotherBase()then
-						if isSelfInflicted then
-							Zoz_Enemy_Overhaul.GetClosestSoldierSpeak("EVR083") -- Boss, I don't think that's...
+						if isSelfInflicted and Zoz_Enemy_Overhaul.GetClosestFromPlayer(mvars.MtbsSaluter) < 20 then
+							GkEventTimerManager.Start("EVF030_Timer", 15)
+							Zoz_Enemy_Overhaul.GetClosestSoldierSpeak("EVF030") -- Boss, I don't think that's...
 						end
 					end
 				end
-			}
+			},
+			{
+				msg = "PlayerDamaged",
+				func = function (playerIndex, attackId, attackerId)
+					if TppLocation.IsMotherBase() and Zoz_Enemy_Overhaul.GetClosestFromPlayer(mvars.MtbsSaluter) < 20 then
+						GkEventTimerManager.Start("EVF030_Timer", 15)
+						if attackId == TppDamage.ATK_PushPlayer then -- From Ocelot mostly
+							Zoz_Enemy_Overhaul.GetClosestSoldierSpeak("EVR220")
+						else
+							Zoz_Enemy_Overhaul.GetClosestSoldierSpeak("EVF030") -- Boss, I don't think that's...
+						end
+					end
+				end
+			},
 		},
     }
 end

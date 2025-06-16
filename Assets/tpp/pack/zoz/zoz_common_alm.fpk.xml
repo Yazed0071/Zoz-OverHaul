@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<ArchiveFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:type="FpkFile" Name="zoz_common_alm.fpk" FpkType="Fpk">
-  <Entries>
-    <Entry FilePath="/Assets/tpp/item/alm/Scenes/alm0_main0_def.fmdl" />
-    <Entry FilePath="/Assets/tpp/item/alm/Scenes/alm0_main0_def.geom" />
-    <Entry FilePath="/Assets/tpp/item/alm/Scenes/alm0_main0_def.fcnp" />
-  </Entries>
-  <References />
-</ArchiveFile>

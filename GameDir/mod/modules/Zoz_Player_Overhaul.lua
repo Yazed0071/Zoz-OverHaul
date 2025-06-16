@@ -15,48 +15,31 @@ local PHASE_SNEAK = TppGameObject.PHASE_SNEAK
 local NULL_ID = GameObject.NULL_ID
 
 
-function this.OnAllocate()end
-function this.OnInitialize()end
-
-
-this.registerMenus={
-	"Zoz_Player_Overhaul",
-}
-
-this.Zoz_Player_Overhaul={
-	parentRefs={"Zoz_Overhaul.safeSpaceMenu","Zoz_Overhaul.inMissionMenu"},
-	options={
-		"Ivars.Zoz_Player_Overhaul_LOOK_QUIET",
-		"Ivars.Zoz_Player_Overhaul_Snake_Deploy_Line",
-		"Ivars.Zoz_Player_Overhaul_Snake_DD_Line",
-		"Ivars.Zoz_Player_Overhaul_Ocelot_Interaction",
-	}
-}
-
-this.registerIvars = {
-    "Zoz_Player_Overhaul_LOOK_QUIET",
+this.registerIvars={
+	"Zoz_Player_Overhaul_LOOK_QUIET",
 	"Zoz_Player_Overhaul_Snake_Deploy_Line",
 	"Zoz_Player_Overhaul_Snake_DD_Line",
 	"Zoz_Player_Overhaul_Ocelot_Interaction",
+	--"Zoz_Player_Overhaul_Player_FOB_respawn",
 }
 
-this.langStrings = {
-    eng = {
-        Zoz_Player_Overhaul = "Player OverHaul",
+this.langStrings={
+	eng={
 		Zoz_Player_Overhaul_LOOK_QUIET = "Look at quiet",
 		Zoz_Player_Overhaul_Snake_Deploy_Line = "Snake Lines on Sortie",
 		Zoz_Player_Overhaul_Snake_DD_Line = "Snake Lines with DD",
 		Zoz_Player_Overhaul_Ocelot_Interaction = "Interact with Ocelot",
-    },
-    help = {
-        eng = {
-			Zoz_Player_Overhaul = "Toggle individual options for Player OverHaul",
-            Zoz_Player_Overhaul_LOOK_QUIET = "Look at quiet in sortie prep",
+		--Zoz_Player_Overhaul_Player_FOB_respawn = "Respawn after death",
+	},
+	help={
+		eng={
+			Zoz_Player_Overhaul_LOOK_QUIET = "Look at quiet in sortie prep",
 			Zoz_Player_Overhaul_Snake_Deploy_Line = "Snake will say a random line out of three when deploying",
 			Zoz_Player_Overhaul_Snake_DD_Line = "Snake will say Lines to D_Dog depending on events in game\nCurrent lines:\nWhen Snake gets in/out of a 4 wheel drive\nWhen gets in/out of support heli",
 			Zoz_Player_Overhaul_Ocelot_Interaction = "Interact with ocelot on Mother Base using the action button\nOcelot must be enabled in\nMother Base menu -> Show charactes menu -> Enable Ocelot",
-        }
-    },
+			--Zoz_Player_Overhaul_Player_FOB_respawn = "Respawn after death similar to FOB mode",
+		}
+	}
 }
 
 this.Zoz_Player_Overhaul_LOOK_QUIET={
@@ -83,6 +66,131 @@ this.Zoz_Player_Overhaul_Ocelot_Interaction={
 	settingNames="set_switch",
 	default=1,
 }
+--this.Zoz_Player_Overhaul_Player_FOB_respawn={
+--	save=IvarProc.CATEGORY_EXTERNAL,
+--	range=Ivars.switchRange,
+--	settingNames="set_switch",
+--	default=0,
+--}
+
+function this.ShowRespawnMenu()
+	Player.ResetPadMask{
+		settingName = "ClientFallDeath",
+	}
+
+	Player.RequestToStopCameraAnimation{}	
+	if Player.OnStartRespawnMenu ~= nil then
+		Player.OnStartRespawnMenu()
+	end
+
+	
+	TppUiStatusManager.SetStatus( "PauseMenu", "INVALID" )
+
+	TppUI.OverrideFadeInGameStatus{
+		EquipHud = false,
+		EquipPanel = false,
+		PauseMenu = false,
+	}
+
+
+	TppUI.FadeIn( TppUI.FADE_SPEED.FADE_HIGHESTSPEED )
+
+	local rspPoints = {}
+	local numRspPoints = #this.Zoz_respawnPosList
+
+	for i, key in pairs(this.Zoz_respawnPosList) do
+		local pos, rot = Tpp.GetLocator( "AfghRespawnPointIdentifier", key ) 
+		if pos ~= nil then
+			rspPoints[i] = Vector3( pos[1], pos[2], pos[3] )
+		end
+	end
+
+	TppUiCommand.StartRespawnMenuSetRecord{ wait = 5, record = numRspPoints, respawnPoints = rspPoints }
+	this.ChangeRespawnPoint(0, 0.1)
+end
+
+this.SetRespawnCamera = function ( param )
+	
+	Player.BeginRespawnCamera()
+	
+	Player.SetAroundCameraManualMode(true) 
+	
+	Player.SetAroundCameraManualModeParams{
+		distance = param.distance,							
+		target = Vector3(mvars.respawnPlayerPos),
+		targetInterpTime = param.interpCamTimeSec,
+		ignoreCollisionGameObjectName = "Player"
+	}
+	Player.RequestToSetCameraRotation { rotX = 15, rotY = mvars.respawnPlayerRotY, interpTime = param.interpCamTimeSec }
+	Player.UpdateAroundCameraManualModeParams()
+end
+
+this.ChangeRespawnPoint = function (respawnPointId, interpCamTimeSec)
+
+	interpCamTimeSec = interpCamTimeSec or 0.2
+
+	local key = this.Zoz_respawnPosList[respawnPointId + 1]
+
+	if key == nil then
+		key = this.Zoz_respawnPosList[1]
+	end
+
+
+	mvars.respawnPlayerPos, mvars.respawnPlayerRotY = Tpp.GetLocator("AfghRespawnPointIdentifier", key)
+
+	if not mvars.respawnPlayerPos then
+		return
+	end
+
+	TppEffectUtility.CreateWormHoleEffect(
+		mvars.respawnPlayerPos[1],
+		mvars.respawnPlayerPos[2],
+		mvars.respawnPlayerPos[3]
+	)
+
+	mvars.respawnPlayerPos[2] = mvars.respawnPlayerPos[2] + 1
+
+	this.SetRespawnCamera{ distance = 5, interpCamTimeSec = interpCamTimeSec }
+end
+
+function this.RespawnWarp(info)
+  	if not IsTypeTable(info)then
+  	  return
+  	end
+  	local pos=info.pos
+  	if not IsTypeTable(pos)or(#pos~=3)then
+  	  return
+  	end
+  	local rotY=foxmath.NormalizeRadian(foxmath.DegreeToRadian(info.rotY or 0))
+  	local playerId
+	playerId={type="TppPlayer2",index=0}
+  	local command={id="WarpAndWaitBlock",pos=pos,rotY=rotY}
+  	GameObject.SendCommand(playerId,command)
+end
+
+this.RespawnPlayer = function (respawnPointId)
+
+	MotherBaseStage.SetFobClientPlayerRespawnTrg()
+
+	TppUI.UnsetOverrideFadeInGameStatus()
+
+
+	Player.ResetPadMask{
+		settingName = "ClientFallDeath",
+	}
+
+
+	TppMain.EnableAllGameStatus()
+	Player.SetAroundCameraManualMode(false)
+	this.RespawnWarp{ pos = mvars.respawnPlayerPos,rotY = mvars.respawnPlayerRotY}
+	
+
+	TppUiStatusManager.ClearStatus( "PauseMenu" )
+	TppUiStatusManager.ClearStatus( "EquipHud" )
+	TppUiStatusManager.ClearStatus( "EquipPanel" )
+
+	Player.StartFOBInvincible(0)
+end
 
 function this.Messages()
     return StrCode32Table{
@@ -203,6 +311,18 @@ function this.Messages()
 					end
 				end
 			},
+			{
+					msg = "RespawnClose",
+					func = function(respawnPointId)
+						--this.RespawnPlayer(respawnPointId)
+					end,
+				},
+				{
+					msg = "RespawnChange",
+					func = function(respawnPointId)
+						--this.ChangeRespawnPoint(respawnPointId)
+					end,
+				},
 		},
 		Player = {
 			{
@@ -269,11 +389,16 @@ function this.Messages()
 					end
 				end
 			},
+			{
+				msg = "Dead",
+				func = function (playerIndex, deathType)
+					--this.ShowRespawnMenu()
+				end
+			},
             {
                 msg = "PlayerHoldWeapon",
                 func = function()
                     -- FOR DEBUG 
-
                 end
             },
 
@@ -283,12 +408,15 @@ function this.Messages()
 				msg = "ChangeBgmPhase",
 				func = function (bgmPhase)
 					mvars.Current_BGM_PHASE_LV = bgmPhase
-					InfCore.Log("Zoz Log: Current BGM_PHASE_LV: " .. tostring(mvars.Current_BGM_PHASE_LV))
 				end
 			},
 		},
     }
 end
+
+this.Zoz_respawnPosList = {
+	"player_spawn_locator_afgh_0000",
+}
 
 
 function this.OnMessage(sender, messageId, arg0, arg1, arg2, arg3, strLogText)
@@ -304,6 +432,7 @@ function this.Init(missionTable)
 	end
 	mvars.LOOK_QUIET = false
 	mvars.Current_BGM_PHASE_LV = nil
+	
 	if vars.missionCode==30050 and Ivars.Zoz_Player_Overhaul_Ocelot_Interaction:Is(1) and Ivars.mbEnableOcelot:Is(1) then
 		if GameObject.DoesGameObjectExistWithTypeName("TppOcelot2") then
 			GameObject.SendCommand( { type="TppOcelot2", index=0 }, { id = "SetPlayerDistanceCheck", enabled = true, near = 5, far = 7.5 } )
