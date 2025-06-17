@@ -360,7 +360,7 @@ function this.Messages()
 					if Ivars.Zoz_Player_Overhaul_Snake_DD_Line:Is(1) then
 						local vehicleType = GameObject.SendCommand( vehicleId, { id="GetVehicleType", })
 						if ( vars.buddyType == BuddyType.DOG ) and vehicleType == Vehicle.type.EASTERN_LIGHT_VEHICLE or vehicleType == Vehicle.type.WESTERN_LIGHT_VEHICLE then
-							if Zoz_overhaul_Ivars.IsNotPhase(PHASE_ALERT) then
+							if Zoz_Overhaul.IsNotPhase(PHASE_ALERT) then
 								if rideFlag == 0 then -- Player Get in and 1 is get out
 									if mvars.Current_BGM_PHASE_LV == nil or mvars.Current_BGM_PHASE_LV <= 1 then
 										Player.CallVoice"b817bb6" --・Buddy commands 4/Normal: Get in: Let's go.

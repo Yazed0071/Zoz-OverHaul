@@ -114,10 +114,10 @@ function this.Messages()
 						if Ivars.Zoz_Enemy_Radio_Extra_Camera_Lines:Is(1) then
 							Zoz_Enemy_Overhaul.PlayCPOnlyRadio("CPR0022_1") -- Responding to intruder!
 						end
-					elseif speechLabel == StrCode32( "ZOZ0000" ) or speechLabel == StrCode32( "ZOZ_CPR0037_0" ) or speechLabel == StrCode32( "ZOZ_CPR0037_1" ) and Zoz_overhaul_Ivars.IsNotPhase(PHASE_ALERT) and Zoz_overhaul_Ivars.IsNotPhase(PHASE_EVASION) then
-						GameObject.SendCommand( Zoz_overhaul_Ivars.getClosestCp(), { id = "SetPhase", phase = TppGameObject.PHASE_CAUTION } )
+					elseif speechLabel == StrCode32( "ZOZ0000" ) or speechLabel == StrCode32( "ZOZ_CPR0037_0" ) or speechLabel == StrCode32( "ZOZ_CPR0037_1" ) and Zoz_Overhaul.IsNotPhase(PHASE_ALERT) and Zoz_Overhaul.IsNotPhase(PHASE_EVASION) then
+						GameObject.SendCommand( Zoz_Overhaul.getClosestCp(), { id = "SetPhase", phase = TppGameObject.PHASE_CAUTION } )
 
-						local e=Zoz_overhaul_Ivars.GetCpSubType(Zoz_overhaul_Ivars.getClosestCp())
+						local e=Zoz_Overhaul.GetCpSubType(Zoz_Overhaul.getClosestCp())
   						local n="cmmn_ene_soviet"
   						if e=="SOVIET_A"or e=="SOVIET_B"then
   						  n="cmmn_ene_soviet"
@@ -150,7 +150,7 @@ function this.Messages()
 			{
 				msg = "Neutralize",
 				func = function(gameObjectId, attackerId, neutralizeType, neutralizeCause)
-					if Tpp.IsUav(gameObjectId) and Zoz_overhaul_Ivars.IsNotPhase(PHASE_ALERT) and Zoz_overhaul_Ivars.IsNotPhase(PHASE_EVASION) and Ivars.Zoz_Enemy_Radio_Report_UAV_Down:Is(1) then
+					if Tpp.IsUav(gameObjectId) and Zoz_Overhaul.IsNotPhase(PHASE_ALERT) and Zoz_Overhaul.IsNotPhase(PHASE_EVASION) and Ivars.Zoz_Enemy_Radio_Report_UAV_Down:Is(1) then
 						GkEventTimerManager.Start("Announce_UAVFeedDown", 6)
 					end
 				end
@@ -186,7 +186,7 @@ function this.Messages()
 				sender = "code102useable",
 				func = 	function()
 					if Ivars.Zoz_Enemy_Radio_Report_Broken_Communication:Is(1) then
-						if Zoz_overhaul_Ivars.IsNotPhase(PHASE_ALERT) then
+						if Zoz_Overhaul.IsNotPhase(PHASE_ALERT) then
 							local options = {"ZOZ_CPR0037_0", "ZOZ_CPR0037_1"}
 							Zoz_Enemy_Overhaul.PlayCPOnlyRadio(options[math.random(#options)]) -- CODE 102/ NETWORK DOWN
 						else
@@ -200,7 +200,7 @@ function this.Messages()
 				func = 	function()
 					InfCore.Log("Zoz_Overhaul Log: Timer Announce_PrisonerNotFound Finish")
 					if Ivars.Zoz_Enemy_Radio_Cancel_Prisoner_Search:Is(1) then
-						if Zoz_overhaul_Ivars.IsNotPhase(PHASE_ALERT) or Zoz_overhaul_Ivars.IsNotPhase(PHASE_EVASION) and not (missionID >= 10010) or not (missionID <= 11151 ) then
+						if Zoz_Overhaul.IsNotPhase(PHASE_ALERT) or Zoz_Overhaul.IsNotPhase(PHASE_EVASION) and not (missionID >= 10010) or not (missionID <= 11151 ) then
 							InfCore.Log("Zoz_Overhaul Log: Second")
 							local gameObjectId = GameObject.GetGameObjectId( "TppSoldier2", Zoz_Enemy_Overhaul.GetClosestSoldier() )
 							if not Zoz_Enemy_Overhaul.IsCanCommunicate(gameObjectId) then
@@ -218,7 +218,7 @@ function this.Messages()
 			{ 	msg = "Finish",
 				sender = "Announce_ShiftChange",
 				func = 	function()
-					if Ivars.Zoz_Enemy_Radio_Announce_Shift_Change:Is(1) and not Zoz_overhaul_Ivars.IsNotPhase(PHASE_SNEAK) then
+					if Ivars.Zoz_Enemy_Radio_Announce_Shift_Change:Is(1) and not Zoz_Overhaul.IsNotPhase(PHASE_SNEAK) then
 						Zoz_Enemy_Overhaul.PlayCPOnlyRadio("CPR0330") -- Situation normal: Announcing shift change
 					end
 				end

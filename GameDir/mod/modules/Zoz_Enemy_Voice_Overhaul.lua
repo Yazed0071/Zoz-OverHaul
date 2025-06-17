@@ -92,7 +92,7 @@ function this.GetAllAliveSoldiersInCp()
 	local enemyNeutralized = 0
 
 	for cpName, cpSoldiers in pairs(mvars.ene_soldierDefine) do
-		if GetGameObjectId(cpName) == Zoz_overhaul_Ivars.getClosestCp() then
+		if GetGameObjectId(cpName) == Zoz_Overhaul.getClosestCp() then
 			InfCore.Log("Zoz Log: cpName: " .. tostring(cpName))
 			for _, soldierName in ipairs(cpSoldiers) do
 				if not TppEnemy.IsNeutralized(soldierName) then
@@ -126,7 +126,7 @@ function this.SetSoldierSurrender(soldierId)
 		if mvars.aliveSoldierName then
 			local gameObjectId = GetGameObjectId("TppSoldier2", mvars.aliveSoldierName)
 
-			if not Zoz_overhaul_Ivars.IsNotPhase(PHASE_ALERT) then
+			if not Zoz_Overhaul.IsNotPhase(PHASE_ALERT) then
 				SendCommand(gameObjectId, { id = "SetForceHoldup" })
 				InfCore.Log("Zoz Log: SetForceHoldup: " .. tostring(mvars.aliveSoldierName))
 				SendCommand(gameObjectId, { id = "SetEverDown", enabled = true })
@@ -135,7 +135,7 @@ function this.SetSoldierSurrender(soldierId)
 		end
 	end
 
-	if not Zoz_overhaul_Ivars.IsNotPhase(PHASE_ALERT) and this.GetAllAliveSoldiersInCp() == 1 then
+	if not Zoz_Overhaul.IsNotPhase(PHASE_ALERT) and this.GetAllAliveSoldiersInCp() == 1 then
 		if not TppEnemy.IsArmor(mvars.aliveSoldierName) then
 			local randomValue = math.random(1, 100)
 			InfCore.Log("Zoz Log: randomValue == " .. randomValue)
@@ -347,12 +347,14 @@ function this.Messages()
 			{
 				msg = "PlayerDamaged",
 				func = function (playerIndex, attackId, attackerId)
-					if TppLocation.IsMotherBase() and Zoz_Enemy_Overhaul.GetClosestFromPlayer(mvars.MtbsSaluter) < 20 then
-						GkEventTimerManager.Start("EVF030_Timer", 15)
-						if attackId == TppDamage.ATK_PushPlayer then -- From Ocelot mostly
-							Zoz_Enemy_Overhaul.GetClosestSoldierSpeak("EVR220")
-						else
-							Zoz_Enemy_Overhaul.GetClosestSoldierSpeak("EVF030") -- Boss, I don't think that's...
+					if TppLocation.IsMotherBase() and mvars.MtbsSaluter ~= nil then
+						if Zoz_Enemy_Overhaul.GetClosestFromPlayer(mvars.MtbsSaluter) < 20 then
+							GkEventTimerManager.Start("EVF030_Timer", 15)
+							if attackId == TppDamage.ATK_PushPlayer then -- From Ocelot mostly
+								Zoz_Enemy_Overhaul.GetClosestSoldierSpeak("EVR220")
+							else
+								Zoz_Enemy_Overhaul.GetClosestSoldierSpeak("EVF030") -- Boss, I don't think that's...
+							end
 						end
 					end
 				end

@@ -68,9 +68,9 @@ function this.OnAllocate()end
 function this.OnInitialize()end
 
 function this.PlayCPOnlyRadio(Label)
-    if string.find(Zoz_overhaul_Ivars.getClosestCpString(), "_cp") then
-        InfCore.Log("Zoz_Overhaul Log: Zoz_Support_Enemy_Overhaul.PlayCPOnlyRadio(" .. Label..") in CP: " .. Zoz_overhaul_Ivars.getClosestCpString())
-        GameObject.SendCommand( Zoz_overhaul_Ivars.getClosestCp(),{ id = "RequestRadio", label=Label } )
+    if string.find(Zoz_Overhaul.getClosestCpString(), "_cp") then
+        InfCore.Log("Zoz_Overhaul Log: Zoz_Support_Enemy_Overhaul.PlayCPOnlyRadio(" .. Label..") in CP: " .. Zoz_Overhaul.getClosestCpString())
+        GameObject.SendCommand( Zoz_Overhaul.getClosestCp(),{ id = "RequestRadio", label=Label } )
     end
 end
 

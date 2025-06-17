@@ -651,13 +651,13 @@ function this.Messages()
             {
                 msg = "WarningGimmick",
                 func = function(irSensorId, irHash, irDataSetName, gameObjectId)
-                    this.RequestNoticeGimmick(Zoz_overhaul_Ivars.getClosestCp(), irSensorId, 0) -- 0 is The Player
+                    this.RequestNoticeGimmick(Zoz_Overhaul.getClosestCp(), irSensorId, 0) -- 0 is The Player
                 end
             },
             {
                 msg = "BurglarAlarmTrap",
                 func = function(bAlarmId, bAlarmHash, bAlarmDataSetName, gameObjectId)
-                    this.RequestNoticeGimmick(Zoz_overhaul_Ivars.getClosestCp(), bAlarmId, gameObjectId)
+                    this.RequestNoticeGimmick(Zoz_Overhaul.getClosestCp(), bAlarmId, gameObjectId)
                 end
             },
             {
@@ -675,7 +675,7 @@ function this.Messages()
                                     true
                              then
                                 this.RequestNoticeGimmick(
-                                    Zoz_overhaul_Ivars.getClosestCp(),
+                                    Zoz_Overhaul.getClosestCp(),
                                     gameObjectId,
                                     fultonedPlayer
                                 ) -- fultonedPlayer is The Player
@@ -697,7 +697,7 @@ function this.Messages()
                             Gimmick.CallBurglarAlarm(gameObjectId, this.burgularAlarmRange, this.burgularAlarmTime) ==
                                 true
                          then
-                            this.RequestNoticeGimmick(Zoz_overhaul_Ivars.getClosestCp(), gameObjectId, 0)
+                            this.RequestNoticeGimmick(Zoz_Overhaul.getClosestCp(), gameObjectId, 0)
                         end
                     end
                 end
